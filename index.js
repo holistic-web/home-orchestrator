@@ -1,12 +1,11 @@
 const schedule = require('node-schedule');
-const alarm = require('./alarm');
-const lights = require('./config/lights');
+const Alarm = require('./functions/Alarm');
 const LightService = require('./lib/LightService');
+const lights = require('./config/lights');
 
 const lightService = new LightService(lights);
-alarm.activate(lightService);
 
-// node-schedule patterns
-const pattern = '44 12 * * *'; // every day at 07:30
-// schedule.scheduleJob(pattern, alarm.activate);
+const alarm = new Alarm(lightService);
+
+schedule.scheduleJob('30 7 * * *', () => { alarm.activate(); });
 

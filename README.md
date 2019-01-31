@@ -17,3 +17,4 @@ Since we have `dotenv` installed loading environment variables into a .env file 
 - set lights to a specific colour on api request
 - fix repo linting
 - user can add lights to the home
+- current state of lights stored in firebase
