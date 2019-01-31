@@ -14,7 +14,7 @@ class Alarm {
 
 		const state = cloneDeep(this.lightService.state);
 		Object.keys(state).forEach(lightName => {
-			state[lightName].scene = 'alarm-start';
+			state[lightName].scene = 'alarm_start';
 		});
 
 		this.lightService.set(state);
