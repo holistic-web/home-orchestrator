@@ -10,6 +10,7 @@ Set up a webhook applet on https://platform.ifttt.com and configure it to set th
 In this folder, run `npm install` to install the required dependencies followed by `npm start` to begin the app.
 
 ## Environment Variables
+Since we have `dotenv` installed loading environment variables into a .env file makes them automagically available.
 - SET_BRIGHTNESS_ENDPOINT: the endpoint at which your ifttt trigger is listening on
 
 ## Roadmap
