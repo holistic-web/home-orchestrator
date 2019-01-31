@@ -15,8 +15,7 @@
 			"node": true
 		},
 		"extends": [
-			"plugin:vue/essential",
-			"@vue/airbnb"
+			"@airbnb"
 		],
 		"rules": {
 			"indent": [
@@ -32,9 +31,6 @@
 				2,
 				"never"
 			]
-		},
-		"parserOptions": {
-			"parser": "babel-eslint"
 		}
 	},
 	"devDependencies": {
