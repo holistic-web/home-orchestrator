@@ -9,7 +9,7 @@ buildPath = (lightController, actionName) => {
 	return path
 }
 
-export default class LightController {
+module.exports = class LightController {
 
 	constructor({ name, type }) {
 		this.name = name;
