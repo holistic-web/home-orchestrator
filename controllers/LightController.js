@@ -21,6 +21,7 @@ module.exports = class LightController {
 	 * @param {number} brightness [1-100] new brightness value
 	 */
 	setBrightness(brightness) {
+		console.log(`> Setting ${this.name} brightness: ${brightness}`);
 		const path = buildPath(this, 'set-brightness');
 		axios.post(path, { value1: brightness });
 	}
@@ -29,6 +30,7 @@ module.exports = class LightController {
 	 * Sets the light completely off
 	 */
 	turnOff() {
+		console.log(`> Turning ${this.name} off`);
 		const path = buildPath(this, 'turn-off');
 		axios.post(path);
 	}
@@ -38,7 +40,7 @@ module.exports = class LightController {
 	 * @param {string} scene new scene to display
 	 */
 	setScene(scene) {
-		const actionName = `set-scene-${scene}`
+		console.log(`> Setting ${this.name} scene: ${scene}`);
 		const path = buildPath(this, actionName);
 		axios.post(path);
 	}
