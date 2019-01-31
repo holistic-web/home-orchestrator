@@ -4,7 +4,7 @@ This is a node.js app to manage home tasks and automation.
 ## Setup
 
 ### IFTTT
-Set up a webhook applet on https://platform.ifttt.com and configure it to set the lights to the value specified by `value1` ingredient.
+Set up webhook applets on https://platform.ifttt.com and configure triggers for endpoints in `/config/lights.js`.
 
 ### Running the app
 In this folder, run `npm install` to install the required dependencies followed by `npm start` to begin the app.
@@ -15,3 +15,5 @@ Since we have `dotenv` installed loading environment variables into a .env file 
 
 ## Roadmap
 - set lights to a specific colour on api request
+- fix repo linting
+- user can add lights to the home
