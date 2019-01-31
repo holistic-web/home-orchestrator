@@ -1,7 +1,6 @@
-const LightService = require('./lib/LightService');
 const lights = require('./config/lights');
 
-exports.activate = () => {
+exports.activate = (lightService) => {
 	console.log('> Alarm activated');
 
 	const lightService = new LightService(lights);
@@ -10,4 +9,4 @@ exports.activate = () => {
 	Object.keys(state).forEach(lightName => {
 		state[lightName].scene = 'alarm-start';
 	})
-}
+};
