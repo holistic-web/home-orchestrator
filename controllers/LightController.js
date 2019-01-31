@@ -41,6 +41,7 @@ module.exports = class LightController {
 	 */
 	setScene(scene) {
 		console.log(`> Setting ${this.name} scene: ${scene}`);
+		const actionName = `set-scene-${scene}`;
 		const path = buildPath(this, actionName);
 		axios.post(path);
 	}
