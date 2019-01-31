@@ -1,11 +1,42 @@
 {
-  "name": "holistic-home",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+	"name": "holistic-home",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"eslintConfig": {
+		"root": true,
+		"env": {
+			"node": true
+		},
+		"extends": [
+			"plugin:vue/essential",
+			"@vue/airbnb"
+		],
+		"rules": {
+			"indent": [
+				1,
+				"tab"
+			],
+			"no-tabs": 0,
+			"max-len": [
+				1,
+				160
+			],
+			"comma-dangle": [
+				2,
+				"never"
+			]
+		},
+		"parserOptions": {
+			"parser": "babel-eslint"
+		}
+	},
+	"devDependencies": {
+		"eslint": "^5.12.1"
+	}
 }
