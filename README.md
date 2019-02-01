@@ -9,8 +9,10 @@ It creates a firebase database to manage the state of your home. And listeners t
 3. update `database.rules.json` to only allow this user id to read / write to the database
 4. add `FIREBASE_EMAIL` and `FIREBASE_PASSWORD` as environment variables. (dotenv is installed so a .env file will work).
 5. In the config folder modify to suit your setup.
+6. Setup cloud environment variable `ifttt.key` with: `firebase functions:config:set ifttt.key="YOUR-API-KEY"`
 
 ### Running the app
+Ensure `firebase deploy` has been run to setup to device controller
 In this folder, run `npm install` to install the required dependencies followed by `npm start` to begin the app.
 
 ## Roadmap

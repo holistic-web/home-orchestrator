@@ -1,12 +1,12 @@
-require('dotenv').config()
+const functions = require('firebase-functions');
 const axios = require('axios');
 
-const key = process.env.IFTTT_WEBHOOK_KEY;
+const key = functions.config().ifttt.key;
 
 buildPath = (lightController, actionName) => {
-	if (!key) throw new Error('no "IFTTT_WEBHOOK_KEY" environment variable')
+	if (!key) throw new Error('no "iftt.key" environment variable')
 	let path = `https://maker.ifttt.com/trigger/${lightController.name}-${actionName}/with/key/${key}`;
-	return path
+	return path;
 }
 
 module.exports = class LightController {
