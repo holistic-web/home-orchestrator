@@ -1,15 +1,14 @@
 const { cloneDeep } = require('lodash');
-const StateService = require('../lib/StateService');
+
+const LightService = require('../lib/LightService');
 const sleep = require('util').promisify(setTimeout)
-const lights = require('../config/lights');
 
+const lightService = new LightService();
 
-// Tightly coupled to the current lights config
 class Alarm {
 
-	constructor(lightService) {
-		this.lights = lights.map(l => l.name);
-		this.lightService = lightService;
+	constructor(lights = lightService) {
+		this.lights = lights;
 	}
 
 	/**
@@ -18,16 +17,19 @@ class Alarm {
 	async activate() {
 		console.log('> Alarm activated');
 
-		await StateService.turnOnAlarm();
+		// #Todo: activate alarm trigger in firebase
 
 		// set all lights to scene "alarm_start"
-		const state = cloneDeep(this.lightService.state);
-		this.lights.forEach(light => {
-			state[light].scene = 'alarm_start';
+		const lights = await this.lights.get();
+		const update = {};
+		Object.keys(lights).forEach(lightName => {
+			update[lightName].scene = 'alart_start';
 		});
-		this.lightService.update(state);
+		await this.lightService.update(state);
 
 		// make the lights brighter over the fade in time
+
+		// #Todo get fade in time from firebase state
 		const fadeInTime = 30 * 60;	// minutes
 		const interval = fadeInTime / 100; // minutes
 		for (let i=2; i<=100; i+=1) {

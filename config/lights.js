@@ -1,4 +1,4 @@
-module.exports = [
+const lights = [
 	{
 		name: 'nanoleaf',
 		type: 'nanoleaf'
@@ -12,3 +12,5 @@ module.exports = [
 		type: 'hue'
 	}
 ]
+
+module.exports = lights;

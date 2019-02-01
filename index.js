@@ -1,10 +1,10 @@
 const schedule = require('node-schedule');
-const Alarm = require('./functions/Alarm');
+const Alarm = require('./modules/Alarm');
 const LightService = require('./lib/LightService');
-const lights = require('./config/lights');
 
-const lightService = new LightService(lights);
+const lightService = new LightService();
 
-const alarm = new Alarm(lightService);
+// const alarm = new Alarm(lightService);
+// schedule.scheduleJob('30 7 * * *', () => { alarm.activate(); });
 
-schedule.scheduleJob('30 7 * * *', () => { alarm.activate(); });
+lightService.update({ nanoleaf: { brightness: 50 } });
