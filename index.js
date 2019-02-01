@@ -7,7 +7,4 @@ const lightService = new LightService(lights);
 
 const alarm = new Alarm(lightService);
 
-// schedule.scheduleJob('51 17 * * *', () => { alarm.activate(); });
-
-
-alarm.activate();
+schedule.scheduleJob('30 7 * * *', () => { alarm.activate(); });
