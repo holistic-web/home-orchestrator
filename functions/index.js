@@ -1,5 +1,5 @@
 const functions = require('firebase-functions');
-const LightController = require('./controllers/LightController');
+const LightController = require('../controllers/LightController');
 
 exports.lightController = functions.database.ref().onWrite(async (change, context) => {
 	const originalState = change.before.val();
