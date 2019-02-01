@@ -1,4 +1,5 @@
 const { cloneDeep } = require('lodash');
+const StateService = require('../lib/StateService');
 const sleep = require('util').promisify(setTimeout)
 const lights = require('../config/lights');
 
@@ -17,6 +18,8 @@ class Alarm {
 	async activate() {
 		console.log('> Alarm activated');
 
+		await StateService.turnOnAlarm();
+
 		// set all lights to scene "alarm_start"
 		const state = cloneDeep(this.lightService.state);
 		this.lights.forEach(light => {
@@ -25,7 +28,7 @@ class Alarm {
 		this.lightService.update(state);
 
 		// make the lights brighter over the fade in time
-		const fadeInTime = 1 * 60;	// minutes
+		const fadeInTime = 30 * 60;	// minutes
 		const interval = fadeInTime / 100; // minutes
 		for (let i=2; i<=100; i+=1) {
 
@@ -37,9 +40,9 @@ class Alarm {
 			this.lightService.update(state);
 		}
 
+		let enabled = true;
 		// after fadeInTime is over
-		await sleep(1000 * fadeInTime);
-		while (true) { // this means the alarm must be cancelled manually
+		while (enabled) { // this means the alarm must be cancelled manually
 			state.room.scene = 'alarm_alt';
 			state.lamp.scene = 'alarm_alt';
 			this.lightService.update(state);
@@ -49,9 +52,13 @@ class Alarm {
 			this.lightService.update(state);
 			await sleep(5000);
 			this.lightService.notify(['nanoleaf']);
+
+			const alarmState = await StateService.getAlarm();
+			if (!alarmState.active) {
+				console.log('> Disabling alarm');
+				enabled = false;
+			}
 		}
-
-
 
 	}
 
