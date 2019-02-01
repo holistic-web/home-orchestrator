@@ -1,17 +1,17 @@
 # Holistic Home
 This is a node.js app to manage home tasks and automation.
 
-## Setup
+It creates a firebase database to manage the state of your home. And listeners to that database to enact changes on devices.
 
-### IFTTT
-Set up webhook applets on https://platform.ifttt.com and configure triggers for endpoints in `/config/lights.js`.
+## Setup
+1. Create a database on the firebase console.
+2. Create an email / password user account
+3. update `database.rules.json` to only allow this user id to read / write to the database
+4. add `FIREBASE_EMAIL` and `FIREBASE_PASSWORD` as environment variables. (dotenv is installed so a .env file will work).
+5. In the config folder modify to suit your setup.
 
 ### Running the app
 In this folder, run `npm install` to install the required dependencies followed by `npm start` to begin the app.
-
-## Environment Variables
-Since we have `dotenv` installed loading environment variables into a .env file makes them automagically available.
-- SET_BRIGHTNESS_ENDPOINT: the endpoint at which your ifttt trigger is listening on
 
 ## Roadmap
 - set lights to a specific colour on api request

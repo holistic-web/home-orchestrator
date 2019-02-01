@@ -9,30 +9,6 @@
 	},
 	"author": "",
 	"license": "ISC",
-	"eslintConfig": {
-		"root": true,
-		"env": {
-			"node": true
-		},
-		"extends": [
-			"@airbnb"
-		],
-		"rules": {
-			"indent": [
-				1,
-				"tab"
-			],
-			"no-tabs": 0,
-			"max-len": [
-				1,
-				160
-			],
-			"comma-dangle": [
-				2,
-				"never"
-			]
-		}
-	},
 	"devDependencies": {
 		"eslint": "^5.12.1"
 	},
