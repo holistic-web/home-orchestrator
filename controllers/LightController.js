@@ -5,7 +5,7 @@ const key = process.env.IFTTT_WEBHOOK_KEY;
 
 buildPath = (lightController, actionName) => {
 	if (!key) throw new Error('no "IFTTT_WEBHOOK_KEY" environment variable')
-	let path = `https://maker.ifttt.com/trigger/${lightController.type}-${actionName}/with/key/${key}`;
+	let path = `https://maker.ifttt.com/trigger/${lightController.name}-${actionName}/with/key/${key}`;
 	return path
 }
 
@@ -20,30 +20,37 @@ module.exports = class LightController {
 	 * Sets the brightness of the light
 	 * @param {number} brightness [1-100] new brightness value
 	 */
-	setBrightness(brightness) {
+	async setBrightness(brightness) {
 		console.log(`> Setting ${this.name} brightness: ${brightness}`);
 		const path = buildPath(this, 'set-brightness');
-		axios.post(path, { value1: brightness });
+		await axios.post(path, { value1: brightness });
 	}
 
 	/**
 	 * Sets the light completely off
 	 */
-	turnOff() {
+	async turnOff() {
 		console.log(`> Turning ${this.name} off`);
 		const path = buildPath(this, 'turn-off');
-		axios.post(path);
+		await axios.post(path);
 	}
 
 	/**
 	 * Sets the lightto a specific scene (must be configured on device and IFTTT)
 	 * @param {string} scene new scene to display
 	 */
-	setScene(scene) {
+	async setScene(scene) {
 		console.log(`> Setting ${this.name} scene: ${scene}`);
 		const actionName = `set-scene-${scene}`;
 		const path = buildPath(this, actionName);
-		axios.post(path);
+		await axios.post(path);
+	}
+
+	async notify () {
+		console.log(`> Notifying ${this.name}`);
+		if (!['nanoleaf'].includes(this.type)) throw new Error('Notify called on a non nanoleaf system');
+		const path = buildPath(this, 'notify');
+		await axios.post(path);
 	}
 
 }
