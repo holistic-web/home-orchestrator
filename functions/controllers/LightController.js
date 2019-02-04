@@ -43,7 +43,7 @@ module.exports = class LightController {
 		console.log(`> Setting ${this.name} colour: ${colour}`);
 		const actionName = `set-colour`;
 		const path = buildPath(this, actionName);
-		if (this.type === 'nanoleaf') colour = colour.substring(1);
+		if (this.type === 'nanoleaf' && colour[0] === '#') colour = colour.substring(1);
 		await axios.post(path, { value1: colour });
 	}
 
