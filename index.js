@@ -7,4 +7,4 @@ const lightService = new LightService();
 // const alarm = new Alarm(lightService);
 // schedule.scheduleJob('30 7 * * *', () => { alarm.activate(); });
 
-lightService.update({ nanoleaf: { brightness: 0 } });
+lightService.setTheme('default');

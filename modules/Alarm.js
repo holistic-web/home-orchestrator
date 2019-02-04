@@ -19,11 +19,11 @@ class Alarm {
 
 		// #Todo: activate alarm trigger in firebase
 
-		// set all lights to scene "alarm_start"
+		// set all lights to colour "alarm_start"
 		const lights = await this.lights.get();
 		const update = {};
 		Object.keys(lights).forEach(lightName => {
-			update[lightName].scene = 'alart_start';
+			update[lightName].colour = 'alart_start';
 		});
 		await this.lightService.update(state);
 
@@ -45,12 +45,12 @@ class Alarm {
 		let enabled = true;
 		// after fadeInTime is over
 		while (enabled) { // this means the alarm must be cancelled manually
-			state.room.scene = 'alarm_alt';
-			state.lamp.scene = 'alarm_alt';
+			state.room.colour = 'alarm_alt';
+			state.lamp.colour = 'alarm_alt';
 			this.lightService.update(state);
 			await sleep(5000);
-			state.room.scene = 'alarm';
-			state.lamp.scene = 'alarm';
+			state.room.colour = 'alarm';
+			state.lamp.colour = 'alarm';
 			this.lightService.update(state);
 			await sleep(5000);
 			this.lightService.notify(['nanoleaf']);

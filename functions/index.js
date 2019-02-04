@@ -1,5 +1,5 @@
 const functions = require('firebase-functions');
-const LightController = require('../controllers/LightController');
+const LightController = require('./controllers/LightController');
 
 exports.lightController = functions.database.ref().onWrite(async (change, context) => {
 	const originalState = change.before.val();
@@ -19,10 +19,10 @@ exports.lightController = functions.database.ref().onWrite(async (change, contex
 			console.log(`> Error: ${err}`, err);
 		}
 
-		const originalScene = originalState.lights[lightName].brightness;
-		const newScene = newState.lights[lightName].brightness;
+		const originalColour = originalState.lights[lightName].colour;
+		const newColour = newState.lights[lightName].colour;
 		try {
-			if (originalScene !== newScene) await controller.setScene(newScene);
+			if (originalColour !== newColour) await controller.setColour(newColour);
 		} catch (err) {
 			console.log(`> Error: ${err}`), err;
 		}

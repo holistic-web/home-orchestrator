@@ -36,21 +36,15 @@ module.exports = class LightController {
 	}
 
 	/**
-	 * Sets the lightto a specific scene (must be configured on device and IFTTT)
-	 * @param {string} scene new scene to display
+	 * Sets the lightto a specific colour (must be configured on device and IFTTT)
+	 * @param {string} colour new colour to display
 	 */
-	async setScene(scene) {
-		console.log(`> Setting ${this.name} scene: ${scene}`);
-		const actionName = `set-scene-${scene}`;
+	async setColour(colour) {
+		console.log(`> Setting ${this.name} colour: ${colour}`);
+		const actionName = `set-colour`;
 		const path = buildPath(this, actionName);
-		await axios.post(path);
-	}
-
-	async notify () {
-		console.log(`> Notifying ${this.name}`);
-		if (!['nanoleaf'].includes(this.type)) throw new Error('Notify called on a non nanoleaf system');
-		const path = buildPath(this, 'notify');
-		await axios.post(path);
+		if (this.type === 'nanoleaf') colour = colour.substring(1);
+		await axios.post(path, { value1: colour });
 	}
 
 }
