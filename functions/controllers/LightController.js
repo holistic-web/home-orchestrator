@@ -1,3 +1,5 @@
+/* Adds listeners to the firebase database and effects the lights through IFTTT */
+
 const functions = require('firebase-functions');
 const axios = require('axios');
 
@@ -9,7 +11,7 @@ buildPath = (lightController, actionName) => {
 	return path;
 }
 
-module.exports = class LightController {
+class LightController {
 
 	constructor({ name, type }) {
 		this.name = name;
@@ -22,7 +24,8 @@ module.exports = class LightController {
 	 */
 	async setBrightness(brightness) {
 		console.log(`> Setting ${this.name} brightness: ${brightness}`);
-		const path = buildPath(this, 'set-brightness');
+		let path = buildPath(this, 'set-brightness');
+		if (brightness === 0)  path = buildPath(this, 'turn-off');
 		await axios.post(path, { value1: brightness });
 	}
 
@@ -48,3 +51,34 @@ module.exports = class LightController {
 	}
 
 }
+
+module.exports = functions.database.ref().onWrite(async (change) => {
+	const originalState = change.before.val();
+	const newState = change.after.val();
+
+	const lightNames = Object.keys(newState.lights);``
+	for (let i=0; i<lightNames.length; i++) {
+
+		const lightName = lightNames[i];
+		const controller = new LightController({ name: lightName, type: newState.lights[lightName].meta.type });
+
+		const originalBrightness = originalState.lights[lightName].brightness;
+		const newBrightness = newState.lights[lightName].brightness;
+		try {
+			if (originalBrightness !== newBrightness) await controller.setBrightness(newBrightness);
+		} catch (err) {
+			console.log(`> Error: ${err}`, err);
+		}
+
+		const originalColour = originalState.lights[lightName].colour;
+		const newColour = newState.lights[lightName].colour;
+		try {
+			if (originalColour !== newColour) await controller.setColour(newColour);
+		} catch (err) {
+			console.log(`> Error: ${err}`), err;
+		}
+
+	}
+
+	return true;
+});
