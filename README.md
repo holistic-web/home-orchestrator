@@ -12,7 +12,7 @@ It creates a firebase database to manage the state of your home. Then adds liste
 ### Running the app
 Ensure `firebase deploy` has been run to setup to device controller
 
-## Roadmap
+## Roadmap
 - fix repo linting
 - create a ui in which
 	- users can add new lights to the home
