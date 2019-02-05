@@ -78,7 +78,7 @@ module.exports = functions.database.ref().onWrite(async (change) => {
 			const originalColour = originalState.lights[lightName].colour;
 			const newColour = newState.lights[lightName].colour;
 			try {
-				if (originalColour !== newColour) await controller.setColour(newColour);
+				if (originalColour !== newColour) controller.setColour(newColour);
 			} catch (err) {
 				console.log(`> Error: ${err}`), err;
 			}
