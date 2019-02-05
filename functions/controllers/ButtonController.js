@@ -33,17 +33,56 @@ const validateToken = (req, res, next) => {
 // Add middleware to authenticate requests
 app.use(validateToken);
 
-// build multiple CRUD interfaces:
-app.post('/desk-button/short-press', async (req, res) => {
-	const ref = admin.database().ref('lights/lamp/brightness');
+const getBrightness = async (lightName) => {
+	const ref = admin.database().ref(`lights/${lightName}/brightness`);
 	const snap = await ref.once('value');
 	const value = snap.val();
-	console.log('value: ', value);
+	return value;
+}
+
+/**
+ * If a light has a non 0 brightness it sets it to 0. Otherwise it sets brightness to 100.
+ * @param {string} lightName name of the light you wish to toggle
+ */
+const toggleLight = async (lightName) => {
+	const brightness = await getBrightness(lightName);
 	let newBrightness = 0;
-	if (value === 0) newBrightness = 100;
-	console.log('newBrightness: ', newBrightness);
+	if (brightness === 0) newBrightness = 100;
 	await ref.set(newBrightness);
-	res.send({ newBrightness });
+	return newBrightness;
+}
+
+/**
+ * If any light is on it sets everything to 100%. Otherwise sets everything to 0
+ */
+const toggleEverything = async () => {
+	const [lampBrightness, roomBrightness, nanoleafBrightness] = await Promise.all([
+		getBrightness('lamp'),
+		getBrightness('room'),
+		getBrightness('nanoleaf')
+	]);
+	if (!lampBrightness && !roomBrightness && !nanoleafBrightness) {
+		admin.database().ref('lights/lamp/brightness').set(100);
+		admin.database().ref('lights/room/brightness').set(100);
+		admin.database().ref('lights/nanoleaf/brightness').set(100);
+		return true;
+	}
+	admin.database().ref('lights/lamp/brightness').set(0);
+	admin.database().ref('lights/room/brightness').set(0);
+	admin.database().ref('lights/nanoleaf/brightness').set(0);
+	return false;
+
+}
+
+// build multiple CRUD interfaces:
+app.post('/desk-button/short-press', async (req, res) => {
+	const result = await toggleLight('lamp');
+	res.send({ result });
 });
+app.post('/bed-button/short-press', async (req, res) => {
+	const result = await toggleEverything();
+	res.send({ result });
+});
+
 
 module.exports = functions.https.onRequest(app)
