@@ -15,6 +15,8 @@ admin.initializeApp({
 	storageBucket: "holistic-home-5134d.appspot.com",
 	messagingSenderId: "549410338560"
 });
+database = admin.database();
+
 const app = express();
 
 const key = functions.config().ifttt.key;
@@ -33,8 +35,8 @@ const validateToken = (req, res, next) => {
 // Add middleware to authenticate requests
 app.use(validateToken);
 
-const getBrightness = async (lightName) => {
-	const ref = admin.database().ref(`lights/${lightName}/brightness`);
+const isLightOff = async (lightName) => {
+	const ref = database.ref(`lights/${lightName}/off`);
 	const snap = await ref.once('value');
 	const value = snap.val();
 	return value;
@@ -45,40 +47,49 @@ const getBrightness = async (lightName) => {
  * @param {string} lightName name of the light you wish to toggle
  */
 const toggleLight = async (lightName) => {
-	const brightness = await getBrightness(lightName);
-	let newBrightness = 0;
-	if (brightness === 0) newBrightness = 100;
-	await ref.set(newBrightness);
-	return newBrightness;
+	const isOff = await isLightOff(lightName);
+	if (isOff) {
+		database.ref(`lights/${lightName}/off`).set(false);
+		return true;
+	}
+	database.ref(`lights/${lightName}/off`).set(true);
+	return false;
 }
 
 /**
  * If any light is on it sets everything to 100%. Otherwise sets everything to 0
  */
 const toggleAllLights = async () => {
-	const [lampBrightness, roomBrightness, nanoleafBrightness] = await Promise.all([
-		getBrightness('lamp'),
-		getBrightness('room'),
-		getBrightness('nanoleaf')
+	const [lampIsOff, roomIsOff, nanoleafIsOff] = await Promise.all([
+		isLightOff('lamp'),
+		isLightOff('room'),
+		isLightOff('nanoleaf')
 	]);
-	if (!lampBrightness && !roomBrightness && !nanoleafBrightness) {
-		admin.database().ref('lights/lamp/brightness').set(100);
-		admin.database().ref('lights/room/brightness').set(100);
-		admin.database().ref('lights/nanoleaf/brightness').set(100);
-		return true;
+	const isAnythingOn = !lampIsOff || !roomIsOff || !nanoleafIsOff;
+	if (isAnythingOn) {
+		await database.ref('lights').update({
+			'lamp/off': true,
+			'room/off': true,
+			'nanoleaf/off': true
+		});
+	} else {
+		await database.ref('lights').update({
+			'lamp/off': false,
+			'room/off': false,
+			'nanoleaf/off': false
+		});
 	}
-	admin.database().ref('lights/lamp/brightness').set(0);
-	admin.database().ref('lights/room/brightness').set(0);
-	admin.database().ref('lights/nanoleaf/brightness').set(0);
-	return false;
+	return isAnythingOn;
 }
 
 // build multiple CRUD interfaces:
 app.post('/desk-button/short-press', async (req, res) => {
+	console.log('> Desk Button: short-press');
 	const result = await toggleLight('lamp');
 	res.send({ result });
 });
 app.post('/bed-button/short-press', async (req, res) => {
+	console.log('> Bed Button: short-press');
 	const result = await toggleAllLights();
 	res.send({ result });
 });
