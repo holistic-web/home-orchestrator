@@ -1,4 +1,4 @@
-/* Adds listeners to the firebase database and effects the lights through IFTTT */
+/* Adds listeners to the firebase database and affects the lights through IFTTT */
 
 const functions = require('firebase-functions');
 const axios = require('axios');
