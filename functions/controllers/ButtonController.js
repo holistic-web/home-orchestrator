@@ -55,7 +55,7 @@ const toggleLight = async (lightName) => {
 /**
  * If any light is on it sets everything to 100%. Otherwise sets everything to 0
  */
-const toggleEverything = async () => {
+const toggleAllLights = async () => {
 	const [lampBrightness, roomBrightness, nanoleafBrightness] = await Promise.all([
 		getBrightness('lamp'),
 		getBrightness('room'),
@@ -71,7 +71,6 @@ const toggleEverything = async () => {
 	admin.database().ref('lights/room/brightness').set(0);
 	admin.database().ref('lights/nanoleaf/brightness').set(0);
 	return false;
-
 }
 
 // build multiple CRUD interfaces:
@@ -80,7 +79,7 @@ app.post('/desk-button/short-press', async (req, res) => {
 	res.send({ result });
 });
 app.post('/bed-button/short-press', async (req, res) => {
-	const result = await toggleEverything();
+	const result = await toggleAllLights();
 	res.send({ result });
 });
 
