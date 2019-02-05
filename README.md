@@ -14,7 +14,7 @@ Ensure `firebase deploy` has been run to setup to device controller
 
 ## Roadmap
 - fix repo linting
-- create a ui in which
+- create a ui in which:
 	- users can add new lights to the home
 	- users can setup themes
 	- users can setup alarms
