@@ -1,7 +1,7 @@
 const LightService = require('../../lib/LightService');
 const { get } = require('../../lib/DatabaseService');
 
-const buttonClick = async (req, res) => {
+const buttons = async (req, res) => {
 	const buttonName = req.parsed.query.name;
 	const clickType = req.parsed.query.click;
 	console.log(`> Click - name: ${buttonName}, type: ${clickType}`)
@@ -17,4 +17,4 @@ const buttonClick = async (req, res) => {
 	res.send(action);
 }
 
-module.exports = buttonClick;
+module.exports = buttons;

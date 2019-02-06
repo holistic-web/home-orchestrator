@@ -5,7 +5,8 @@ const cors = require('cors');
 const url = require('url');
 const functions = require('firebase-functions');
 const config = require('../config');
-const buttonClick = require('./modules/buttons');
+const buttons = require('./modules/buttons');
+const alarm = require('./modules/alarm');
 
 const app = express();
 
@@ -27,8 +28,6 @@ const validateToken = (req, res, next) => {
 app.use(parseUrl);
 app.use(validateToken);
 
-// build multiple CRUD interfaces:
-app.post('/click', buttonClick);
-
-
+app.post('/click', buttons);
+app.post('/alarm', alarm)
 module.exports = functions.https.onRequest(app)
