@@ -39,6 +39,7 @@ const alarm = async (req, res) => {
 			active = await get('state/alarm/active');
 			await sleep(3000);
 		}
+		await LightService.setTheme('morning');
 
 	}, duration * 60 * 1000);
 
