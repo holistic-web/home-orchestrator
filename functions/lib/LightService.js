@@ -8,8 +8,8 @@ const isLightOff = async (lightName) => {
 
 const toggleLight = async (lightName) => {
 	const isOff = await isLightOff(lightName);
-	const path = `state/lights/${lightName}/off`;
-	update(path, !isOff);
+	const path = `state/lights/${lightName}`;
+	update(path, { off: !isOff });
 	return !isOff;
 };
 
