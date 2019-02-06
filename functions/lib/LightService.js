@@ -30,10 +30,10 @@ const setTheme = async (themeName) => {
 		get('state'),
 		get('themes')
 	]);
-	const lightState = state.lights;
+	const lightsState = state.lights;
 	const theme = themes[themeName];
-	const newLightState = merge(lightState, theme);
-	await update('state/lights', newLightState);
+	const newLightsState = merge(lightsState, theme);
+	await update('state/lights', newLightsState);
 	return theme;
 };
 

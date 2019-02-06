@@ -2,6 +2,10 @@ const LightService = require('../../lib/LightService');
 const { get } = require('../../lib/DatabaseService');
 
 const buttons = async (req, res) => {
+
+	const alarmOn = await get('state/alarm/active');
+	if (alarmOn) return res.send(update('state/alarm', { active: false }));
+
 	const buttonName = req.parsed.query.name;
 	const clickType = req.parsed.query.click;
 	console.log(`> Click - name: ${buttonName}, type: ${clickType}`)
@@ -14,7 +18,7 @@ const buttons = async (req, res) => {
 	} else {
 		await LightService[method]();
 	}
-	res.send(action);
+	return res.send(action);
 }
 
 module.exports = buttons;
