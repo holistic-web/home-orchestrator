@@ -7,13 +7,12 @@ const isLightOff = async (lightName) => {
 };
 
 const toggleLight = async (lightName) => {
-	const isOff = await isLightOff(lightName);
-	const path = `state/lights/${lightName}`;
-	update(path, { off: !isOff });
-	return !isOff;
-};
-
-const toggleAllLights = async () => {
+	if (lightName) {
+		const isOff = await isLightOff(lightName);
+		const path = `state/lights/${lightName}`;
+		update(path, { off: !isOff });
+		return !isOff;
+	}
 	const lightState = await get('state/lights');
 	const lightNames = Object.keys(lightState);
 	const lightsOffValues = await Promise.all(lightNames.map(ln => isLightOff(ln)));
@@ -26,9 +25,9 @@ const toggleAllLights = async () => {
 	return isAnythingOn;
 };
 
-const applyTheme = async (themeName) => {
+const setTheme = async (themeName) => {
 	const [state, themes] = await Promise.all([
-		get ('state'),
+		get('state'),
 		get('themes')
 	]);
 	const lightState = state.lights;
@@ -36,11 +35,36 @@ const applyTheme = async (themeName) => {
 	const newLightState = merge(lightState, theme);
 	await update('state/lights', newLightState);
 	return theme;
+};
+
+const setBrightness = async (brightness, lightName) => {
+	if (lightName) return await update(`state/lights/${lightName}`, { brightness });
+	const state = await get('state');
+	const lightNames = Object.keys(state.lights);
+	const commit = {};
+	lightNames.forEach(lightName => {
+		commit[`${lightName}/brightness`] = brightness;
+	});
+	await update('state/lights', commit);
+	return brightness;
+};
+
+const setColour = async (colour, lightName) => {
+	if (lightName) return await update(`state/lights/${lightName}`, { colour });
+	const lights = await get('state/lights');
+	const lightNames = Object.keys(lights);
+	const commit = {};
+	lightNames.forEach(lightName => {
+		commit[`${lightName}/colour`] = colour;
+	});
+	await update('state/lights', commit);
+	return colour;
 }
 
 module.exports = {
 	isLightOff,
 	toggleLight,
-	toggleAllLights,
-	applyTheme
+	setTheme,
+	setBrightness,
+	setColour
 }
