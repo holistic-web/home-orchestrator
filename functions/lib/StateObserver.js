@@ -1,6 +1,7 @@
 const functions = require('firebase-functions');
 const LightController = require('../controllers/LightController');
 const AlarmController = require('../controllers/AlarmController');
+const LightService = require('./LightService');
 
 module.exports = functions.database.ref().onWrite(async (change) => {
 	const originalState = change.before.val().state;
@@ -11,7 +12,11 @@ module.exports = functions.database.ref().onWrite(async (change) => {
 
 	if (isAlarmActive !== wasAlarmActive) {
 		const alarmController = new AlarmController();
-		if (isAlarmActive) alarmController.triggerAlarm();
+		if (isAlarmActive) {
+			alarmController.triggerAlarm();
+		} else {
+			LightService.setTheme('morning');
+		}
 	}
 
 	const lightNames = Object.keys(newState.lights);
