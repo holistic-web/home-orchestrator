@@ -1,5 +1,5 @@
-const LightController = require('./controllers/LightController');
 const Webhooks = require('./webhooks');
+const StateObserver = require('./services/StateObserver');
 
-exports.lightController = LightController;
 exports.webhooks = Webhooks;
+exports.stateObserver = StateObserver;
