@@ -2,12 +2,10 @@
 
 const functions = require('firebase-functions');
 const axios = require('axios');
-
-const key = functions.config().ifttt.key;
+const config = require('../config');
 
 buildPath = (lightController, actionName) => {
-	if (!key) throw new Error('no "iftt.key" environment variable')
-	let path = `https://maker.ifttt.com/trigger/${lightController.name}-${actionName}/with/key/${key}`;
+	let path = `https://maker.ifttt.com/trigger/${lightController.name}-${actionName}/with/key/${config.IFTT_KEY}`;
 	return path;
 }
 
@@ -53,8 +51,8 @@ class LightController {
 }
 
 module.exports = functions.database.ref().onWrite(async (change) => {
-	const originalState = change.before.val();
-	const newState = change.after.val();
+	const originalState = change.before.val().state;
+	const newState = change.after.val().state;
 
 	const lightNames = Object.keys(newState.lights);
 	for (let i=0; i<lightNames.length; i++) {

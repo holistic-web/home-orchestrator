@@ -1,6 +1,5 @@
 const LightController = require('./controllers/LightController');
-const ButtonController = require('./controllers/ButtonController');
-
+const Webhooks = require('./webhooks');
 
 exports.lightController = LightController;
-exports.buttonController = ButtonController;
+exports.webhooks = Webhooks;
