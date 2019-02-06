@@ -3,8 +3,8 @@ const { get } = require('../../lib/DatabaseService');
 
 const buttons = async (req, res) => {
 
-	const alarmOn = await get('state/alarm/active');
-	if (alarmOn) return res.send(update('state/alarm', { active: false }));
+	// const alarmOn = await get('state/alarm/active');
+	// if (alarmOn) return res.send(update('state/alarm', { active: false }));
 
 	const buttonName = req.parsed.query.name;
 	const clickType = req.parsed.query.click;
