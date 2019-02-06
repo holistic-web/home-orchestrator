@@ -22,7 +22,7 @@ const parseUrl = (req, res, next) => {
 const validateToken = (req, res, next) => {
 	const token = req.parsed.query['IFTTT-token'];
 	if (token && token === config['IFTTT_KEY']) return next();
-	res.send('not authenticated');
+	return res.send('not authenticated');
 };
 
 app.use(parseUrl);
