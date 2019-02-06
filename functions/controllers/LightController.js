@@ -4,7 +4,7 @@ const axios = require('axios');
 const config = require('../config');
 
 buildPath = (lightController, actionName) => {
-	let path = `https://maker.ifttt.com/trigger/${lightController.name}-${actionName}/with/key/${config.IFTT_KEY}`;
+	let path = `https://maker.ifttt.com/trigger/${lightController.name}-${actionName}/with/key/${config.IFTTT_KEY}`;
 	return path;
 }
 

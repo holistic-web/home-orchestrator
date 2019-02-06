@@ -5,7 +5,6 @@ module.exports = class AlarmController {
 
 	async triggerAlarm() {
 		const result = await axios.post(`${config.BASE_URL}/alarm?IFTTT-token=${config.IFTTT_KEY}&propagate=true`);
-		console.log('result: ', result);
 		return result;
 	}
 
