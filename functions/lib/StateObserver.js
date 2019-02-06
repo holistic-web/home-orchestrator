@@ -1,23 +1,23 @@
 const functions = require('firebase-functions');
 const LightController = require('../controllers/LightController');
-const AlarmController = require('../controllers/AlarmController');
+// const AlarmController = require('../controllers/AlarmController');
 const LightService = require('./LightService');
 
 module.exports = functions.database.ref().onWrite(async (change) => {
 	const originalState = change.before.val().state;
 	const newState = change.after.val().state;
 
-	const isAlarmActive = newState.alarm.active;
-	const wasAlarmActive = originalState.alarm.active;
+	// const isAlarmActive = newState.alarm.active;
+	// const wasAlarmActive = originalState.alarm.active;
 
-	if (isAlarmActive !== wasAlarmActive) {
-		const alarmController = new AlarmController();
-		if (isAlarmActive) {
-			alarmController.triggerAlarm();
-		} else {
-			LightService.setTheme('morning');
-		}
-	}
+	// if (isAlarmActive !== wasAlarmActive) {
+	// 	const alarmController = new AlarmController();
+	// 	if (isAlarmActive) {
+	// 		alarmController.triggerAlarm();
+	// 	} else {
+	// 		LightService.setTheme('morning');
+	// 	}
+	// }
 
 	const lightNames = Object.keys(newState.lights);
 	for (let i=0; i<lightNames.length; i++) {

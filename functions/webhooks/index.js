@@ -6,7 +6,7 @@ const url = require('url');
 const functions = require('firebase-functions');
 const config = require('../config');
 const buttons = require('./modules/buttons');
-const alarm = require('./modules/alarm');
+// const alarm = require('./modules/alarm');
 
 const app = express();
 
@@ -29,5 +29,5 @@ app.use(parseUrl);
 app.use(validateToken);
 
 app.post('/click', buttons);
-app.post('/alarm', alarm)
+// app.post('/alarm', alarm)
 module.exports = functions.https.onRequest(app)
