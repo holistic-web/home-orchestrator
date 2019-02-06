@@ -1,4 +1,4 @@
-# Holistic Home
+# Home Orchestrator
 This is a node.js app to manage home tasks and automation.
 
 It creates a firebase database to manage the state of your home. Then adds listeners to that database to enact changes on devices.
