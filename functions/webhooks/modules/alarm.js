@@ -1,11 +1,11 @@
 const LightService = require('../../lib/LightService');
 const { get, update } = require('../../lib/DatabaseService');
-const { shuffle } = require('../../lib/common');
+const { shuffle, sleep } = require('../../lib/common');
 
 const colourScheme = ['white', 'red', 'blue'];
 
 const alarm = async (req, res) => {
-	const duration = parseInt(req.parsed.query.duration, 10) || 30;
+	const duration = parseInt(req.parsed.query.duration, 10);
 	console.log(`> Alarm - duration: ${duration}`);
 
 	await update(`state/alarm`, { active: true });
@@ -17,7 +17,11 @@ const alarm = async (req, res) => {
 	for (let i=0; i<100; i++) {
 		setTimeout(async () => {
 			const active = await get('state/alarm/active');
-			if (active) LightService.setBrightness(i);
+			if (active) {
+				LightService.setBrightness(i);
+			} else {
+				i = 100;
+			}
 		}, interval * i * 1000);
 	}
 
@@ -26,13 +30,16 @@ const alarm = async (req, res) => {
 
 	setTimeout(async () => {
 		let active = await get('state/alarm/active');
+		let colours;
 		while (active) {
-			let colours = shuffle(colourScheme);
-			lightNames.forEach((lightName, i) => {
+			colours = shuffle(colourScheme);
+			lightNames.forEach((lightName, i) => { // eslint-disable-line no-loop-func
 				LightService.setColour(colours[i], lightName);
 			});
 			active = await get('state/alarm/active');
+			await sleep(3000);
 		}
+
 	}, duration * 60 * 1000);
 
 
