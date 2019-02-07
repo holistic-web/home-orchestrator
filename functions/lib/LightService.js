@@ -37,6 +37,18 @@ const setTheme = async (themeName) => {
 	return theme;
 };
 
+const setScene = async (scene, lightName) => {
+	if (lightName) return await update(`state/lights/${lightName}`, { scene });
+	const state = await get('state');
+	const lightNames = Object.keys(state.lights);
+	const commit = {};
+	lightNames.forEach(lightName => {
+		commit[`${lightName}/scene`] = scene;
+	});
+	await update('state/lights', commit);
+	return scene;
+};
+
 const setBrightness = async (brightness, lightName) => {
 	if (lightName) return await update(`state/lights/${lightName}`, { brightness });
 	const state = await get('state');
@@ -66,5 +78,6 @@ module.exports = {
 	toggleLight,
 	setTheme,
 	setBrightness,
-	setColour
+	setColour,
+	setScene
 }

@@ -30,6 +30,7 @@ module.exports = functions.database.ref().onWrite(async (change) => {
 		if (isOff) {
 			lightController.turnOff();
 		} else {
+
 			const originalBrightness = originalState.lights[lightName].brightness;
 			const newBrightness = newState.lights[lightName].brightness;
 			try {
@@ -45,6 +46,15 @@ module.exports = functions.database.ref().onWrite(async (change) => {
 			} catch (err) {
 				console.log(`> Error: ${err}`), err;
 			}
+
+			const originalScene = originalState.lights[lightName].scene;
+			const newScene = newState.lights[lightName].scene;
+			try {
+				if (originalScene !== newScene) lightController.setScene(newScene);
+			} catch (err) {
+				console.log(`> Error: ${err}`), err;
+			}
+
 		}
 	}
 
