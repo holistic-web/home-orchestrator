@@ -26,6 +26,7 @@ const toggleLight = async (lightName) => {
 };
 
 const setTheme = async (themeName) => {
+	console.log(`> Setting theme ${themeName}`)
 	const [state, themes] = await Promise.all([
 		get('state'),
 		get('themes')
@@ -35,7 +36,7 @@ const setTheme = async (themeName) => {
 	const lightNames = Object.keys(lightState);
 	lightNames.forEach(ln => {
 		lightsState[ln].off = false;
-	})
+	});
 	const newLightsState = merge(lightsState, theme);
 	await update('state/lights', newLightsState);
 	return theme;

@@ -1,7 +1,6 @@
 const functions = require('firebase-functions');
 const LightController = require('../controllers/LightController');
 // const AlarmController = require('../controllers/AlarmController');
-const LightService = require('./LightService');
 
 module.exports = functions.database.ref().onWrite(async (change) => {
 	const originalState = change.before.val().state;
@@ -50,7 +49,7 @@ module.exports = functions.database.ref().onWrite(async (change) => {
 			const originalScene = originalState.lights[lightName].scene;
 			const newScene = newState.lights[lightName].scene;
 			try {
-				if (originalScene !== newScene || wasOff) lightController.setScene(newScene);
+				if (scene && originalScene !== newScene || wasOff) LightController.setScene(newScene);
 			} catch (err) {
 				console.log(`> Error: ${err}`), err;
 			}
