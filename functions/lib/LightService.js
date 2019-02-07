@@ -33,7 +33,7 @@ const setTheme = async (themeName) => {
 	]);
 	const lightsState = state.lights;
 	const theme = themes[themeName];
-	const lightNames = Object.keys(lightState);
+	const lightNames = Object.keys(lightsState);
 	lightNames.forEach(ln => {
 		lightsState[ln].off = false;
 	});
