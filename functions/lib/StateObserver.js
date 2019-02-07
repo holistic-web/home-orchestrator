@@ -48,10 +48,12 @@ module.exports = functions.database.ref().onWrite(async (change) => {
 
 			const originalScene = originalState.lights[lightName].scene;
 			const newScene = newState.lights[lightName].scene;
-			try {
-				if ((newScene && (originalScene !== newScene)) || wasOff) lightController.setScene(newScene);
-			} catch (err) {
-				console.log(`> Error: ${err}`), err;
+			if (newScene) {
+				try {
+					if (originalScene !== newScene || wasOff) lightController.setScene(newScene);
+				} catch (err) {
+					console.log(`> Error: ${err}`), err;
+				}
 			}
 
 		}
