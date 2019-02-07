@@ -32,6 +32,10 @@ const setTheme = async (themeName) => {
 	]);
 	const lightsState = state.lights;
 	const theme = themes[themeName];
+	const lightNames = Object.keys(lightState);
+	lightNames.forEach(ln => {
+		lightsState[ln].off = false;
+	})
 	const newLightsState = merge(lightsState, theme);
 	await update('state/lights', newLightsState);
 	return theme;
@@ -71,7 +75,7 @@ const setColour = async (colour, lightName) => {
 	});
 	await update('state/lights', commit);
 	return colour;
-}
+};
 
 module.exports = {
 	isLightOff,
