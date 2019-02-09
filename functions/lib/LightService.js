@@ -71,7 +71,7 @@ const setColour = async (colour, lightName) => {
 	if (lightName) return await update(`state/lights/${lightName}`, { colour });
 	const lights = await get('state/lights');
 	const lightNames = Object.keys(lights);
-	const commit = {};
+
 	lightNames.forEach(lightName => {
 		commit[`${lightName}/colour`] = colour;
 	});

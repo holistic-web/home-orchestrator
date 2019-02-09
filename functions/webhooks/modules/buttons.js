@@ -11,14 +11,16 @@ const buttons = async (req, res) => {
 	const clickType = req.parsed.query.click;
 	console.log(`> Click - name: ${buttonName}, type: ${clickType}`)
 	const actionString = await get(`config/buttons/${buttonName}/${clickType}`);
-	if (!actionString) throw new Error(`Action ${actionString} not found`);
+	if (!actionString) throw new Error(`action ${actionString} not found`);
 	const action = url.parse(actionString, true);
-	const method = action.pathName;
-	const args =  action.query;
-	Object.keys(args).forEach(key => {
-		args[key] = key
-	});
-	await LightService[method](...args);
+	const method = action.pathname;
+	const args =  Object.keys(action.query);
+	if (args && args.length > 0) {
+		await LightService[method](...args);
+	} else {
+		await LightService[method]();
+	}
+
 	return res.send(action);
 }
 
