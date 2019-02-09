@@ -19,7 +19,7 @@ const toggleLight = async (lightName) => {
 	const isAnythingOn = lightsOffValues.includes(false);
 	const commit = {};
 	lightNames.forEach(lightName => {
-		commit[`${lightName}/off`] = isAnythingOn;
+		if (!lightName.startsWith('_')) commit[`${lightName}/off`] = isAnythingOn;
 	});
 	await update('state/lights', commit);
 	return isAnythingOn;
@@ -35,7 +35,7 @@ const setTheme = async (themeName) => {
 	const theme = themes[themeName];
 	const lightNames = Object.keys(lightsState);
 	lightNames.forEach(ln => {
-		lightsState[ln].off = false;
+		if (!ln.startsWith('_')) lightsState[ln].off = false;
 	});
 	const newLightsState = merge(lightsState, theme);
 	newLightsState._lastTheme = themeName;
@@ -49,7 +49,7 @@ const setScene = async (scene, lightName) => {
 	const lightNames = Object.keys(state.lights);
 	const commit = {};
 	lightNames.forEach(lightName => {
-		commit[`${lightName}/scene`] = scene;
+		if (!lightName.startsWith('_')) commit[`${lightName}/scene`] = scene;
 	});
 	await update('state/lights', commit);
 	return scene;
@@ -61,7 +61,7 @@ const setBrightness = async (brightness, lightName) => {
 	const lightNames = Object.keys(state.lights);
 	const commit = {};
 	lightNames.forEach(lightName => {
-		commit[`${lightName}/brightness`] = brightness;
+		if (!lightName.startsWith('_')) commit[`${lightName}/brightness`] = brightness;
 	});
 	await update('state/lights', commit);
 	return brightness;
@@ -71,9 +71,8 @@ const setColour = async (colour, lightName) => {
 	if (lightName) return await update(`state/lights/${lightName}`, { colour });
 	const lights = await get('state/lights');
 	const lightNames = Object.keys(lights);
-
 	lightNames.forEach(lightName => {
-		commit[`${lightName}/colour`] = colour;
+		if (!lightName.startsWith('_')) commit[`${lightName}/colour`] = colour;
 	});
 	await update('state/lights', commit);
 	return colour;
