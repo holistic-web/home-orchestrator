@@ -38,6 +38,7 @@ const setTheme = async (themeName) => {
 		lightsState[ln].off = false;
 	});
 	const newLightsState = merge(lightsState, theme);
+	newLightsState._lastTheme = themeName;
 	await update('state/lights', newLightsState);
 	return theme;
 };
@@ -78,11 +79,22 @@ const setColour = async (colour, lightName) => {
 	return colour;
 };
 
+const rotateTheme = async (themes) => {
+	themes = themes.split(',');
+	const lastTheme = await get('state/lights/_lastTheme');
+	const themeIndex = themes.indexOf(lastTheme);
+	let nextThemeIndex = themeIndex + 1;
+	if (themeIndex === -1 || themeIndex === (themes.length - 1)) nextThemeIndex = 0;
+	const nextTheme = themes[nextThemeIndex];
+	await setTheme(nextTheme);
+}
+
 module.exports = {
 	isLightOff,
 	toggleLight,
 	setTheme,
 	setBrightness,
 	setColour,
-	setScene
+	setScene,
+	rotateTheme
 }

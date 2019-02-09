@@ -1,3 +1,4 @@
+const url = require('url');
 const LightService = require('../../lib/LightService');
 const { get } = require('../../lib/DatabaseService');
 
@@ -9,11 +10,12 @@ const buttons = async (req, res) => {
 	const buttonName = req.parsed.query.name;
 	const clickType = req.parsed.query.click;
 	console.log(`> Click - name: ${buttonName}, type: ${clickType}`)
-	const action = await get(`config/buttons/${buttonName}/${clickType}`);
-	if (!action) throw new Error(`Action ${action} not found`);
-	const [ method, argsString ] = action.split(':');
+	const actionString = await get(`config/buttons/${buttonName}/${clickType}`);
+	if (!actionString) throw new Error(`Action ${actionString} not found`);
+	const action = url.parse(action, true);
+	const method = action.pathName;
+	const args =  action.query;
 	if (argsString) {
-		const args = argsString.split(',');
 		await LightService[method](...args);
 	} else {
 		await LightService[method]();
