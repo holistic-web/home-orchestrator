@@ -22,38 +22,42 @@ module.exports = functions.database.ref().onWrite(async (change) => {
 	for (let i=0; i<lightNames.length; i++) {
 
 		const lightName = lightNames[i];
-		const lightController = new LightController({ name: lightName, type: newState.lights[lightName].meta.type });
+		if (!lightName).startsWith('_') {
 
-		const isOff = newState.lights[lightName].off;
-		const wasOff = originalState.lights[lightName].off;
-		if (isOff) {
-			lightController.turnOff();
-		} else {
+			const lightController = new LightController({ name: lightName, type: newState.lights[lightName].meta.type });
 
-			const originalBrightness = originalState.lights[lightName].brightness;
-			const newBrightness = newState.lights[lightName].brightness;
-			try {
-				if (originalBrightness !== newBrightness || wasOff) lightController.setBrightness(newBrightness);
-			} catch (err) {
-				console.log(`> Error: ${err}`, err);
-			}
+			const isOff = newState.lights[lightName].off;
+			const wasOff = originalState.lights[lightName].off;
+			if (isOff) {
+				lightController.turnOff();
+			} else {
 
-			const originalColour = originalState.lights[lightName].colour;
-			const newColour = newState.lights[lightName].colour;
-			try {
-				if (originalColour !== newColour) lightController.setColour(newColour);
-			} catch (err) {
-				console.log(`> Error: ${err}`), err;
-			}
-
-			const originalScene = originalState.lights[lightName].scene;
-			const newScene = newState.lights[lightName].scene;
-			if (newScene) {
+				const originalBrightness = originalState.lights[lightName].brightness;
+				const newBrightness = newState.lights[lightName].brightness;
 				try {
-					if (originalScene !== newScene || wasOff) lightController.setScene(newScene);
+					if (originalBrightness !== newBrightness || wasOff) lightController.setBrightness(newBrightness);
+				} catch (err) {
+					console.log(`> Error: ${err}`, err);
+				}
+
+				const originalColour = originalState.lights[lightName].colour;
+				const newColour = newState.lights[lightName].colour;
+				try {
+					if (originalColour !== newColour) lightController.setColour(newColour);
 				} catch (err) {
 					console.log(`> Error: ${err}`), err;
 				}
+
+				const originalScene = originalState.lights[lightName].scene;
+				const newScene = newState.lights[lightName].scene;
+				if (newScene) {
+					try {
+						if (originalScene !== newScene || wasOff) lightController.setScene(newScene);
+					} catch (err) {
+						console.log(`> Error: ${err}`), err;
+					}
+				}
+
 			}
 
 		}
