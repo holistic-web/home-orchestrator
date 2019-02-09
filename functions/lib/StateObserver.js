@@ -22,7 +22,7 @@ module.exports = functions.database.ref().onWrite(async (change) => {
 	for (let i=0; i<lightNames.length; i++) {
 
 		const lightName = lightNames[i];
-		if (!lightName).startsWith('_') {
+		if (!lightName.startsWith('_')) {
 
 			const lightController = new LightController({ name: lightName, type: newState.lights[lightName].meta.type });
 
