@@ -1,5 +1,7 @@
 const admin = require('firebase-admin');
 const firebaseConfig = require('../config/firebase');
+
+// #Todo: replace config with value from firebase env and delete this file
 admin.initializeApp(firebaseConfig);
 database = admin.database();
 
