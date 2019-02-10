@@ -53,7 +53,6 @@ module.exports = class LightController {
 	 */
 	async setScene(scene) {
 		if (!this.type === 'nanoleaf') throw new Error('set scene called on a non nanoleaf device');
-		if (!['morning', 'default', 'night', 'sesh', 'woah'].includes(scene)) throw new Error(`scene: ${scene} not recognised`);
 		console.log(`> Setting ${this.name} scene: ${scene}`);
 		const actionName = `set-scene-${scene}`;
 		const path = buildPath(this, actionName);
