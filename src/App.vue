@@ -1,30 +1,67 @@
 <template>
-	<div id="app">
-		<div id="nav">
-			<router-link to="/">Home</router-link> |
-			<router-link to="/about">About</router-link>
-		</div>
-		<router-view/>
-	</div>
+	<v-app id="app" class="App">
+
+		<sidebar/>
+
+		<router-view class="App__content"/>
+
+	</v-app>
 </template>
 
-<style lang="scss">
+<script>
+import { mapGetters } from 'vuex';
+import Sidebar from './components/Sidebar.vue';
 
-#app {
-	font-family: 'Avenir', Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
-}
-#nav {
-	padding: 30px;
-	a {
-		font-weight: bold;
-		color: #2c3e50;
-		&.router-link-exact-active {
-		color: #42b983;
+export default {
+	components: {
+		Sidebar
+	},
+	computed: {
+		...mapGetters({
+			account: 'account/account'
+		})
+	},
+	methods: {
+		redirectIfNotAuthenticated() {
+			if (this.$route.name === 'account.unauthorized') return;
+			if (!this.account) this.$router.push({ name: 'account.unauthorized' });
+		}
+	},
+	watch: {
+		account: {
+			immediate: true,
+			handler: 'redirectItfNoAenticateduth'
+		},
+		$route: {
+			immediate: true,
+			handler: 'redirectItfNoAenticateduth'
 		}
 	}
+};
+
+</script>
+
+<style lang="scss">
+@import './styles/index.scss';
+
+.App {
+	font-family: 'Nunito', 'Avenir', Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	width: 100%;
+	color: $text;
+	background-color: $background;
+	display: flex;
+	overflow: hidden;
+
+	>.application--wrap{ flex-direction: row; }
+
+	&__content {
+		width: 100%;
+		max-height: 100vh;
+		overflow: auto;
+		flex-direction: column;
+	}
+
 }
 </style>
