@@ -4,7 +4,7 @@
 		<section class="Sidebar__inner">
 
 			<router-link class="Sidebar__title" to="/">
-				Wan
+				Home Orchestrator
 			</router-link>
 
 			<template v-if="account">
@@ -31,9 +31,6 @@
 				</section>
 			</template>
 
-			<signup-modal :visible="isSignupModalVisible" @close="onSignupModalClose"/>
-			<login-modal :visible="isLoginModalVisible" @close="onLoginModalClose"/>
-
 		</section>
 
 	</div>
@@ -43,20 +40,8 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import routes from '../router/routes';
-import LoginModal from '@/components/LoginModal.vue';
-import SignupModal from '@/components/SignupModal.vue';
 
 export default {
-	components: {
-		LoginModal,
-		SignupModal
-	},
-	data() {
-		return {
-			isSignupModalVisible: false,
-			isLoginModalVisible: false
-		};
-	},
 	computed: {
 		...mapGetters({
 			account: 'account/account'
@@ -72,16 +57,11 @@ export default {
 					});
 				}
 			});
-			return [
-				{
-					path: '/welcome',
-					title: 'Welcome'
-				},
-				...menuItems
-			];
+			return menuItems;
 		},
 		username() {
-			const name = `${this.account.firstName} ${this.account.lastName}`;
+			// #Todo: calculate username here from google account details
+			const name = '';
 			return name;
 		}
 	},
@@ -92,30 +72,8 @@ export default {
 		async onSignOutClick() {
 			await this.signOut();
 		},
-		onSignUpButtonClick() {
-			this.$router.push({ query: { signUp: null } });
-		},
-		onSignupModalClose() {
-			this.$router.push({ query: { signUp: undefined } });
-			this.isSignupModalVisible = false;
-		},
 		onLoginButtonClick() {
-			this.$router.push({ query: { login: null } });
-		},
-		onLoginModalClose() {
-			this.$router.push({ query: { login: undefined } });
-			this.isLoginModalVisible = false;
-		},
-		handleURLQuery() {
-			const { query } = this.$route;
-			if (query.signUp === null) this.isSignupModalVisible = true;
-			if (query.login === null) this.isLoginModalVisible = true;
-		}
-	},
-	watch: {
-		$route: {
-			immediate: true,
-			handler: 'handleURLQuery'
+			// #Todo: login in with firebase through account vuex store on click
 		}
 	}
 };
@@ -127,7 +85,7 @@ export default {
 
 .Sidebar {
 	height: 100%;
-	background: $blue-dark;
+	background: $secondary;
 	font-size: 1.25rem;
 	min-width: 20rem;
 
@@ -140,17 +98,17 @@ export default {
 
 	&__title {
 		font-weight: bold;
-		color: $grey;
+		color: $text;
 		width: 100%;
 		text-align: left;
 		padding: 1.5rem;
-		border-bottom: 1px solid $grey;
+		border-bottom: 1px solid $text;
 		text-transform: uppercase;
 		font-size: 1.2rem;
 		letter-spacing: 0.1rem;
 
 		&:hover {
-			color: $grey;
+			color: $text;
 			text-shadow: none;
 		}
 	}
@@ -166,15 +124,15 @@ export default {
 		a {
 			font-weight: 600;
 			text-transform: capitalize;
-			color: $white;
+			color: $highlight;
 			padding: 1rem 2rem;
 
 			&.router-link-active {
-				color: $blue-light;
+				color: $primary;
 			}
 
 			&:hover {
-				color: $blue-light;
+				color: $primary;
 			}
 		}
 	}
@@ -182,8 +140,8 @@ export default {
 	&__auth {
 		max-width: 100%;
 		padding: 1.5rem 1rem;
-		border-top: 1px solid $grey;
-		color: $white;
+		border-top: 1px solid $text;
+		color: $highlight;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;

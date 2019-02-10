@@ -29,22 +29,6 @@ export default {
 		}
 	},
 	actions: {
-		async signUp({ commit, dispatch, rootState }, {
-			email, password, firstName, lastName
-		}) {
-			const result = await rootState.firebase.auth()
-				.createUserWithEmailAndPassword(email, password);
-			commit('SET_AUTH', result);
-			const user = await rootState.db.collection(collectionName)
-				.doc(result.user.uid)
-				.set({
-					email,
-					firstName,
-					lastName
-				});
-			await dispatch('logIn', { email, password });
-			return user;
-		},
 		/**
 		 * Logs in with given credentials and stores these credentials.
 		 * Call with {} to log in with last used credentials

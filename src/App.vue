@@ -24,6 +24,7 @@ export default {
 	methods: {
 		redirectIfNotAuthenticated() {
 			if (this.$route.name === 'account.unauthorized') return;
+			// #Todo: confirm account is on approved list of accounts within the database.
 			if (!this.account) this.$router.push({ name: 'account.unauthorized' });
 		}
 	},
