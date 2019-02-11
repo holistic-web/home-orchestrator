@@ -1,12 +1,10 @@
 import accountRoutes from '../containers/Account';
-// import roomRoutes from '../containers/Room';
-// import themeRoutes from '../containers/Theme';
+import controlRoutes from '../containers/Control';
 
 
 const routes = [
 	...accountRoutes,
-	// ...roomRoutes,
-	// ...themeRoutes,
+	...controlRoutes,
 	{
 		path: '*',
 		redirect: { name: 'account.unauthorized' }

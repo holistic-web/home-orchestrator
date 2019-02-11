@@ -57,12 +57,13 @@ export default {
 					});
 				}
 			});
-			return menuItems;
+			return [
+				{ title: 'Control', path: '/control' },
+				...menuItems
+			];
 		},
 		username() {
-			// #Todo: calculate username here from google account details
-			const name = '';
-			return name;
+			return this.account.user.displayName;
 		}
 	},
 	methods: {
@@ -71,9 +72,6 @@ export default {
 		}),
 		async onSignOutClick() {
 			await this.signOut();
-		},
-		onLoginButtonClick() {
-			// #Todo: login in with firebase through account vuex store on click
 		}
 	}
 };
