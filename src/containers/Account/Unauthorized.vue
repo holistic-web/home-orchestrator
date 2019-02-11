@@ -2,7 +2,7 @@
 	<v-container class="Unauthorized">
 
 		<span class="Unauthorized__title">
-			Please <a @click="onLoginClick">login</a> then contact <a href="mailto:michael.fitzhavey@gmail.com">michael.fitzhavey@gmail.com</a> for access
+			Please <a @click="logIn">login</a> then contact <a href="mailto:michael.fitzhavey@gmail.com">michael.fitzhavey@gmail.com</a> for access
 		</span>
 
 	</v-container>
@@ -10,11 +10,13 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
 	methods: {
-		onLoginClick() {
-			this.$router.push({ query: { login: null } });
-		}
+		...mapActions({
+			logIn: 'account/logIn'
+		})
 	}
 };
 </script>
