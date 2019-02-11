@@ -14,11 +14,13 @@ const vuexCookie = new VuexPersistence({
 
 const app = firebase.initializeApp(firebaseConfig);
 const db = app.firestore();
+const provider = new firebase.auth.GoogleAuthProvider();
 
 const store = {
 	state: {
 		firebase,
-		db
+		db,
+		provider
 	},
 	modules: {
 		account: accountStore

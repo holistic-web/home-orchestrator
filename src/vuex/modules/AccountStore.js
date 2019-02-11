@@ -39,7 +39,7 @@ export default {
 			if (!email) email = state._email;
 			if (!password) password = state._password;
 			const result = await rootState.firebase.auth()
-				.signInWithEmailAndPassword(email, password);
+				.signInWithPopup(rootState.provider);
 			state._email = email;
 			state._password = password;
 			commit('SET_AUTH', result);
