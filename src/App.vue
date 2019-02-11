@@ -31,11 +31,11 @@ export default {
 	watch: {
 		account: {
 			immediate: true,
-			handler: 'redirectItfNoAenticateduth'
+			handler: 'redirectIfNotAuthenticated'
 		},
 		$route: {
 			immediate: true,
-			handler: 'redirectItfNoAenticateduth'
+			handler: 'redirectIfNotAuthenticated'
 		}
 	}
 };

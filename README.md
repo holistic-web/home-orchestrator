@@ -26,7 +26,6 @@ Ensure `firebase deploy` has been run to setup to device controller
 - add direct to device controllers to reduce response times
 
 #Todo:
-- import vuetify
 - debug imports to get site working
 - enable google logins swap log in over to using google
 - add database and api resources for authorized users
