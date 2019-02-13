@@ -1,8 +1,8 @@
 import firebase from 'firebase';
 import VuexPersistence from 'vuex-persist';
-
 import firebaseConfig from '../../config/firebase';
 import accountStore from './modules/AccountStore';
+import controlStore from './modules/ControlStore';
 
 // Create a persisted state cookie for the authentication module (keeps user's signed in!)
 const vuexCookie = new VuexPersistence({
@@ -23,7 +23,8 @@ const store = {
 		provider
 	},
 	modules: {
-		account: accountStore
+		account: accountStore,
+		control: controlStore
 	},
 	plugins: [
 		vuexCookie.plugin

@@ -15,6 +15,10 @@ export default {
 			const result = await rootState.firebase.database().ref().once('value');
 			const data = result.val();
 			commit('SET_DATA', data);
+		},
+		async update({ dispatch, rootState }, commit) {
+			await rootState.firebase.database().ref().update(commit);
+			dispatch('fetch');
 		}
 	},
 	getters: {
