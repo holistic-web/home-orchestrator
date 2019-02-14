@@ -6,8 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
 	"lint": "vue-cli-service lint",
-	"deploy": "node build/build.js && firebase deploy",
-	"deployCI": "node build/build.js && firebase deploy --token ${FIREBASE_TOKEN}"
+	"deploy": "vue-cli-service build && firebase deploy",
+	"deployCI": "vue-cli-service build && firebase deploy --token ${FIREBASE_TOKEN}"
   },
   "dependencies": {
     "firebase": "^5.8.2",

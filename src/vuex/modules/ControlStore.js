@@ -17,6 +17,7 @@ export default {
 			commit('SET_DATA', data);
 		},
 		async update({ dispatch, rootState }, commit) {
+			console.log('commit: ', commit);
 			await rootState.firebase.database().ref().update(commit);
 			dispatch('fetch');
 		}

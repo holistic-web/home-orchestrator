@@ -1,19 +1,21 @@
 <template>
 	<section class="Control">
-		<div
+		<light
 			class="Control__light"
 			v-for="light in lights"
-			:key="light.name">
-			{{light.name}}
-		</div>
+			:key="light.name"
+			:light="light"/>
 	</section>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-// #Todo: import light component to control each light in the room
+import Light from './components/Light.vue';
 
 export default {
+	components: {
+		Light
+	},
 	computed: {
 		...mapGetters({
 			data: 'control/data'
@@ -46,14 +48,6 @@ export default {
 .Control {
 	display: flex;
 	flex-direction: row !important;
-
-	&__light {
-		padding: 1rem;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-	}
 }
 
 </style>
