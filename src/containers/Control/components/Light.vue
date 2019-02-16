@@ -1,8 +1,7 @@
 <template>
 	<section
 		v-if="inputVal"
-		class="Light"
-		:style="style">
+		class="Light">
 
 		<h2 class="mb-5" v-text="label"/>
 
@@ -17,9 +16,11 @@
 			@input="onStandardInput"
 			type="number"/>
 
-		<v-text-field
+		<v-select
+			v-if="inputVal.meta.type==='nanoleaf'"
 			label="Scene"
 			v-model="inputVal.scene"
+			:items="sceneOptions"
 			@input="onSceneInput"/>
 
 		<section class="Light__palette" :style="paletteStyle"/>
@@ -42,7 +43,9 @@ export default {
 	data() {
 		return {
 			inputVal: this.value,
-			style: ''
+			sceneOptions: [
+				'default', 'morning', 'flow', 'sesh', 'woah', 'night'
+			]
 		};
 	},
 	methods: {
