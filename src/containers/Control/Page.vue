@@ -68,7 +68,12 @@ export default {
 			if (!this.lights) return;
 			this.page.isSubmitting = true;
 			Object.keys(this.lights).forEach((ln) => {
-				if (this.lights[ln].colour) this.lights[ln].colour = getHexColour(this.lights[ln].colour);
+				if (!ln.startsWith('_')) {
+					if (
+						this.lights[ln].meta.type !== 'nanoleaf'
+						|| !this.lights[ln].colour
+					) this.lights[ln].colour = getHexColour(this.lights[ln].colour);
+				}
 			});
 			const commit = {};
 			commit['state/lights'] = this.lights;
