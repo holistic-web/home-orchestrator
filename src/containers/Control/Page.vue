@@ -5,9 +5,9 @@
 
 		<template v-else>
 			<section class="Control__lights">
-				<light v-model="lights.nanoleaf" label="nanoleaf"/>
-				<light v-model="lights.room" label="room"/>
-				<light v-model="lights.lamp" label="lamp"/>
+				<light v-model="lights.nanoleaf" label="Nanoleaf"/>
+				<light v-model="lights.room" label="Room"/>
+				<light v-model="lights.lamp" label="Lamp"/>
 			</section>
 
 			<section class="Control__buttons">

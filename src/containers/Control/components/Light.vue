@@ -1,7 +1,7 @@
 <template>
 	<section class="Light" v-if="inputVal">
 
-		<h4 v-text="label"/>
+		<h2 class="mb-5" v-text="label"/>
 
 		<v-text-field
 			label="Colour"
