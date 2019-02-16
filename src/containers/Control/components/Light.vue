@@ -1,52 +1,43 @@
 <template>
-	<section class="Light">
-		<h4 v-text="light.name"/>
+	<section class="Light" v-if="inputVal">
+
+		<h4 v-text="label"/>
 
 		<v-text-field
 			label="Colour"
-			v-model="colour"/>
+			v-model="inputVal.colour"/>
 
 		<v-text-field
 			label="Brightness"
-			v-model="brightness"/>
+			v-model="inputVal.brightness"/>
 
 		<v-text-field
 			label="Scene"
-			v-model="scene"/>
-
-		<v-btn @click="submit">Update</v-btn>
+			v-model="inputVal.scene"/>
 
 	</section>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-
 export default {
 	props: {
-		light: {
-			type: Object,
+		value: {
 			required: true
+		},
+		label: {
+			type: String
 		}
 	},
 	data() {
 		return {
-			colour: null,
-			brightness: null,
-			scene: null
+			inputVal: this.value
 		};
 	},
-	methods: {
-		...mapActions({
-			postUpdate: 'control/update'
-		}),
-		async submit() {
-			const commit = {};
-			commit[`state/lights/${this.light.name}/colour`] = this.colour;
-			commit[`state/lights/${this.light.name}/brightness`] = this.brightness;
-			commit[`state/lights/${this.light.name}/scene`] = this.scene;
-			await this.postUpdate(commit);
-		}
+	inputVal(v) {
+		this.$emit('input', v);
+	},
+	value(v) {
+		this.inputVal = v;
 	}
 };
 </script>
