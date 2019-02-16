@@ -15,6 +15,7 @@
 				<v-btn
 					v-else
 					class="w-100"
+					large
 					color="primary"
 					v-text="'Update'"
 					:disabled="isUpdateButtonDisabled"
