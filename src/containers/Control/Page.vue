@@ -95,6 +95,7 @@ export default {
 		display: flex;
 		flex-direction: row;
 		height: 90%;
+		padding: 1rem;
 	}
 
 	&__buttons {
