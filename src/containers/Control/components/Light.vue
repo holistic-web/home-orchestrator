@@ -5,16 +5,19 @@
 
 		<v-text-field
 			label="Colour"
-			v-model="inputVal.colour"/>
+			v-model="inputVal.colour"
+			@input="onStandardInput"/>
 
 		<v-text-field
 			label="Brightness"
 			v-model="inputVal.brightness"
+			@input="onStandardInput"
 			type="number"/>
 
 		<v-text-field
 			label="Scene"
-			v-model="inputVal.scene"/>
+			v-model="inputVal.scene"
+			@input="onSceneInput"/>
 
 	</section>
 </template>
@@ -34,16 +37,19 @@ export default {
 			inputVal: this.value
 		};
 	},
+	methods: {
+		onSceneInput() {
+			if (!this.inputVal.scene) return;
+			this.inputVal.brightness = null;
+			this.inputVal.colour = null;
+		},
+		onStandardInput() {
+			if (!this.inputVal.brightness && !this.inputVal.colour) return;
+			this.inputVal.scene = null;
+		}
+	},
 	watch: {
 		inputVal(v) {
-			console.log('v: ', v);
-			/* eslint-disable no-param-reassign */
-			if (v.scene) {
-				v.brightness = null;
-				v.colour = null;
-			}
-			if (v.brightness || v.colour) v.scene = null;
-			/* eslint-enable */
 			this.$emit('input', v);
 		},
 		value(v) {
