@@ -10,11 +10,16 @@
 			v-model="inputVal.colour"
 			@input="onStandardInput"/>
 
-		<v-text-field
-			label="Brightness"
-			v-model="inputVal.brightness"
-			@input="onStandardInput"
-			type="number"/>
+		<color-picker
+			:startColour="inputVal.colour"
+			@colorChange="onColourInput"/>
+
+		<div>
+			<label>Brightness</label>
+			<v-slider
+				v-model="inputVal.brightness"
+				@input="onStandardInput"/>
+		</div>
 
 		<v-select
 			v-if="inputVal.meta.type==='nanoleaf'"
@@ -29,9 +34,13 @@
 </template>
 
 <script>
+import ColorPicker from 'vue-color-picker-wheel';
 import { getHexColour } from '../../../lib/common';
 
 export default {
+	components: {
+		ColorPicker
+	},
 	props: {
 		value: {
 			required: true
@@ -49,6 +58,10 @@ export default {
 		};
 	},
 	methods: {
+		onColourInput(colour) {
+			this.inputVal.colour = colour;
+			this.onStandardInput();
+		},
 		onSceneInput() {
 			if (!this.inputVal.scene) return;
 			this.inputVal.brightness = null;
@@ -97,7 +110,6 @@ export default {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	justify-content: center;
 	align-items: center;
 	width: 100%;
 	border-radius: 0.5rem;
@@ -109,6 +121,10 @@ export default {
 		width: 100%;
 		border-radius: 0.5rem;
 	}
+}
+
+.v-input {
+	flex: none;
 }
 
 </style>
