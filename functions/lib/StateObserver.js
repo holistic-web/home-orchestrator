@@ -32,27 +32,24 @@ module.exports = functions.database.ref().onWrite(async (change) => {
 				lightController.turnOff();
 			} else {
 
-				const originalBrightness = originalState.lights[lightName].brightness;
 				const newBrightness = newState.lights[lightName].brightness;
 				try {
-					if (originalBrightness !== newBrightness || wasOff) lightController.setBrightness(newBrightness);
+					lightController.setBrightness(newBrightness);
 				} catch (err) {
 					console.log(`> Error: ${err}`, err);
 				}
 
-				const originalColour = originalState.lights[lightName].colour;
 				const newColour = newState.lights[lightName].colour;
 				try {
-					if (originalColour !== newColour) lightController.setColour(newColour);
+					lightController.setColour(newColour);
 				} catch (err) {
 					console.log(`> Error: ${err}`), err;
 				}
 
-				const originalScene = originalState.lights[lightName].scene;
 				const newScene = newState.lights[lightName].scene;
 				if (newScene) {
 					try {
-						if (originalScene !== newScene || wasOff) lightController.setScene(newScene);
+						lightController.setScene(newScene);
 					} catch (err) {
 						console.log(`> Error: ${err}`), err;
 					}
