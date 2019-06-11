@@ -3,8 +3,8 @@ import Vuex from 'vuex';
 import firebase from 'firebase';
 import VuexPersistence from 'vuex-persist';
 import config from '../config';
-import accountStore from './modules/AccountStore';
-import controlStore from './modules/ControlStore';
+import accountStore from './modules/account';
+import controlStore from './modules/control';
 
 Vue.use(Vuex);
 
