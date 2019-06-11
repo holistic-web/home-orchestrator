@@ -98,6 +98,7 @@ export default {
 <style lang="scss">
 
 .Lights {
+	padding: 1rem;
 
 	&__inner {
 		display: flex;

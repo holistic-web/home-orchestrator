@@ -52,7 +52,7 @@
 				class="Light__controlToggle"
 				v-model="controls"
 				:options="controlsOptions"
-				button-variant="outline-primary"
+				button-variant="outline-info"
 				buttons/>
 		</div>
 
