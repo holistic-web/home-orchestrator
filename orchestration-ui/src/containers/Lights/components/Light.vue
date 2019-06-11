@@ -16,7 +16,7 @@
 					<label v-text="'Colour'"/>
 					<b-form-input
 						v-model="inputVal.colour"
-						@input="onStandardInput"/>
+						@input="clearSceneInputs"/>
 				</div>
 
 				<div class="Light__item">
@@ -26,7 +26,7 @@
 						min="0"
 						max="100"
 						v-model="inputVal.brightness"
-						@input="onStandardInput"/>
+						@input="clearSceneInputs"/>
 					<span v-if="inputVal.brightness" v-text="`${inputVal.brightness}%`"/>
 				</div>
 
@@ -39,7 +39,7 @@
 					<b-form-select
 						v-model="inputVal.scene"
 						:options="sceneOptions"
-						@input="onSceneInput"/>
+						@input="clearDefaultInputs"/>
 				</div>
 
 			</template>
@@ -88,18 +88,6 @@ export default {
 		},
 		clearSceneInputs() {
 			this.inputVal.scene = null;
-		},
-		onColourInput(colour) {
-			this.inputVal.colour = colour;
-			this.onStandardInput();
-		},
-		onStandardInput() {
-			if (!this.inputVal.brightness && !this.inputVal.colour) return;
-			this.clearDefaultInputs();
-		},
-		onSceneInput() {
-			if (!this.inputVal.scene) return;
-			this.clearDefaultInputs();
 		}
 	},
 	watch: {
