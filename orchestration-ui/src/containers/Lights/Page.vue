@@ -11,9 +11,11 @@
 
 				<section class="Lights__lights">
 
-					<light v-model="lights.nanoleaf" label="Nanoleaf"/>
-					<light v-model="lights.room" label="Room"/>
-					<light v-model="lights.lamp" label="Lamp"/>
+					<light class="Lights__light" v-model="lights.nanoleaf" label="Nanoleaf"/>
+
+					<light class="Lights__light" v-model="lights.room" label="Room"/>
+
+					<light class="Lights__light" v-model="lights.lamp" label="Lamp"/>
 
 				</section>
 
@@ -113,6 +115,10 @@ export default {
 
 	&__lights {
 		padding: 3rem;
+	}
+
+	&__light {
+		margin-bottom: 1rem;
 	}
 }
 

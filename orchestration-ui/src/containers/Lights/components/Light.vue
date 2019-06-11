@@ -1,46 +1,45 @@
 <template>
-	<section
-		v-if="inputVal"
-		class="Light">
+	<b-card
+		class="Light"
+		body-class="Light__inner">
 
-		<h2 class="mb-5" v-text="label"/>
+		<section>
+			<h4 v-text="inputVal.meta.name"/>
+			<pre v-text="inputVal.meta.type"/>
+		</section>
 
-		<v-text-field
-			label="Colour"
-			v-model="inputVal.colour"
-			@input="onStandardInput"/>
+		<section class="Light__items">
 
-		<color-picker
-			:startColour="inputVal.colour"
-			@colorChange="onColourInput"/>
-
-		<div>
-			<label>Brightness</label>
-			<v-slider
-				v-model="inputVal.brightness"
+			<v-text-field
+				class="Light__item"
+				label="Colour"
+				v-model="inputVal.colour"
 				@input="onStandardInput"/>
-		</div>
 
-		<v-select
-			v-if="inputVal.meta.type==='nanoleaf'"
-			label="Scene"
-			v-model="inputVal.scene"
-			:items="sceneOptions"
-			@input="onSceneInput"/>
+			<div class="Light__item">
+				<label>Brightness</label>
+				<v-slider
+					v-model="inputVal.brightness"
+					@input="onStandardInput"/>
+			</div>
 
-		<section class="Light__palette" :style="paletteStyle"/>
+			<b-form-select
+				class="Light__item"
+				v-if="inputVal.meta.type==='nanoleaf'"
+				label="Scene"
+				v-model="inputVal.scene"
+				:options="sceneOptions"
+				@input="onSceneInput"/>
 
-	</section>
+		</section>
+
+	</b-card>
+
 </template>
 
 <script>
-import ColorPicker from 'vue-color-picker-wheel';
-import { getHexColour } from '../../../lib/common';
 
 export default {
-	components: {
-		ColorPicker
-	},
 	props: {
 		value: {
 			required: true
@@ -62,21 +61,17 @@ export default {
 			this.inputVal.colour = colour;
 			this.onStandardInput();
 		},
+		onStandardInput() {
+			if (!this.inputVal.brightness && !this.inputVal.colour) return;
+			this.inputVal.scene = null;
+		},
 		onSceneInput() {
 			if (!this.inputVal.scene) return;
 			this.inputVal.brightness = null;
 			this.inputVal.colour = null;
-		},
-		onStandardInput() {
-			if (!this.inputVal.brightness && !this.inputVal.colour) return;
-			this.inputVal.scene = null;
 		}
 	},
 	computed: {
-		paletteColour() {
-			const colour = getHexColour(this.inputVal.colour);
-			return colour;
-		},
 		paletteOpacity() {
 			const opacity = this.inputVal.brightness / 100;
 			return opacity;
@@ -101,26 +96,25 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../../styles/index.scss';
 
 .Light {
-	margin: 1rem;
-	margin-top: 2rem;
-	padding: 1rem;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-	align-items: center;
-	width: 100%;
-	border-radius: 0.5rem;
-	background-color: $highlight;
 
-	&__palette {
-		margin-bottom: 5rem;
-		height: 5rem;
-		width: 100%;
-		border-radius: 0.5rem;
+	&__inner {
+		display: flex;
+		flex-direction: row;
 	}
+
+	&__items {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+	}
+
+	&__item {
+		padding: 1rem;
+	}
+
 }
 
 .v-input {
