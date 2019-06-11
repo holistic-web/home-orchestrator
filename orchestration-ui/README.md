@@ -1,4 +1,4 @@
-# Orchestration UI [PRE ALPHA]
+# Orchestration UI
 This interface allows a user to set the lights. It is written in Vue.js.
 
 ## Architecture
