@@ -35,12 +35,12 @@ export default {
 			return result;
 		},
 		async logOut({ commit, rootState }) {
-			const result = await rootState.firebase.auth()
-				.signOut();
+			const success = await rootState.firebase.auth().signOut();
 			commit('SET_ACCOUNT', null);
 			commit('SET_TOKEN', null);
 			localStorage.clear();
-			return result;
+			window.location.reload();
+			return success;
 		}
 	},
 	getters: {

@@ -1,17 +1,21 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
+// #Todo: remove vuetify once replaced with bootstrap-vue
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
+
+import BootstrapVue from 'bootstrap-vue';
 import App from './App.vue';
 import router from './router';
 import store from './store/index';
-import theme from './styles/theme';
 
 
 Vue.config.productionTip = false;
 
 Vue.use(Vuex);
-Vue.use(Vuetify, { theme });
+Vue.use(BootstrapVue);
+Vue.use(Vuetify);
 
 new Vue({
 	router,
