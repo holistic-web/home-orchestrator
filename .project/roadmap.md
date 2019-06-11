@@ -1,0 +1,12 @@
+## Roadmap
+- fix repo linting
+- create a ui in which:
+	- users can add new lights to the home
+	- users can setup themes
+	- users can setup alarms
+	- users can apply themes to rooms
+- update setup with info on how to
+	- create firebase database
+	- create ifttt triggers (for iot buttons and lights)
+- if possibly integrate with google homegraph / apple homekit
+- add direct to device controllers to reduce response times

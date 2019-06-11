@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import VuexPersistence from 'vuex-persist';
-import firebaseConfig from '../../config/firebase';
+import firebaseConfig from '../config/firebase';
 import accountStore from './modules/AccountStore';
 import controlStore from './modules/ControlStore';
 
