@@ -37,7 +37,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import { getHexColour } from '../../lib/common';
 import Light from './components/Light.vue';
 
 export default {
@@ -76,14 +75,6 @@ export default {
 		async submit() {
 			if (!this.lights) return;
 			this.page.isSubmitting = true;
-			Object.keys(this.lights).forEach((ln) => {
-				if (!ln.startsWith('_')) {
-					if (
-						this.lights[ln].meta.type !== 'nanoleaf'
-						|| !this.lights[ln].colour
-					) this.lights[ln].colour = getHexColour(this.lights[ln].colour);
-				}
-			});
 			const commit = {};
 			commit['state/lights'] = this.lights;
 			await this.postUpdate(commit);
@@ -114,7 +105,7 @@ export default {
 	}
 
 	&__lights {
-		padding: 3rem;
+		margin-bottom: 1rem;
 	}
 
 	&__light {
