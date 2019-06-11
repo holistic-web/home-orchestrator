@@ -1,12 +1,23 @@
 <template>
-	<v-container class="Unauthorized">
+	<section class="Unauthorized">
 
-		<span class="Unauthorized__title">
-			Please <a @click="logIn">login</a> then contact <a href="mailto:michael.fitzhavey@gmail.com">michael.fitzhavey@gmail.com</a> for access
-		</span>
+		<b-container class="Unauthorized__inner">
 
-	</v-container>
+			<b-btn
+				class="Unauthorized__button"
+				variant="info"
+				size="lg"
+				v-text="'Log In'"
+				@click="logIn"/>
 
+			<a
+				class="p-3"
+				href="https://github.com/michaelfitzhavey/home-orchestrator"
+				v-text="'https://github.com/michaelfitzhavey/home-orchestrator'"/>
+
+		</b-container>
+
+	</section>
 </template>
 
 <script>
@@ -23,24 +34,21 @@ export default {
 
 
 <style lang="scss">
-@import '../../styles/index.scss';
-
 .Unauthorized {
-	display: flex;
-	justify-content: center;
-	align-self: center;
+	height: -webkit-fill-available;
 
-	&__title {
-		font-size: 2rem;
-		width: auto;
-		margin-left: auto;
-		margin-right: auto;
+	&__inner {
+		height: -webkit-fill-available;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-content: center;
 	}
 
-	a:hover {
-		text-shadow: $primary 1px 1px;
+	&__button {
+		padding: 1rem 3rem;
+		width: 100%;
 	}
-
 }
 
 </style>

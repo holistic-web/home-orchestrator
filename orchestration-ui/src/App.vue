@@ -1,11 +1,11 @@
 <template>
-	<v-app id="app" class="App">
+	<div id="app" class="App">
 
 		<app-header/>
 
 		<router-view class="App__content"/>
 
-	</v-app>
+	</div>
 </template>
 
 <script>
@@ -28,5 +28,10 @@ export default {
 	-moz-osx-font-smoothing: grayscale;
 	width: 100%;
 	display: flex;
+	flex-direction: column;
+
+	&__content {
+		width: 100%;
+	}
 }
 </style>

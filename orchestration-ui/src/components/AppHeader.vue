@@ -11,7 +11,12 @@
 
 					<b-nav class="AppHeader__menu">
 						<b-nav-item class="AppHeader__menu__item">
-							<router-link class="AppHeader__menu__link" :to="{ name: 'lights.page' }">Portfolio</router-link>
+
+							<router-link
+								class="AppHeader__menu__link"
+								:to="{ name: 'lights.page' }"
+								v-text="'Lights'"/>
+
 						</b-nav-item>
 					</b-nav>
 

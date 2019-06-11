@@ -1,27 +1,34 @@
 <template>
-	<div class="Control">
+	<div class="Lights">
 
-		<v-icon v-if="page.isLoading" v-text="'progress'"/>
+		<b-container class="Lights__inner">
 
-		<template v-else>
-			<section class="Control__lights">
-				<light v-model="lights.nanoleaf" label="Nanoleaf"/>
-				<light v-model="lights.room" label="Room"/>
-				<light v-model="lights.lamp" label="Lamp"/>
-			</section>
+			<p
+				v-if="page.isLoading"
+				v-text="'Loading...'"/>
 
-			<section class="Control__buttons">
-				<v-icon v-if="page.isSubmitting" v-text="'progress'"/>
-				<v-btn
+			<template v-else>
+
+				<section class="Lights__lights">
+
+					<light v-model="lights.nanoleaf" label="Nanoleaf"/>
+					<light v-model="lights.room" label="Room"/>
+					<light v-model="lights.lamp" label="Lamp"/>
+
+				</section>
+
+				<p v-if="page.isSubmitting" v-text="'Submitting...'"/>
+				<b-btn
 					v-else
-					class="w-100"
-					large
-					color="primary"
-					v-text="'Update'"
+					size="lg"
+					variant="primary"
+					v-text="'Apply Changes'"
 					:disabled="isUpdateButtonDisabled"
 					@click="submit"/>
-			</section>
-		</template>
+
+			</template>
+
+		</b-container>
 
 	</div>
 </template>
@@ -96,25 +103,16 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../styles/index.scss';
 
-.Control {
-	display: flex;
+.Lights {
 
-	&__lights {
+	&__inner {
 		display: flex;
-		flex-direction: row;
-		height: 90%;
-		padding: 1rem;
+		flex-direction: column;
 	}
 
-	&__buttons {
-		display: flex;
-		width: 100%;
-		height: 10%;
-		justify-content: center;
-		align-items: center;
-		padding: 1rem;
+	&__lights {
+		padding: 3rem;
 	}
 }
 
