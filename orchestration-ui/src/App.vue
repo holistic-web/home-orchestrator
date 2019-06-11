@@ -9,34 +9,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import Sidebar from './components/Sidebar.vue';
 
 export default {
 	components: {
 		Sidebar
-	},
-	computed: {
-		...mapGetters({
-			account: 'account/account'
-		})
-	},
-	methods: {
-		redirectIfNotAuthenticated() {
-			if (this.$route.name === 'account.unauthorized') return;
-			// #Todo: confirm account is on approved list of accounts within the database.
-			if (!this.account) this.$router.push({ name: 'account.unauthorized' });
-		}
-	},
-	watch: {
-		account: {
-			immediate: true,
-			handler: 'redirectIfNotAuthenticated'
-		},
-		$route: {
-			immediate: true,
-			handler: 'redirectIfNotAuthenticated'
-		}
 	}
 };
 
