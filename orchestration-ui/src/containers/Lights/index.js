@@ -2,8 +2,8 @@ import Page from './Page.vue';
 
 const routes = [
 	{
-		name: 'control.Page',
-		path: '/control',
+		name: 'lights.page',
+		path: '/lights',
 		component: Page
 	}
 ];

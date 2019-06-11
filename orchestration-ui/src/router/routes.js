@@ -1,12 +1,12 @@
 import accountRoutes from '../containers/Account';
-import controlRoutes from '../containers/Control';
+import controlRoutes from '../containers/Lights';
 
 const routes = [
 	...accountRoutes,
 	...controlRoutes,
 	{
 		path: '*',
-		redirect: { name: 'control.Page' }
+		redirect: { name: 'lights.page' }
 	}
 ];
 
