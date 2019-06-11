@@ -1,6 +1,8 @@
 # Orchestration UI
 This interface allows a user to set the lights. It is written in Vue.js.
 
+It hosted at: [https://holistic-home-5134d.web.app](https://holistic-home-5134d.web.app)
+
 ## Architecture
 
 ### Containers
