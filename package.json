@@ -5,14 +5,17 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-	"lint": "vue-cli-service lint",
-	"deploy": "vue-cli-service build && firebase deploy",
-	"deployCI": "vue-cli-service build && firebase deploy --token ${FIREBASE_TOKEN}"
+    "lint": "vue-cli-service lint",
+    "deploy": "vue-cli-service build && firebase deploy",
+    "deployCI": "vue-cli-service build && firebase deploy --token ${FIREBASE_TOKEN}"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "firebase": "^5.8.2",
     "register-service-worker": "^1.5.2",
     "vue": "^2.5.22",
+    "vue-color": "^2.7.0",
+    "vue-color-picker-wheel": "^0.4.3",
     "vue-router": "^3.0.1",
     "vuetify": "^1.5.0",
     "vuex": "^3.0.1",
@@ -35,7 +38,7 @@
     "root": true,
     "env": {
       "node": true
-	},
+    },
     "extends": [
       "plugin:vue/essential",
       "@vue/airbnb"
@@ -56,7 +59,7 @@
       ]
     },
     "parserOptions": {
-	  "parser": "babel-eslint"
+      "parser": "babel-eslint"
     }
   }
 }

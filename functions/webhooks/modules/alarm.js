@@ -1,8 +1,8 @@
+const sleep = require('util').promisify(setTimeout);
 const { update, get } = require('../../lib/DatabaseService');
 const LightService = require('../../lib/LightService');
 const { shuffle } = require('../../lib/common');
 const AlarmController = require('../../controllers/AlarmController');
-const sleep = require('util').promisify(setTimeout);
 
 const alarmController = new AlarmController();
 const colourScheme = ['white', 'red', 'blue'];

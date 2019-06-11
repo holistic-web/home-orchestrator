@@ -1,66 +1,130 @@
 <template>
-	<section class="Light">
-		<h4 v-text="light.name"/>
+	<section
+		v-if="inputVal"
+		class="Light">
+
+		<h2 class="mb-5" v-text="label"/>
 
 		<v-text-field
 			label="Colour"
-			v-model="colour"/>
+			v-model="inputVal.colour"
+			@input="onStandardInput"/>
 
-		<v-text-field
-			label="Brightness"
-			v-model="brightness"/>
+		<color-picker
+			:startColour="inputVal.colour"
+			@colorChange="onColourInput"/>
 
-		<v-text-field
+		<div>
+			<label>Brightness</label>
+			<v-slider
+				v-model="inputVal.brightness"
+				@input="onStandardInput"/>
+		</div>
+
+		<v-select
+			v-if="inputVal.meta.type==='nanoleaf'"
 			label="Scene"
-			v-model="scene"/>
+			v-model="inputVal.scene"
+			:items="sceneOptions"
+			@input="onSceneInput"/>
 
-		<v-btn @click="submit">Update</v-btn>
+		<section class="Light__palette" :style="paletteStyle"/>
 
 	</section>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import ColorPicker from 'vue-color-picker-wheel';
+import { getHexColour } from '../../../lib/common';
 
 export default {
+	components: {
+		ColorPicker
+	},
 	props: {
-		light: {
-			type: Object,
+		value: {
 			required: true
+		},
+		label: {
+			type: String
 		}
 	},
 	data() {
 		return {
-			colour: null,
-			brightness: null,
-			scene: null
+			inputVal: this.value,
+			sceneOptions: [
+				'default', 'morning', 'flow', 'sesh', 'woah', 'night'
+			]
 		};
 	},
 	methods: {
-		...mapActions({
-			postUpdate: 'control/update'
-		}),
-		async submit() {
-			const commit = {};
-			commit[`state/lights/${this.light.name}/colour`] = this.colour;
-			commit[`state/lights/${this.light.name}/brightness`] = this.brightness;
-			commit[`state/lights/${this.light.name}/scene`] = this.scene;
-			await this.postUpdate(commit);
+		onColourInput(colour) {
+			this.inputVal.colour = colour;
+			this.onStandardInput();
+		},
+		onSceneInput() {
+			if (!this.inputVal.scene) return;
+			this.inputVal.brightness = null;
+			this.inputVal.colour = null;
+		},
+		onStandardInput() {
+			if (!this.inputVal.brightness && !this.inputVal.colour) return;
+			this.inputVal.scene = null;
+		}
+	},
+	computed: {
+		paletteColour() {
+			const colour = getHexColour(this.inputVal.colour);
+			return colour;
+		},
+		paletteOpacity() {
+			const opacity = this.inputVal.brightness / 100;
+			return opacity;
+		},
+		paletteStyle() {
+			const style = {
+				background: this.paletteColour,
+				opacity: this.paletteOpacity
+			};
+			return style;
+		}
+	},
+	watch: {
+		inputVal(v) {
+			this.$emit('input', v);
+		},
+		value(v) {
+			this.inputVal = v;
 		}
 	}
 };
 </script>
 
 <style lang="scss">
+@import '../../../styles/index.scss';
 
 .Light {
+	margin: 1rem;
+	margin-top: 2rem;
 	padding: 1rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	justify-content: center;
 	align-items: center;
 	width: 100%;
+	border-radius: 0.5rem;
+	background-color: $highlight;
+
+	&__palette {
+		margin-bottom: 5rem;
+		height: 5rem;
+		width: 100%;
+		border-radius: 0.5rem;
+	}
+}
+
+.v-input {
+	flex: none;
 }
 
 </style>

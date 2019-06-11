@@ -20,6 +20,7 @@ module.exports = class LightController {
 	 * @param {number} brightness [1-100] new brightness value
 	 */
 	async setBrightness(brightness) {
+		if (!brightness) return;
 		console.log(`> Setting ${this.name} brightness: ${brightness}`);
 		let path = buildPath(this, 'set-brightness');
 		if (brightness === 0)  path = buildPath(this, 'turn-off');
@@ -40,6 +41,7 @@ module.exports = class LightController {
 	 * @param {string} colour new colour to display
 	 */
 	async setColour(colour) {
+		if (!colour) return;
 		console.log(`> Setting ${this.name} colour: ${colour}`);
 		const actionName = `set-colour`;
 		const path = buildPath(this, actionName);

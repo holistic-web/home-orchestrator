@@ -1,43 +1,96 @@
 <template>
-	<section class="Control">
-		<light
-			class="Control__light"
-			v-for="light in lights"
-			:key="light.name"
-			:light="light"/>
-	</section>
+	<div class="Control">
+
+		<v-icon v-if="page.isLoading" v-text="'progress'"/>
+
+		<template v-else>
+			<section class="Control__lights">
+				<light v-model="lights.nanoleaf" label="Nanoleaf"/>
+				<light v-model="lights.room" label="Room"/>
+				<light v-model="lights.lamp" label="Lamp"/>
+			</section>
+
+			<section class="Control__buttons">
+				<v-icon v-if="page.isSubmitting" v-text="'progress'"/>
+				<v-btn
+					v-else
+					class="w-100"
+					large
+					color="primary"
+					v-text="'Update'"
+					:disabled="isUpdateButtonDisabled"
+					@click="submit"/>
+			</section>
+		</template>
+
+	</div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { getHexColour } from '../../lib/common';
 import Light from './components/Light.vue';
 
 export default {
 	components: {
 		Light
 	},
+	data() {
+		return {
+			page: {
+				isLoading: false,
+				isSubmitting: false
+			},
+			lights: null
+		};
+	},
 	computed: {
 		...mapGetters({
 			data: 'control/data'
 		}),
-		lights() {
-			if (!this.data || !this.data.state) return [];
-			let { lights } = this.data.state;
-			lights = Object.keys(lights).map(ln => ({
-				name: ln,
-				...lights[ln]
-			}));
-			lights.shift(); // remove _lastState light, get rid of this line ASAP
-			return lights;
+		isUpdateButtonDisabled() {
+			return !this.lights;
 		}
 	},
 	methods: {
 		...mapActions({
-			fetch: 'control/fetch'
-		})
+			fetchData: 'control/fetch',
+			postUpdate: 'control/update'
+		}),
+		async fetch() {
+			this.page.isLoading = true;
+			await this.fetchData();
+			const { lights } = this.data.state;
+			this.lights = lights;
+			this.page.isLoading = false;
+		},
+		async submit() {
+			if (!this.lights) return;
+			this.page.isSubmitting = true;
+			Object.keys(this.lights).forEach((ln) => {
+				if (!ln.startsWith('_')) {
+					if (
+						this.lights[ln].meta.type !== 'nanoleaf'
+						|| !this.lights[ln].colour
+					) this.lights[ln].colour = getHexColour(this.lights[ln].colour);
+				}
+			});
+			const commit = {};
+			commit['state/lights'] = this.lights;
+			await this.postUpdate(commit);
+			this.page.isSubmitting = false;
+		}
 	},
 	created() {
 		this.fetch();
+	},
+	watch: {
+		lights() {
+			if (!this.data) return;
+			const commit = {};
+			commit['state/lights'] = this.lights;
+			this.postUpdate(commit);
+		}
 	}
 };
 </script>
@@ -47,7 +100,22 @@ export default {
 
 .Control {
 	display: flex;
-	flex-direction: row !important;
+
+	&__lights {
+		display: flex;
+		flex-direction: row;
+		height: 90%;
+		padding: 1rem;
+	}
+
+	&__buttons {
+		display: flex;
+		width: 100%;
+		height: 10%;
+		justify-content: center;
+		align-items: center;
+		padding: 1rem;
+	}
 }
 
 </style>
