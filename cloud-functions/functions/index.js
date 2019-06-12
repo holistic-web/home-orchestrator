@@ -10,7 +10,7 @@ class LightsController {
 	async updateLight(light) {
 		console.log('> LightsController/updateLight~ called with: ' + JSON.stringify(light, null, 4));
 
-		console.log('> LightsController/updateLight~ settings light (on/off) state');
+		console.log('> LightsController/updateLight~ setting light (on/off) state');
 		if (light.state.on) {
 			await axios.post(this._getRequestPath(light, 'turn-on'));
 
