@@ -4,6 +4,11 @@ N.B. There is a firebase realtime database currently acting as a legacy database
 
 The database is a Firestore database.
 
+## Structure
+
+### Lights
+The lights collection stores each light
+
 ## Access Rules
 These are defined in firestore.rules
 

@@ -30,6 +30,8 @@
 
 			</template>
 
+			{{ newLights }}
+
 		</b-container>
 
 	</div>
@@ -54,7 +56,8 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			data: 'control/data'
+			data: 'control/data',
+			newLights: 'lights/lights'
 		}),
 		isUpdateButtonDisabled() {
 			return !this.lights;
@@ -63,7 +66,8 @@ export default {
 	methods: {
 		...mapActions({
 			fetchData: 'control/fetch',
-			postUpdate: 'control/update'
+			postUpdate: 'control/update',
+			fetchLights: 'lights/fetchLights'
 		}),
 		async fetch() {
 			this.page.isLoading = true;
@@ -83,6 +87,7 @@ export default {
 	},
 	created() {
 		this.fetch();
+		this.fetchLights();
 	},
 	watch: {
 		lights() {
