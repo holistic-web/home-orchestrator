@@ -3,19 +3,26 @@
 
 		<b-container class="Lights__inner">
 
-			<p
-				v-if="page.isLoading"
-				v-text="'Loading...'"/>
+			<section class="Lights__header">
+				<b-button
+					class="Lights__refreshButton"
+					variant="info"
+					v-text="'Refresh'"
+					@click="fetchLightsAndSetupPage"/>
+				<span
+					v-if="page.isLoading"
+					v-text="'Loading...'"/>
+			</section>
 
-			<template v-else>
+			<template v-if="!page.isLoading">
 
 				<section class="Lights__lights">
 
-					<light class="Lights__light" v-model="lights.nanoleaf" label="Nanoleaf"/>
-
-					<light class="Lights__light" v-model="lights.room" label="Room"/>
-
-					<light class="Lights__light" v-model="lights.lamp" label="Lamp"/>
+					<light
+						v-for="(light, i) in lightsInputs"
+						:key="light.name"
+						class="Lights__light"
+						v-model="lightsInputs[i]"/>
 
 				</section>
 
@@ -30,14 +37,13 @@
 
 			</template>
 
-			{{ newLights }}
-
 		</b-container>
 
 	</div>
 </template>
 
 <script>
+import { cloneDeep, isEqual } from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
 import Light from './components/Light.vue';
 
@@ -51,16 +57,16 @@ export default {
 				isLoading: false,
 				isSubmitting: false
 			},
-			lights: null
+			lightsInputs: []
 		};
 	},
 	computed: {
 		...mapGetters({
 			data: 'control/data',
-			newLights: 'lights/lights'
+			lights: 'lights/lights'
 		}),
 		isUpdateButtonDisabled() {
-			return !this.lights;
+			return isEqual(this.lights, this.lightsInputs);
 		}
 	},
 	methods: {
@@ -69,33 +75,21 @@ export default {
 			postUpdate: 'control/update',
 			fetchLights: 'lights/fetchLights'
 		}),
-		async fetch() {
+		async fetchLightsAndSetupPage() {
 			this.page.isLoading = true;
-			await this.fetchData();
-			const { lights } = this.data.state;
-			this.lights = lights;
+			await this.fetchLights();
+			this.lightsInputs = cloneDeep(this.lights);
 			this.page.isLoading = false;
 		},
 		async submit() {
 			if (!this.lights) return;
 			this.page.isSubmitting = true;
-			const commit = {};
-			commit['state/lights'] = this.lights;
-			await this.postUpdate(commit);
+			// #Todo update lights
 			this.page.isSubmitting = false;
 		}
 	},
 	created() {
-		this.fetch();
-		this.fetchLights();
-	},
-	watch: {
-		lights() {
-			if (!this.data) return;
-			const commit = {};
-			commit['state/lights'] = this.lights;
-			this.postUpdate(commit);
-		}
+		this.fetchLightsAndSetupPage();
 	}
 };
 </script>
@@ -108,6 +102,13 @@ export default {
 	&__inner {
 		display: flex;
 		flex-direction: column;
+	}
+
+	&__header {
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: space-between;
+		margin-bottom: 1rem;
 	}
 
 	&__lights {

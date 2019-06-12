@@ -4,9 +4,19 @@
 		body-class="Light__inner">
 
 		<section class="Light__label">
-			<h4 v-text="inputVal.meta.name"/>
-			<pre v-text="inputVal.meta.type"/>
+			<h4 v-text="inputVal.name"/>
+			<pre v-text="inputVal.type"/>
 		</section>
+
+		<div>
+			<b-form-radio-group
+				id="btn-radios-3"
+				v-model="inputVal.state.on"
+				:options="onStateOptions"
+				buttons
+				button-variant="outline-info"
+				stacked/>
+		</div>
 
 		<section class="Light__items">
 
@@ -15,7 +25,7 @@
 				<div class="Light__item">
 					<label v-text="'Colour'"/>
 					<b-form-input
-						v-model="inputVal.colour"
+						v-model="inputVal.state.colour"
 						@input="clearSceneInputs"/>
 				</div>
 
@@ -25,9 +35,9 @@
 						type="range"
 						min="0"
 						max="100"
-						v-model="inputVal.brightness"
+						v-model="inputVal.state.brightness"
 						@input="clearSceneInputs"/>
-					<span v-if="inputVal.brightness" v-text="`${inputVal.brightness}%`"/>
+					<span v-if="inputVal.state.brightness" v-text="`${inputVal.state.brightness}%`"/>
 				</div>
 
 			</template>
@@ -37,7 +47,7 @@
 				<div class="Light__item">
 					<label v-text="'Scene'"/>
 					<b-form-select
-						v-model="inputVal.scene"
+						v-model="inputVal.state.scene"
 						:options="sceneOptions"
 						@input="clearDefaultInputs"/>
 				</div>
@@ -51,6 +61,7 @@
 			<b-form-radio-group
 				class="Light__controlToggle"
 				v-model="controls"
+				size="sm"
 				:options="controlsOptions"
 				button-variant="outline-info"
 				buttons/>
@@ -78,16 +89,17 @@ export default {
 				'default', 'morning', 'flow', 'sesh', 'woah', 'night'
 			],
 			controls: 'manual',
-			controlsOptions: ['manual', 'scene']
+			controlsOptions: ['manual', 'scene'],
+			onStateOptions: [{ text: 'On', value: true }, { text: 'Off', value: false }]
 		};
 	},
 	methods: {
 		clearDefaultInputs() {
-			this.inputVal.brightness = null;
-			this.inputVal.colour = null;
+			this.inputVal.state.brightness = null;
+			this.inputVal.state.colour = null;
 		},
 		clearSceneInputs() {
-			this.inputVal.scene = null;
+			this.inputVal.state.scene = null;
 		}
 	},
 	watch: {
@@ -96,6 +108,16 @@ export default {
 		},
 		value(v) {
 			this.inputVal = v;
+		},
+		controls() {
+			if (this.controls === 'manual') {
+				this.inputVal.state.brightness = 50;
+				this.inputVal.state.colour = '#FFFFFF';
+				return;
+			}
+			if (this.controls === 'scene') {
+				this.inputVal.state.scene = 'default';
+			}
 		}
 	}
 };
@@ -109,10 +131,12 @@ export default {
 	&__inner {
 		display: flex;
 		flex-direction: row;
+		align-items: center;
 	}
 
 	&__label {
-		width: 8rem;
+		min-width: 8rem;
+		margin-right: 2rem;
 	}
 
 	&__items {
@@ -127,12 +151,6 @@ export default {
 		padding: 1rem;
 		display: flex;
 		flex-direction: column;
-	}
-
-	&__controlToggle {
-		> label:not(.active) {
-			cursor: pointer;
-		}
 	}
 
 }

@@ -34,4 +34,14 @@ export default {
 		width: 100%;
 	}
 }
+
+/* Bootstrap Vue Customisation */
+
+// Radio buttons that are clickable have mouse cursor
+.btn-group-toggle {
+	> label:not(.active) {
+		cursor: pointer;
+	}
+}
+
 </style>
