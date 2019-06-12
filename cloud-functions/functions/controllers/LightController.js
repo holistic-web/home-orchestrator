@@ -19,11 +19,10 @@ module.exports = class LightController {
 	 * Sets the brightness of the light
 	 * @param {number} brightness [1-100] new brightness value
 	 */
-	async setBrightness(brightness) {
+	async setBrightness(light, brightness) {
 		if (!brightness) return;
-		console.log(`> Setting ${this.name} brightness: ${brightness}`);
-		let path = buildPath(this, 'set-brightness');
-		if (brightness === 0)  path = buildPath(this, 'turn-off');
+		console.log(`> Setting ${light.name} brightness: ${brightness}`);
+		let path = buildPath(light, 'set-brightness');
 		await axios.post(path, { value1: brightness });
 	}
 

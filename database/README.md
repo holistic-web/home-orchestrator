@@ -7,8 +7,7 @@ The database is a Firestore database.
 ## Structure
 
 ### Lights
-The lights collection stores each light
-
+The lights collection stores each light. The names are tightly coupled to values in the IFTTT triggers.
 ## Access Rules
 These are defined in firestore.rules
 
