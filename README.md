@@ -1,36 +1,14 @@
 # Home Orchestrator
-This is a node.js app to manage home tasks and automation.
+This is a project to manage home tasks and automation.
 
-It creates a firebase database to manage the state of your home. Then adds listeners to that database to enact changes on devices.
+## Useful Links
+- [https://holistic-home-5134d.web.app](https://holistic-home-5134d.web.app)
+	_orchestration UI_
+- [https://console.firebase.google.com/u/0/project/holistic-home-5134d/](https://console.firebase.google.com/u/0/project/holistic-home-5134d/):
+	_firebase console_
 
-## Setup
-1. Create a database on the firebase console.
-2. Create an email / password user account
-3. Set up relevant IFTTT triggers
-4. Setup cloud environment variable `ifttt.key` with: `firebase functions:config:set ifttt.key="YOUR-API-KEY"`
-
-### Running the app
-Ensure `firebase deploy` has been run to setup to device controller
-
-## Roadmap
-- fix repo linting
-- create a ui in which:
-	- users can add new lights to the home
-	- users can setup themes
-	- users can setup alarms
-	- users can apply themes to rooms
-- update setup with info on how to
-	- create firebase database
-	- create ifttt triggers (for iot buttons and lights)
-- if possibly integrate with google homegraph / apple homekit
-- add direct to device controllers to reduce response times
-
-#Todo:
-- add collection of allowed user ids & redirect if user account not on allowed list
-- change colourscheme of site
-- add favicon to site
-- 1. a page to allow the current lights to be modified and set with inputs
-- 2. a page to create a room by configuring light names and light types
-- 3. on a page generated to control the lights in each room, the user can save the current configuration as a theme
-- 4. themes can be modified and applied to rooms
-- 5. a page listing existing buttons and allowing the user to change the functionality of each button (toggle off, rotate scenes)
+## Architecture
+- [.project](/.project): _files relating to the project, including the roadmap_
+- [cloud-functions](/cloud-functions): _cloud functions acting as a serverless API_
+- [database](/database): _the configuration for the database_
+- [orchestration-ui](/orchestration-ui): _user interface through which one can orchestrate the home_
