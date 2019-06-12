@@ -62,7 +62,6 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			data: 'control/data',
 			lights: 'lights/lights'
 		}),
 		isUpdateButtonDisabled() {
@@ -71,9 +70,8 @@ export default {
 	},
 	methods: {
 		...mapActions({
-			fetchData: 'control/fetch',
-			postUpdate: 'control/update',
-			fetchLights: 'lights/fetchLights'
+			fetchLights: 'lights/fetchLights',
+			updateLights: 'lights/updateLights'
 		}),
 		async fetchLightsAndSetupPage() {
 			this.page.isLoading = true;
@@ -84,7 +82,19 @@ export default {
 		async submit() {
 			if (!this.lights) return;
 			this.page.isSubmitting = true;
-			// #Todo update lights
+			try {
+				await this.updateLights(this.lightsInputs);
+				this.fetchLightsAndSetupPage();
+				this.$toasted.show('Lights Updated', {
+					position: 'bottom-right',
+					duration: '3000'
+				});
+			} catch (err) {
+				this.$toasted.show(err, {
+					position: 'bottom-right',
+					duration: '3000'
+				});
+			}
 			this.page.isSubmitting = false;
 		}
 	},

@@ -86,7 +86,7 @@ export default {
 		return {
 			inputVal: this.value,
 			sceneOptions: [
-				'default', 'morning', 'flow', 'sesh', 'woah', 'night'
+				'flow', 'sesh', 'woah', 'morning'
 			],
 			controls: 'manual',
 			controlsOptions: ['manual', 'scene'],
@@ -100,6 +100,13 @@ export default {
 		},
 		clearSceneInputs() {
 			this.inputVal.state.scene = null;
+		},
+		setDefaultControls() {
+			if (this.inputVal.state.scene) {
+				this.controls = 'scene';
+			} else {
+				this.controls = 'manual';
+			}
 		}
 	},
 	watch: {
@@ -108,17 +115,10 @@ export default {
 		},
 		value(v) {
 			this.inputVal = v;
-		},
-		controls() {
-			if (this.controls === 'manual') {
-				this.inputVal.state.brightness = 50;
-				this.inputVal.state.colour = '#FFFFFF';
-				return;
-			}
-			if (this.controls === 'scene') {
-				this.inputVal.state.scene = 'default';
-			}
 		}
+	},
+	created() {
+		this.setDefaultControls();
 	}
 };
 </script>

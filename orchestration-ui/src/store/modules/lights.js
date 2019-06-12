@@ -16,6 +16,11 @@ export default {
 			const lights = lightsSnapshots.docs.map(doc => doc.data());
 			if (!options.skipCommit) commit('SET_LIGHTS', lights);
 			return lights;
+		},
+		async updateLights({ rootState }, lights) {
+			const updateLights = rootState.firebase.functions().httpsCallable('updateLights');
+			const result = await updateLights(lights);
+			return result;
 		}
 	},
 	getters: {
