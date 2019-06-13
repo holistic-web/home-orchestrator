@@ -9,5 +9,6 @@ service cloud.firestore {
 
 function isAuthorisedUser(userId) {
 	return userId == '7RAvkf9IHVSGEWeu5E3fUYR2dqi1'		// Kylie
-		|| userId == 'Op8k7VRQNkg0tK7GsCXks0jMj3l2';	// Michael
+		|| userId == 'Op8k7VRQNkg0tK7GsCXks0jMj3l2'		// Michael
+		|| userId == '6aICVvLNqbeVkvGlcOjddpvH1S63'		// Andrew
 }

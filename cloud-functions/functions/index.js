@@ -25,8 +25,13 @@ class LightsController {
 			}
 
 			if (light.state.colour) {
+
+				// handle nanoleaf hex codes...
+				let colour = light.state.colour;
+				if (light.type === 'nanoleaf') colour = colour.replace('#', '');
+
 				console.log('> LightsController/updateLight~ setting light colour');
-				await axios.post(this._getRequestPath(light, 'set-colour'), { value1: light.state.colour });
+				await axios.post(this._getRequestPath(light, 'set-colour'), { value1: colour });
 			}
 
 		} else {
@@ -60,7 +65,8 @@ exports.updateLights = functions.https.onCall(async (lights, context) => {
 	console.log('> updateLights~ called with: ' + JSON.stringify({ lights, auth: context.auth }, null, 4));
 	const allowedUsers = [
 		'7RAvkf9IHVSGEWeu5E3fUYR2dqi1', // Kylie
-		'Op8k7VRQNkg0tK7GsCXks0jMj3l2' // Michael
+		'Op8k7VRQNkg0tK7GsCXks0jMj3l2', // Michael
+		'6aICVvLNqbeVkvGlcOjddpvH1S63'	// Andrew
 	];
 	const requestUserId = context.auth.uid;
 	if (!allowedUsers.includes(requestUserId)) throw new Error('not authenticated');
