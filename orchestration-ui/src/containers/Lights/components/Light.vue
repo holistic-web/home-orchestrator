@@ -9,13 +9,26 @@
 		</section>
 
 		<div>
-			<b-form-radio-group
-				id="btn-radios-3"
-				v-model="inputVal.state.on"
-				:options="onStateOptions"
-				buttons
-				button-variant="outline-info"
-				stacked/>
+
+			<div class="Light__item">
+				<label v-text="'Power'"/>
+				<b-form-radio-group
+					v-model="inputVal.state.on"
+					:options="onStateOptions"
+					buttons
+					button-variant="outline-info"
+					stacked/>
+			</div>
+
+			<div v-if="controlOptions.length > 1" class="Light__input">
+			<label v-text="'Controls'"/>
+				<b-form-radio-group
+					v-model="controls"
+					size="sm"
+					:options="controlOptions"
+					button-variant="outline-info"
+					buttons/>
+			</div>
 		</div>
 
 		<section class="Light__items">
@@ -53,17 +66,6 @@
 			</template>
 
 		</section>
-
-		<div v-if="controlOptions.length > 1">
-			<label v-text="'Controls'"/>
-			<b-form-radio-group
-				class="Light__controlToggle"
-				v-model="controls"
-				size="sm"
-				:options="controlOptions"
-				button-variant="outline-info"
-				buttons/>
-		</div>
 
 	</b-card>
 
@@ -152,7 +154,7 @@ export default {
 <style lang="scss">
 
 .Light {
-	min-height: 10rem;
+	min-height: 22rem;
 
 	&__inner {
 		display: flex;
@@ -178,6 +180,7 @@ export default {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		align-items: center;
 	}
 
 }
