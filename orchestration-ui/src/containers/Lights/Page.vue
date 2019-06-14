@@ -125,16 +125,24 @@ export default {
 	&__lights {
 		margin-bottom: 2rem;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
+
+		@media all and (min-width: 768px) {
+			flex-direction: row;
+		}
 	}
 
 	&__light {
 		width: 100%;
-		margin: 0 1rem;
+		margin-bottom: 1rem;
 
-		&:first-of-type { margin-left: 0; }
+		@media all and (min-width: 768px) {
+			margin: 0 1rem;
 
-		&:last-of-type { margin-right: 0; }
+			&:first-of-type { margin-left: 0; }
+
+			&:last-of-type { margin-right: 0; }
+		}
 	}
 }
 
