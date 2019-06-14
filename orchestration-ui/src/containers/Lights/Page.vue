@@ -112,6 +112,7 @@ export default {
 	&__inner {
 		display: flex;
 		flex-direction: column;
+		justify-content: space-between;
 	}
 
 	&__header {
@@ -122,11 +123,18 @@ export default {
 	}
 
 	&__lights {
-		margin-bottom: 1rem;
+		margin-bottom: 2rem;
+		display: flex;
+		flex-direction: row;
 	}
 
 	&__light {
-		margin-bottom: 1rem;
+		width: 100%;
+		margin: 0 1rem;
+
+		&:first-of-type { margin-left: 0; }
+
+		&:last-of-type { margin-right: 0; }
 	}
 }
 

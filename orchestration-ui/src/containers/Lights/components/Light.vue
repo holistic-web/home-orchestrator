@@ -20,7 +20,7 @@
 					stacked/>
 			</div>
 
-			<div v-if="controlOptions.length > 1" class="Light__input">
+			<div v-if="controlOptions.length > 1" class="Light__item">
 			<label v-text="'Controls'"/>
 				<b-form-radio-group
 					v-model="controls"
@@ -158,7 +158,7 @@ export default {
 
 	&__inner {
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		align-items: center;
 	}
 
@@ -168,9 +168,9 @@ export default {
 	}
 
 	&__items {
-		width: 100%;
+		height: 100%;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		justify-content: space-around;
 		margin: 0 1rem;
 	}
