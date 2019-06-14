@@ -24,9 +24,9 @@
 
 				<div class="Light__item">
 					<label v-text="'Colour'"/>
-					<b-form-input
-						v-model="inputVal.state.colour"
-						@input="clearSceneInputs"/>
+					<colour-picker
+						v-model="colourPickerValue"
+						@input="onColourPickerInput"/>
 				</div>
 
 				<div class="Light__item">
@@ -35,8 +35,7 @@
 						type="range"
 						min="0"
 						max="100"
-						v-model="inputVal.state.brightness"
-						@input="clearSceneInputs"/>
+						v-model="inputVal.state.brightness"/>
 					<span v-if="inputVal.state.brightness" v-text="`${inputVal.state.brightness}%`"/>
 				</div>
 
@@ -48,21 +47,20 @@
 					<label v-text="'Scene'"/>
 					<b-form-select
 						v-model="inputVal.state.scene"
-						:options="sceneOptions"
-						@input="clearDefaultInputs"/>
+						:options="sceneOptions"/>
 				</div>
 
 			</template>
 
 		</section>
 
-		<div>
+		<div v-if="controlOptions.length > 1">
 			<label v-text="'Controls'"/>
 			<b-form-radio-group
 				class="Light__controlToggle"
 				v-model="controls"
 				size="sm"
-				:options="controlsOptions"
+				:options="controlOptions"
 				button-variant="outline-info"
 				buttons/>
 		</div>
@@ -72,8 +70,12 @@
 </template>
 
 <script>
+import { Chrome as ColourPicker } from 'vue-color';
 
 export default {
+	components: {
+		ColourPicker
+	},
 	props: {
 		value: {
 			required: true
@@ -85,15 +87,26 @@ export default {
 	data() {
 		return {
 			inputVal: this.value,
+			colourPickerValue: { hex: '#ffffff' },
 			sceneOptions: [
 				'flow', 'sesh', 'woah', 'morning'
 			],
 			controls: 'manual',
-			controlsOptions: ['manual', 'scene'],
+			baseControlsOptions: ['manual'],
 			onStateOptions: [{ text: 'On', value: true }, { text: 'Off', value: false }]
 		};
 	},
+	computed: {
+		controlOptions() {
+			const controlOptions = [...this.baseControlsOptions];
+			if (this.value.type === 'nanoleaf') controlOptions.push('scene');
+			return controlOptions;
+		}
+	},
 	methods: {
+		onColourPickerInput() {
+			this.inputVal.state.colour = this.colourPickerValue.hex;
+		},
 		clearDefaultInputs() {
 			this.inputVal.state.brightness = null;
 			this.inputVal.state.colour = null;
@@ -113,8 +126,21 @@ export default {
 		inputVal(v) {
 			this.$emit('input', v);
 		},
-		value(v) {
-			this.inputVal = v;
+		value: {
+			immediate: true,
+			handler() {
+				this.inputVal = this.value;
+				this.colourPickerValue = { hex: this.value.state.colour };
+			}
+		},
+		controls() {
+			if (this.controls === 'manual') {
+				return this.clearSceneInputs();
+			}
+			if (this.controls === 'scene') {
+				return this.clearDefaultInputs();
+			}
+			throw new Error('unknown control type');
 		}
 	},
 	created() {
@@ -151,6 +177,7 @@ export default {
 		padding: 1rem;
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
 	}
 
 }

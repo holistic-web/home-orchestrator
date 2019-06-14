@@ -9,16 +9,17 @@
 		"deploy": "vue-cli-service build && firebase deploy"
 	},
 	"dependencies": {
-		"axios": "0.18.0",
+		"axios": "0.18.1",
 		"bootstrap-vue": "2.0.0-rc.22",
 		"firebase": "6.1.1",
 		"lodash": "^4.17.11",
 		"register-service-worker": "^1.5.2",
 		"vue": "^2.5.22",
+		"vue-color": "2.7.0",
 		"vue-router": "^3.0.1",
 		"vue-toasted": "^1.1.27",
 		"vuex": "^3.0.1",
-		"vuex-persist": "^2.0.0"
+		"vuex-persist": "2.0.0"
 	},
 	"devDependencies": {
 		"@vue/cli-plugin-babel": "^3.4.0",
