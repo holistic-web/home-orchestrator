@@ -8,15 +8,16 @@
 			<pre v-text="inputVal.type"/>
 		</section>
 
-		<div>
+		<div class="Light__controls">
 
 			<div class="Light__item">
 				<label v-text="'Power'"/>
 				<b-form-radio-group
 					v-model="inputVal.state.on"
 					:options="onStateOptions"
-					buttons
+					size="lg"
 					button-variant="outline-info"
+					buttons
 					stacked/>
 			</div>
 
@@ -24,10 +25,11 @@
 			<label v-text="'Controls'"/>
 				<b-form-radio-group
 					v-model="controls"
-					size="sm"
 					:options="controlOptions"
+					size="sm"
 					button-variant="outline-info"
-					buttons/>
+					buttons
+					stacked/>
 			</div>
 		</div>
 
@@ -181,6 +183,11 @@ export default {
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+	}
+
+	&__controls {
+		display: flex;
+		flex-direction: row;
 	}
 
 }
