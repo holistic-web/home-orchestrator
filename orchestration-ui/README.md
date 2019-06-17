@@ -1,17 +1,19 @@
 # Orchestration UI
-This interface allows a user to set the lights. It is written in Vue.js.
+This is the user interface for this project, written in Vue.js.
 
 It hosted at: [https://holistic-home-5134d.web.app](https://holistic-home-5134d.web.app)
 
 ## Architecture
 
-### Containers
-
-#### Account
+### Account
 The account section consists of the login page, login is done through firebase with Google authentication. Once authenticated the account store in vuex confirms that the user is on the approved list of unique id's in firebase.
 
-#### Lights
-The lights section allows the user to set the state of the lights by communicating with the cloud functions through vuex.
+### Lights
+Allows the user to see the stored state of lights and set them using the `updateLights` cloud function.
+
+### Themes
+Allows a user to manage and apply themes, which are pre saved states of how things should be. Creating themes is managed with the `createTheme` cloud function.
+
 
 ## Getting Started
 To get the project up and running:
