@@ -16,6 +16,11 @@ export default {
 			const themes = themesSnapshots.docs.map(doc => doc.data());
 			if (!options.skipCommit) commit('SET_THEMES', themes);
 			return themes;
+		},
+		async createTheme({ rootState }, theme) {
+			const createTheme = rootState.firebase.functions().httpsCallable('createTheme');
+			const result = await createTheme(theme);
+			return result;
 		}
 	},
 	getters: {

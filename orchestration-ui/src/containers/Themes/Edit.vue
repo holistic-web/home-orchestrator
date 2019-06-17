@@ -8,7 +8,9 @@
 				<b-button
 					class="ThemesEdit__header__button"
 					variant="primary"
-					v-text="'Create Theme'"/>
+					v-text="'Create Theme'"
+					:disabled="page.isSubmitting"
+					@click="onCreateThemeClick"/>
 
 			</div>
 
@@ -39,6 +41,7 @@
 <script>
 import { cloneDeep } from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
+import toastService from '../../lib/toastService';
 import Light from '../Lights/components/Light.vue';
 
 export default {
@@ -68,7 +71,8 @@ export default {
 	},
 	methods: {
 		...mapActions({
-			fetchLights: 'lights/fetchLights'
+			fetchLights: 'lights/fetchLights',
+			createTheme: 'themes/createTheme'
 		}),
 		async setUpPage() {
 			this.page.isLoading = true;
@@ -77,6 +81,17 @@ export default {
 				this.themeInput.lights = cloneDeep(this.lights);
 			}
 			this.page.isLoading = false;
+		},
+		async onCreateThemeClick() {
+			this.page.isSubmitting = true;
+			try {
+				await this.createTheme(this.themeInput);
+				toastService.toast('Theme created');
+				this.$router.push({ name: 'themes.list' });
+			} catch (err) {
+				toastService.toast(err);
+			}
+			this.page.isSubmitting = false;
 		}
 	},
 	created() {
