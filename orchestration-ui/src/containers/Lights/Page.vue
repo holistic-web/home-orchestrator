@@ -1,45 +1,50 @@
 <template>
-	<div class="Lights">
+	<b-container class="Lights">
 
-		<b-container class="Lights__inner">
+		<section class="Lights__header">
 
-			<section class="Lights__header">
+			<div>
 				<b-button
-					class="Lights__refreshButton"
+					class="Lights__header__button"
 					variant="info"
 					v-text="'Refresh'"
 					@click="fetchLightsAndSetupPage"/>
-				<span
-					v-if="page.isLoading"
-					v-text="'Loading...'"/>
+			</div>
+
+
+			<h2>Lights</h2>
+
+		</section>
+
+		<span
+			v-if="page.isLoading"
+			v-text="'Loading...'"/>
+
+
+		<template v-if="!page.isLoading">
+
+			<section class="Lights__lights">
+
+				<light
+					v-for="(light, i) in lightsInputs"
+					:key="light.name"
+					class="Lights__light"
+					v-model="lightsInputs[i]"/>
+
 			</section>
 
-			<template v-if="!page.isLoading">
+			<p v-if="page.isSubmitting" v-text="'Submitting...'"/>
+			<b-btn
+				v-else
+				size="lg"
+				variant="primary"
+				v-text="'Apply Changes'"
+				:disabled="isUpdateButtonDisabled"
+				@click="submit"/>
 
-				<section class="Lights__lights">
+		</template>
 
-					<light
-						v-for="(light, i) in lightsInputs"
-						:key="light.name"
-						class="Lights__light"
-						v-model="lightsInputs[i]"/>
-
-				</section>
-
-				<p v-if="page.isSubmitting" v-text="'Submitting...'"/>
-				<b-btn
-					v-else
-					size="lg"
-					variant="primary"
-					v-text="'Apply Changes'"
-					:disabled="isUpdateButtonDisabled"
-					@click="submit"/>
-
-			</template>
-
-		</b-container>
-
-	</div>
+	</b-container>
 </template>
 
 <script>
@@ -102,19 +107,19 @@ export default {
 <style lang="scss">
 
 .Lights {
-	padding: 1rem;
-
-	&__inner {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-	}
+	margin-top: 1rem;
+	display: flex;
+	flex-direction: column;
 
 	&__header {
 		display: flex;
 		flex-direction: row-reverse;
 		justify-content: space-between;
 		margin-bottom: 1rem;
+
+		&__button {
+			margin-left: 1rem;
+		}
 	}
 
 	&__lights {
@@ -135,7 +140,6 @@ export default {
 			margin: 0 1rem;
 
 			&:first-of-type { margin-left: 0; }
-
 			&:last-of-type { margin-right: 0; }
 		}
 	}

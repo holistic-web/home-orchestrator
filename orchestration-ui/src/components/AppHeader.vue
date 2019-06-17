@@ -12,9 +12,11 @@
 					<b-nav-item class="AppHeader__menu__item">
 
 						<router-link
+							v-for="item in menuItems"
+							:key="item.name"
 							class="AppHeader__menu__link"
-							:to="{ name: 'lights.page' }"
-							v-text="'Lights'"/>
+							:to="{ name: item.name }"
+							v-text="item.menuName"/>
 
 					</b-nav-item>
 				</b-nav>
@@ -34,6 +36,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import routes from '../router/routes';
 
 export default {
 	methods: {
@@ -45,6 +48,10 @@ export default {
 		isAccountPage() {
 			const isAccountPage = this.$route.name.startsWith('account.');
 			return isAccountPage;
+		},
+		menuItems() {
+			const menuItems = routes.filter(route => route.menuName);
+			return menuItems;
 		}
 	}
 };
