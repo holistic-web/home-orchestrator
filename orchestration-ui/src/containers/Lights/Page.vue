@@ -45,6 +45,7 @@
 <script>
 import { cloneDeep, isEqual } from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
+import toastService from '../../lib/toastService';
 import Light from './components/Light.vue';
 
 export default {
@@ -85,15 +86,9 @@ export default {
 			try {
 				await this.updateLights(this.lightsInputs);
 				this.fetchLightsAndSetupPage();
-				this.$toasted.show('Lights Updated', {
-					position: 'bottom-right',
-					duration: '3000'
-				});
+				toastService.toast('Lights Updated');
 			} catch (err) {
-				this.$toasted.show(err, {
-					position: 'bottom-right',
-					duration: '3000'
-				});
+				toastService.toast(err);
 			}
 			this.page.isSubmitting = false;
 		}
