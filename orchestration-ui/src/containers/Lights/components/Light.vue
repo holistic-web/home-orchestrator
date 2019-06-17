@@ -165,8 +165,7 @@ export default {
 	}
 
 	&__label {
-		min-width: 8rem;
-		margin-right: 2rem;
+		width: 100%;
 	}
 
 	&__items {
@@ -174,7 +173,6 @@ export default {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
-		margin: 0 1rem;
 	}
 
 	&__item {
