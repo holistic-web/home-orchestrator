@@ -1,22 +1,36 @@
 ## Roadmap
-- fix repo linting
-- create a ui in which:
-	- users can add new lights to the home
-	- users can setup themes
-	- users can setup alarms
-	- users can apply themes to rooms
-- update setup with info on how to
-	- create firebase database
-	- create ifttt triggers (for iot buttons and lights)
-- if possibly integrate with google homegraph / apple homekit
-- add direct to device controllers to reduce response times
 
-#Todo:
-- add collection of allowed user ids & redirect if user account not on allowed list
-- change colourscheme of site
-- add favicon to site
-- 1. a page to allow the current lights to be modified and set with inputs
-- 2. a page to create a room by configuring light names and light types
-- 3. on a page generated to control the lights in each room, the user can save the current configuration as a theme
-- 4. themes can be modified and applied to rooms
-- 5. a page listing existing buttons and allowing the user to change the functionality of each button (toggle off, rotate scenes)
+## General
+
+- the concepts of `Themes` storing a state and `Scenes` setting a light should be swapped
+
+- the site could use some design tender love and care, including a favicon
+
+
+## Sharing
+
+- other users should be able to sign up and have their own lights
+
+- they should be able to set their own authenticated users
+
+
+### Orchestration UI
+
+- could use some form of navigation aid or breadcrumb
+
+- scenes should have something to indicate what they look like in the UI
+
+- should be able to update lights one by one
+
+- user experience should be smoother: if off don't show inputs for lights
+
+- Could use some form of default layout component
+
+
+### Light Control
+
+- these should use native apis rather than IFTTT if possibel to reduce response times
+
+- relevant IFTTT triggers should be managed through the IFTTT API
+
+- lights should be able to be grouped to be treated as one
