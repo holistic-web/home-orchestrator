@@ -3,14 +3,14 @@ import Edit from './Edit.vue';
 
 const routes = [
 	{
-		name: 'templates.list',
-		path: '/templates',
+		name: 'theme.list',
+		path: '/theme',
 		component: List,
-		menuName: 'Templates'
+		menuName: 'Themes'
 	},
 	{
-		name: 'templates.create',
-		path: '/templates/create',
+		name: 'themes.create',
+		path: '/themes/create',
 		component: Edit
 	}
 ];

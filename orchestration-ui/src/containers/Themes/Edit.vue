@@ -1,14 +1,14 @@
 <template>
-	<b-container class="TemplatesEdit">
+	<b-container class="ThemesEdit">
 
-		<section class="TemplatesEdit__header">
+		<section class="ThemesEdit__header">
 
 			<div>
 
 				<b-button
-					class="TemplatesEdit__header__button"
+					class="ThemesEdit__header__button"
 					variant="primary"
-					v-text="'Create Template'"/>
+					v-text="'Create Theme'"/>
 
 			</div>
 
@@ -22,13 +22,13 @@
 
 		<template v-if="!page.isLoading">
 			<h3>Lights</h3>
-			<div class="TemplatesEdit__lights">
+			<div class="ThemesEdit__lights">
 
 				<light
 					v-for="(light, i) in lights"
 					:key="light.name"
-					class="TemplatesEdit__lights__item"
-					v-model="templateInput.lights[i]"/>
+					class="ThemesEdit__lights__item"
+					v-model="themeInput.lights[i]"/>
 
 			</div>
 		</template>
@@ -51,7 +51,7 @@ export default {
 				isLoading: false,
 				isSubmitting: false
 			},
-			templateInput: {}
+			themeInput: {}
 		};
 	},
 	computed: {
@@ -59,11 +59,11 @@ export default {
 			lights: 'lights/lights'
 		}),
 		isInCreateMode() {
-			return this.$route.name === 'templates.create';
+			return this.$route.name === 'themes.create';
 		},
 		titleText() {
-			if (this.isInCreateMode) return 'New Template';
-			return 'Edit Template';
+			if (this.isInCreateMode) return 'New Theme';
+			return 'Edit Theme';
 		}
 	},
 	methods: {
@@ -74,7 +74,7 @@ export default {
 			this.page.isLoading = true;
 			if (this.isInCreateMode) {
 				await this.fetchLights();
-				this.templateInput.lights = cloneDeep(this.lights);
+				this.themeInput.lights = cloneDeep(this.lights);
 			}
 			this.page.isLoading = false;
 		}
@@ -88,7 +88,7 @@ export default {
 
 <style lang="scss">
 
-.TemplatesEdit {
+.ThemesEdit {
 	margin-top: 1rem;
 	display: flex;
 	flex-direction: column;

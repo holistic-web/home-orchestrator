@@ -5,7 +5,7 @@ import VuexPersistence from 'vuex-persist';
 import config from '../config';
 import accountStore from './modules/account';
 import lightsStore from './modules/lights';
-import templatesStore from './modules/templates';
+import themeStore from './modules/themes';
 
 Vue.use(Vuex);
 
@@ -29,7 +29,7 @@ const storeConfig = {
 	modules: {
 		account: accountStore,
 		lights: lightsStore,
-		templates: templatesStore
+		themes: themeStore
 	},
 	plugins: [
 		persistedState.plugin

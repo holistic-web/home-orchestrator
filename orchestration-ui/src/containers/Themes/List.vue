@@ -1,25 +1,25 @@
 <template>
-	<b-container class="TemplatesList">
+	<b-container class="ThemesList">
 
-		<section class="TemplatesList__header">
+		<section class="ThemesList__header">
 
 			<div>
 
 				<b-button
-					class="TemplatesList__header__button"
+					class="ThemesList__header__button"
 					variant="primary"
-					v-text="'New Template'"
-					:to="{ name: 'templates.create' }"/>
+					v-text="'New Theme'"
+					:to="{ name: 'themes.create' }"/>
 
 				<b-button
-					class="TemplatesList__header__button"
+					class="ThemesList__header__button"
 					variant="info"
 					v-text="'Refresh'"
-					@click="fetchTemplatesAndSetupPage"/>
+					@click="fetchThemesAndSetupPage"/>
 
 			</div>
 
-			<h2>Templates</h2>
+			<h2>Themes</h2>
 
 		</section>
 
@@ -30,11 +30,11 @@
 		<template v-if="!page.isLoading">
 
 			<span
-				v-if="templates.length === 0"
-				v-text="'There are no templates to display. Why not create one?'"/>
+				v-if="themes.length === 0"
+				v-text="'There are no themes to display. Why not create one?'"/>
 			<b-table
 				v-else
-				:items="templates"/>
+				:items="themes"/>
 
 		</template>
 
@@ -54,28 +54,28 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			templates: 'templates/templates'
+			themes: 'themes/themes'
 		})
 	},
 	methods: {
 		...mapActions({
-			fetchTemplates: 'templates/fetchTemplates'
+			fetchThemes: 'themes/fetchThemes'
 		}),
-		async fetchTemplatesAndSetupPage() {
+		async fetchThemesAndSetupPage() {
 			this.page.isLoading = true;
-			await this.fetchTemplates();
+			await this.fetchThemes();
 			this.page.isLoading = false;
 		}
 	},
 	created() {
-		this.fetchTemplatesAndSetupPage();
+		this.fetchThemesAndSetupPage();
 	}
 };
 </script>
 
 <style lang="scss">
 
-.TemplatesList {
+.ThemesList {
 	margin-top: 1rem;
 	display: flex;
 	flex-direction: column;
