@@ -1,18 +1,23 @@
 # Cloud Functions
-This project uses cloud functions as a serverless api.
+These are the cloud functions for this project, hosted on Firebase.
+
+### Deploying
+Ensure `firebase-tools` is installed globally and then run `firebase deploy` from this folder.
+
+## Authentication
+Authentication is currently managed by checking against an array approved of user ids.
 
 ## Functions
 
 ### Update Lights
-This is defined in `/functions/index` and allows a user to update the lights and the database values.
+Allows a user to update the lights and the corresponding database values.
 
-# IFTTT Triggers
-We use multiple IFTTT triggers in this project, they are:
+It currently uses IFTTT triggers to control the lights, they are:
 - _{lightName}_-turn-on
 - _{lightName}_-turn-off
 - _{lightName}_-set-scene-_{sceneName}_
 - _{lightName}_-set-brightness
 - _{lightName}_-set-colour
 
-### Deploying
-Ensure `firebase-tools` is installed globally and then run `firebase deploy` from this folder.
+### Create Theme
+Allows a user to create a theme and adds it to the themes store.
