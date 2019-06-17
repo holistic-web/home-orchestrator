@@ -15,6 +15,6 @@ exports.createTheme = functions.https.onCall(async (theme, context) => {
 
 	// Update the Database
 	console.log('> createTheme~ writing to themes collection');
-	const result = await admin.firestore().collection('themes').write(theme);
+	const result = await admin.firestore().collection('themes').add(theme);
 	return result;
 });
