@@ -9,7 +9,7 @@ const routes = [
 	...themesRoutes,
 	{
 		path: '*',
-		redirect: { name: 'lights.page' }
+		redirect: { name: 'lights.control' }
 	}
 ];
 

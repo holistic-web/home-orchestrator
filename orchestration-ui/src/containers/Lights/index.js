@@ -1,10 +1,10 @@
-import Page from './Page.vue';
+import Control from './Control.vue';
 
 const routes = [
 	{
-		name: 'lights.page',
+		name: 'lights.control',
 		path: '/lights',
-		component: Page,
+		component: Control,
 		menuName: 'Lights'
 	}
 ];

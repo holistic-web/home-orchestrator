@@ -3,13 +3,9 @@
 
 		<section class="ThemesList__header">
 
-			<div>
+			<h2>Themes</h2>
 
-				<b-button
-					class="ThemesList__header__button"
-					variant="outline-info"
-					v-text="'New Theme'"
-					:to="{ name: 'themes.create' }"/>
+			<div class="ThemesList__header__buttons">
 
 				<b-button
 					class="ThemesList__header__button"
@@ -17,9 +13,13 @@
 					v-text="'Refresh'"
 					@click="fetchThemesAndSetupPage"/>
 
-			</div>
+				<b-button
+					class="ThemesList__header__button"
+					variant="outline-info"
+					v-text="'New Theme'"
+					:to="{ name: 'themes.create' }"/>
 
-			<h2>Themes</h2>
+			</div>
 
 		</section>
 
@@ -47,18 +47,22 @@
 						<b
 							class="ThemesList__table__lights__item"
 							v-text="`${light.name}:`"/>
-						<span
-							class="ThemesList__table__lights__item"
-							v-if="light.state.colour"
-							v-text="`Colour: ${light.state.colour};`"/>
-						<span
-							class="ThemesList__table__lights__item"
-							v-if="light.state.brightness"
-							v-text="`Brightness: ${light.state.brightness};`"/>
-						<span
-							class="ThemesList__table__lights__item"
-							v-if="light.state.scene"
-							v-text="`Scene: ${light.state.scene};`"/>
+
+						<span v-if="!light.state.on" v-text="'off'"/>
+						<template v-else>
+							<span
+								class="ThemesList__table__lights__item"
+								v-if="light.state.colour"
+								v-text="`colour: ${light.state.colour};`"/>
+							<span
+								class="ThemesList__table__lights__item"
+								v-if="light.state.brightness"
+								v-text="`brightness: ${light.state.brightness};`"/>
+							<span
+								class="ThemesList__table__lights__item"
+								v-if="light.state.scene"
+								v-text="`scene: ${light.state.scene};`"/>
+						</template>
 					</div>
 
 				</template>
@@ -84,7 +88,8 @@
 
 						<span
 							v-if="data.item.isSubmitting"
-							v-text="'Submitting'"/>
+							class="ThemesList__table__actions__item"
+							v-text="'Submitting...'"/>
 
 					</div>
 
@@ -156,12 +161,31 @@ export default {
 
 	&__header {
 		display: flex;
-		flex-direction: row-reverse;
+		flex-direction: column;
 		justify-content: space-between;
 		margin-bottom: 1rem;
 
+		@media all and (min-width: 768px) {
+			flex-direction: row;
+		}
+
+		&__buttons {
+			display: flex;
+			flex-direction: column;
+
+			@media all and (min-width: 768px) {
+				flex-direction: row;
+			}
+		}
+
 		&__button {
-			margin-left: 1rem;
+			margin-bottom: 1rem;
+
+			@media all and (min-width: 768px) {
+				margin-bottom: 0;
+				margin-left: 1rem;
+			}
+
 		}
 	}
 

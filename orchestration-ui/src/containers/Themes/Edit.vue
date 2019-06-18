@@ -1,97 +1,107 @@
 <template>
-	<b-container class="ThemesEdit">
+	<div class="ThemesEdit">
 
-		<section class="ThemesEdit__header">
+		<b-container class="ThemesEdit__content">
 
-			<div>
+			<section class="ThemesEdit__header">
 
-				<b-button
-					class="ThemesEdit__header__button"
-					variant="info"
-					v-text="'List View'"
-					:to="{ name: 'themes.list' }"/>
+				<h2 v-text="titleText"/>
 
-				<b-button
-					v-if="!isInCreateMode"
-					class="ThemesEdit__header__button"
-					variant="danger"
-					v-text="'Delete Theme'"
-					:disabled="page.isSubmitting"
-					@click="onDeleteClick"/>
+				<div class="ThemesEdit__header__buttons">
 
-				<b-button
-					v-if="isInCreateMode"
-					class="ThemesEdit__header__button"
-					variant="outline-primary"
-					v-text="'Create Theme'"
-					:disabled="isSubmitDisabled"
-					@click="onCreateClick"/>
+					<b-button
+						class="ThemesEdit__header__button"
+						variant="info"
+						v-text="'List View'"
+						:to="{ name: 'themes.list' }"/>
 
-				<b-button
-					v-if="!isInCreateMode"
-					class="ThemesEdit__header__button"
-					variant="primary"
-					v-text="'Update Theme'"
-					:disabled="isSubmitDisabled"
-					@click="onUpdateClick"/>
+					<b-button
+						v-if="!isInCreateMode"
+						class="ThemesEdit__header__button"
+						variant="danger"
+						v-text="'Delete Theme'"
+						:disabled="page.isSubmitting"
+						@click="openConfirmDeleteModal"/>
 
-			</div>
+					<b-button
+						v-if="isInCreateMode"
+						class="ThemesEdit__header__button"
+						variant="outline-primary"
+						v-text="'Create Theme'"
+						:disabled="isSubmitDisabled"
+						@click="onCreateClick"/>
 
-			<h2 v-text="titleText"/>
+					<b-button
+						v-if="!isInCreateMode"
+						class="ThemesEdit__header__button"
+						variant="outline-info"
+						v-text="'Update Theme'"
+						:disabled="isSubmitDisabled"
+						@click="onUpdateClick"/>
 
-		</section>
-
-		<span
-			v-if="page.isLoading"
-			v-text="'Loading...'"/>
-
-		<span
-			v-if="page.isSubmitting"
-			v-text="'Submitting...'"/>
-
-		<template v-if="!page.isLoading && !page.isSubmitting">
-
-			<b-form-group
-				label="Name"
-				label-for="ThemesEdit__name">
-				<b-form-input
-					id="ThemesEdit__name"
-					v-model="themeInput.name"
-					trim/>
-			</b-form-group>
-
-			<section>
-				<h3>Lights</h3>
-				<div class="ThemesEdit__lights">
-
-					<light
-						v-for="(light, i) in themeInput.lights"
-						:key="light.name"
-						class="ThemesEdit__lights__item"
-						v-model="themeInput.lights[i]"/>
 				</div>
+
 			</section>
 
-		</template>
+			<span
+				v-if="page.isLoading"
+				v-text="'Loading...'"/>
 
-	</b-container>
+			<span
+				v-if="page.isSubmitting"
+				v-text="'Submitting...'"/>
+
+			<template v-if="!page.isLoading && !page.isSubmitting">
+
+				<b-form-group
+					label="Name"
+					label-for="ThemesEdit__name">
+					<b-form-input
+						id="ThemesEdit__name"
+						v-model="themeInput.name"
+						trim/>
+				</b-form-group>
+
+				<section>
+					<h3>Lights</h3>
+					<light-list v-model="themeInput.lights"/>
+				</section>
+
+			</template>
+
+		</b-container>
+
+		<b-modal
+			:visible="page.isConfirmDeleteModalVisible"
+			title="Delete Theme"
+			header-text-variant="light"
+			header-bg-variant="danger"
+			ok-variant="danger"
+			cancel-variant="info"
+			@ok="onDeleteClick"
+			@hidden="hideConfirmDeleteModal">
+			<span v-text="'Are you sure you want to delete this theme?'"/>
+		</b-modal>
+
+	</div>
 </template>
 
 <script>
 import { cloneDeep } from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
 import toastService from '../../lib/toastService';
-import Light from '../Lights/components/Light.vue';
+import LightList from '../Lights/components/LightList.vue';
 
 export default {
 	components: {
-		Light
+		LightList
 	},
 	data() {
 		return {
 			page: {
 				isLoading: false,
-				isSubmitting: false
+				isSubmitting: false,
+				isConfirmDeleteModalVisible: false
 			},
 			themeInput: {}
 		};
@@ -163,6 +173,12 @@ export default {
 				toastService.toast(err.message);
 			}
 			this.page.isSubmitting = false;
+		},
+		openConfirmDeleteModal() {
+			this.page.isConfirmDeleteModalVisible = true;
+		},
+		hideConfirmDeleteModal() {
+			this.page.isConfirmDeleteModalVisible = false;
 		}
 	},
 	created() {
@@ -175,18 +191,40 @@ export default {
 <style lang="scss">
 
 .ThemesEdit {
-	margin-top: 1rem;
-	display: flex;
-	flex-direction: column;
+
+	&__content {
+		margin-top: 1rem;
+		display: flex;
+		flex-direction: column;
+	}
 
 	&__header {
 		display: flex;
-		flex-direction: row-reverse;
+		flex-direction: column;
 		justify-content: space-between;
 		margin-bottom: 1rem;
 
+		@media all and (min-width: 768px) {
+			flex-direction: row;
+		}
+
+		&__buttons {
+			display: flex;
+			flex-direction: column;
+
+			@media all and (min-width: 768px) {
+				flex-direction: row;
+			}
+		}
+
 		&__button {
-			margin-left: 1rem;
+			margin-bottom: 1rem;
+
+			@media all and (min-width: 768px) {
+				margin-bottom: 0;
+				margin-left: 1rem;
+			}
+
 		}
 	}
 
