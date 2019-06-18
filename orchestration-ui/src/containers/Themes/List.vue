@@ -88,7 +88,8 @@
 
 						<span
 							v-if="data.item.isSubmitting"
-							v-text="'Submitting'"/>
+							class="ThemesList__table__actions__item"
+							v-text="'Submitting...'"/>
 
 					</div>
 
