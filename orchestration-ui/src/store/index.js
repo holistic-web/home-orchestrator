@@ -4,8 +4,8 @@ import firebase from 'firebase';
 import VuexPersistence from 'vuex-persist';
 import config from '../config';
 import accountStore from './modules/account';
-import controlStore from './modules/control';
 import lightsStore from './modules/lights';
+import themeStore from './modules/themes';
 
 Vue.use(Vuex);
 
@@ -28,8 +28,8 @@ const storeConfig = {
 	},
 	modules: {
 		account: accountStore,
-		control: controlStore,
-		lights: lightsStore
+		lights: lightsStore,
+		themes: themeStore
 	},
 	plugins: [
 		persistedState.plugin

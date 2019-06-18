@@ -4,7 +4,8 @@ const routes = [
 	{
 		name: 'lights.page',
 		path: '/lights',
-		component: Page
+		component: Page,
+		menuName: 'Lights'
 	}
 ];
 
