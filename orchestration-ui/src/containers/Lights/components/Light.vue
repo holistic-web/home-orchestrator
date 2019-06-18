@@ -193,15 +193,11 @@ export default {
 	}
 
 	&__item {
-		padding: 1rem 0;
+		padding: 1rem;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-
-		@media all and (min-width: 768px) {
-			padding: 0 1rem;
-		}
 	}
 
 	&__controls {
