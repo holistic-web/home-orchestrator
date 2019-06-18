@@ -7,16 +7,25 @@
 
 				<b-button
 					class="ThemesEdit__header__button"
-					variant="warning"
-					v-text="'List'"
+					variant="info"
+					v-text="'List View'"
 					:to="{ name: 'themes.list' }"/>
 
 				<b-button
+					v-if="isInCreateMode"
 					class="ThemesEdit__header__button"
-					variant="primary"
+					variant="outline-primary"
 					v-text="'Create Theme'"
 					:disabled="isSubmitDisabled"
-					@click="onCreateThemeClick"/>
+					@click="onCreateClick"/>
+
+				<b-button
+					v-if="!isInCreateMode"
+					class="ThemesEdit__header__button"
+					variant="primary"
+					v-text="'Update Theme'"
+					:disabled="isSubmitDisabled"
+					@click="onUpdateClick"/>
 
 			</div>
 
@@ -48,7 +57,7 @@
 				<div class="ThemesEdit__lights">
 
 					<light
-						v-for="(light, i) in lights"
+						v-for="(light, i) in themeInput.lights"
 						:key="light.name"
 						class="ThemesEdit__lights__item"
 						v-model="themeInput.lights[i]"/>
@@ -81,7 +90,8 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			lights: 'lights/lights'
+			lights: 'lights/lights',
+			theme: 'themes/theme'
 		}),
 		isInCreateMode() {
 			return this.$route.name === 'themes.create';
@@ -97,22 +107,39 @@ export default {
 	methods: {
 		...mapActions({
 			fetchLights: 'lights/fetchLights',
-			createTheme: 'themes/createTheme'
+			fetchTheme: 'themes/fetchTheme',
+			updateTheme: 'themes/updateTheme',
+			createTheme: 'themes/createTheme',
+			applyTheme: 'themes/applyTheme'
 		}),
 		async setUpPage() {
 			this.page.isLoading = true;
 			if (this.isInCreateMode) {
 				await this.fetchLights();
 				this.themeInput.lights = cloneDeep(this.lights);
+			} else {
+				const { id } = this.$route.params;
+				await this.fetchTheme(id);
+				this.themeInput = this.theme;
 			}
 			this.page.isLoading = false;
 		},
-		async onCreateThemeClick() {
+		async onCreateClick() {
 			this.page.isSubmitting = true;
 			try {
 				await this.createTheme(this.themeInput);
 				toastService.toast('Theme created');
 				this.$router.push({ name: 'themes.list' });
+			} catch (err) {
+				toastService.toast(err.message);
+			}
+			this.page.isSubmitting = false;
+		},
+		async onUpdateClick() {
+			this.page.isSubmitting = true;
+			try {
+				await this.updateTheme(this.themeInput);
+				toastService.toast('Theme updated');
 			} catch (err) {
 				toastService.toast(err.message);
 			}

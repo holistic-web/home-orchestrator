@@ -12,6 +12,11 @@ const routes = [
 		name: 'themes.create',
 		path: '/themes/create',
 		component: Edit
+	},
+	{
+		name: 'themes.edit',
+		path: '/themes/:id',
+		component: Edit
 	}
 ];
 
