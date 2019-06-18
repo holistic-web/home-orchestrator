@@ -1,6 +1,6 @@
 ## Known Issues
 
-- linting doesn't seem consistent across projects
+- linting doesn't seem consistent across projects, and still need the .vue extension?
 
 - occasionally nanoleaf brightness doesn't fire when changing colour, seems to be a race condition worth looking into
 

@@ -18,13 +18,13 @@
 
 - could use some form of navigation aid or breadcrumb
 
+- could use some form of default layout component
+
 - scenes should have something to indicate what they look like in the UI
 
 - should be able to update lights one by one
 
 - user experience should be smoother: if off don't show inputs for lights
-
-- Could use some form of default layout component
 
 - Loading... and Submitting... messages should be replaced with icons
 

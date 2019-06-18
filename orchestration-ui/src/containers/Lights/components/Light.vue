@@ -156,31 +156,52 @@ export default {
 <style lang="scss">
 
 .Light {
-	min-height: 22rem;
+
+	@media all and (min-width: 768px) {
+		min-height: 20rem;
+	}
 
 	&__inner {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+
+		@media all and (min-width: 768px) {
+			flex-direction: row;
+			justify-content: space-between;
+		}
 	}
 
 	&__label {
 		width: 100%;
+
+		@media all and (min-width: 768px) {
+			width: auto;
+		}
 	}
 
 	&__items {
 		height: 100%;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-around;
+
+		@media all and (min-width: 768px) {
+			min-width: 26rem;
+			flex-direction: row;
+			justify-content: space-around;
+		}
 	}
 
 	&__item {
-		padding: 1rem;
+		padding: 1rem 0;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+
+		@media all and (min-width: 768px) {
+			padding: 0 1rem;
+		}
 	}
 
 	&__controls {
