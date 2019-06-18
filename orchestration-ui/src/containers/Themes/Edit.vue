@@ -15,7 +15,7 @@
 					class="ThemesEdit__header__button"
 					variant="primary"
 					v-text="'Create Theme'"
-					:disabled="page.isSubmitting"
+					:disabled="isSubmitDisabled"
 					@click="onCreateThemeClick"/>
 
 			</div>
@@ -33,16 +33,28 @@
 			v-text="'Submitting...'"/>
 
 		<template v-if="!page.isLoading && !page.isSubmitting">
-			<h3>Lights</h3>
-			<div class="ThemesEdit__lights">
 
-				<light
-					v-for="(light, i) in lights"
-					:key="light.name"
-					class="ThemesEdit__lights__item"
-					v-model="themeInput.lights[i]"/>
+			<b-form-group
+				label="Name"
+				label-for="ThemesEdit__name">
+				<b-form-input
+					id="ThemesEdit__name"
+					v-model="themeInput.name"
+					trim/>
+			</b-form-group>
 
-			</div>
+			<section>
+				<h3>Lights</h3>
+				<div class="ThemesEdit__lights">
+
+					<light
+						v-for="(light, i) in lights"
+						:key="light.name"
+						class="ThemesEdit__lights__item"
+						v-model="themeInput.lights[i]"/>
+				</div>
+			</section>
+
 		</template>
 
 	</b-container>
@@ -77,6 +89,9 @@ export default {
 		titleText() {
 			if (this.isInCreateMode) return 'New Theme';
 			return 'Edit Theme';
+		},
+		isSubmitDisabled() {
+			return (!this.themeInput.name || this.page.isSubmitting);
 		}
 	},
 	methods: {
