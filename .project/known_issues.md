@@ -7,3 +7,5 @@
 - themes contain more information than they need to, they only need light ID and state
 
 - themes section in UI is not mobile friendly at all
+
+- user can create a theme without selecting a scene, adding a theme with a blank light (probably also affects updating lights)
