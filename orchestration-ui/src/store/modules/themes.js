@@ -37,6 +37,11 @@ export default {
 			const result = await createTheme(theme);
 			return result;
 		},
+		async deleteTheme({ rootState }, theme) {
+			const deleteTheme = rootState.firebase.functions().httpsCallable('deleteTheme');
+			const result = await deleteTheme(theme);
+			return result;
+		},
 		async applyTheme({ dispatch }, theme) {
 			await dispatch('lights/updateLights', theme.lights, { root: true });
 			return 'success';

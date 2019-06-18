@@ -12,6 +12,14 @@
 					:to="{ name: 'themes.list' }"/>
 
 				<b-button
+					v-if="!isInCreateMode"
+					class="ThemesEdit__header__button"
+					variant="danger"
+					v-text="'Delete Theme'"
+					:disabled="page.isSubmitting"
+					@click="onDeleteClick"/>
+
+				<b-button
 					v-if="isInCreateMode"
 					class="ThemesEdit__header__button"
 					variant="outline-primary"
@@ -110,7 +118,7 @@ export default {
 			fetchTheme: 'themes/fetchTheme',
 			updateTheme: 'themes/updateTheme',
 			createTheme: 'themes/createTheme',
-			applyTheme: 'themes/applyTheme'
+			deleteTheme: 'themes/deleteTheme'
 		}),
 		async setUpPage() {
 			this.page.isLoading = true;
@@ -140,6 +148,17 @@ export default {
 			try {
 				await this.updateTheme(this.themeInput);
 				toastService.toast('Theme updated');
+			} catch (err) {
+				toastService.toast(err.message);
+			}
+			this.page.isSubmitting = false;
+		},
+		async onDeleteClick() {
+			this.page.isSubmitting = true;
+			try {
+				await this.deleteTheme(this.themeInput);
+				toastService.toast('Theme deleted');
+				this.$router.push({ name: 'themes.list' });
 			} catch (err) {
 				toastService.toast(err.message);
 			}
