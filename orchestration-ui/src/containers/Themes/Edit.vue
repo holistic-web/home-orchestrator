@@ -5,7 +5,9 @@
 
 			<section class="ThemesEdit__header">
 
-				<div>
+				<h2 v-text="titleText"/>
+
+				<div class="ThemesEdit__header__buttons">
 
 					<b-button
 						class="ThemesEdit__header__button"
@@ -38,8 +40,6 @@
 						@click="onUpdateClick"/>
 
 				</div>
-
-				<h2 v-text="titleText"/>
 
 			</section>
 
@@ -200,12 +200,31 @@ export default {
 
 	&__header {
 		display: flex;
-		flex-direction: row-reverse;
+		flex-direction: column;
 		justify-content: space-between;
 		margin-bottom: 1rem;
 
+		@media all and (min-width: 768px) {
+			flex-direction: row;
+		}
+
+		&__buttons {
+			display: flex;
+			flex-direction: column;
+
+			@media all and (min-width: 768px) {
+				flex-direction: row;
+			}
+		}
+
 		&__button {
-			margin-left: 1rem;
+			margin-bottom: 1rem;
+
+			@media all and (min-width: 768px) {
+				margin-bottom: 0;
+				margin-left: 1rem;
+			}
+
 		}
 	}
 

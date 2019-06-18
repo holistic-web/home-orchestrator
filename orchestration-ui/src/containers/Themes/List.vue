@@ -3,7 +3,9 @@
 
 		<section class="ThemesList__header">
 
-			<div>
+			<h2>Themes</h2>
+
+			<div class="ThemesList__header__buttons">
 
 				<b-button
 					class="ThemesList__header__button"
@@ -18,8 +20,6 @@
 					:to="{ name: 'themes.create' }"/>
 
 			</div>
-
-			<h2>Themes</h2>
 
 		</section>
 
@@ -161,12 +161,31 @@ export default {
 
 	&__header {
 		display: flex;
-		flex-direction: row-reverse;
+		flex-direction: column;
 		justify-content: space-between;
 		margin-bottom: 1rem;
 
+		@media all and (min-width: 768px) {
+			flex-direction: row;
+		}
+
+		&__buttons {
+			display: flex;
+			flex-direction: column;
+
+			@media all and (min-width: 768px) {
+				flex-direction: row;
+			}
+		}
+
 		&__button {
-			margin-left: 1rem;
+			margin-bottom: 1rem;
+
+			@media all and (min-width: 768px) {
+				margin-bottom: 0;
+				margin-left: 1rem;
+			}
+
 		}
 	}
 
