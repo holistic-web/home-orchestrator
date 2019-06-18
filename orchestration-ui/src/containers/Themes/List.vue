@@ -74,12 +74,6 @@
 					<div class="ThemesList__table__actions">
 
 						<b-btn
-							class="ThemesList__table__actions__item"
-							variant="outline-info"
-							v-text="'Edit'"
-							:to="{ name: 'themes.edit', params: { id: data.item._id } }"/>
-
-						<b-btn
 							v-if="!data.item.isSubmitting"
 							class="ThemesList__table__actions__item"
 							variant="primary"
@@ -90,6 +84,12 @@
 							v-if="data.item.isSubmitting"
 							class="ThemesList__table__actions__item"
 							v-text="'Submitting...'"/>
+
+						<b-btn
+							class="ThemesList__table__actions__item"
+							variant="outline-info"
+							v-text="'Edit'"
+							:to="{ name: 'themes.edit', params: { id: data.item._id } }"/>
 
 					</div>
 
@@ -200,11 +200,21 @@ export default {
 
 		&__actions {
 			display: flex;
-			flex-direction: row;
+			flex-direction: column;
 			justify-content: flex-end;
 
+			@media all and (min-width: 768px) {
+				flex-direction: row-reverse;
+				justify-content: flex-start;
+			}
+
 			&__item {
-				margin-left: 1rem;
+				margin-bottom: 1rem;
+
+				@media all and (min-width: 768px) {
+					margin-bottom: 0;
+					margin-left: 1rem;
+				}
 			}
 		}
 	}
