@@ -111,6 +111,10 @@ export default {
 		&__buttons {
 			display: flex;
 			flex-direction: column;
+
+			@media all and (min-width: 768px) {
+				flex-direction: row;
+			}
 		}
 
 		&__button {
