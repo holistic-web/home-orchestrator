@@ -7,15 +7,15 @@
 
 				<b-button
 					class="ThemesList__header__button"
-					variant="outline-info"
-					v-text="'New Theme'"
-					:to="{ name: 'themes.create' }"/>
-
-				<b-button
-					class="ThemesList__header__button"
 					variant="info"
 					v-text="'Refresh'"
 					@click="fetchThemesAndSetupPage"/>
+
+				<b-button
+					class="ThemesList__header__button"
+					variant="outline-info"
+					v-text="'New Theme'"
+					:to="{ name: 'themes.create' }"/>
 
 			</div>
 
@@ -47,18 +47,22 @@
 						<b
 							class="ThemesList__table__lights__item"
 							v-text="`${light.name}:`"/>
-						<span
-							class="ThemesList__table__lights__item"
-							v-if="light.state.colour"
-							v-text="`Colour: ${light.state.colour};`"/>
-						<span
-							class="ThemesList__table__lights__item"
-							v-if="light.state.brightness"
-							v-text="`Brightness: ${light.state.brightness};`"/>
-						<span
-							class="ThemesList__table__lights__item"
-							v-if="light.state.scene"
-							v-text="`Scene: ${light.state.scene};`"/>
+
+						<span v-if="!light.state.on" v-text="'off'"/>
+						<template v-else>
+							<span
+								class="ThemesList__table__lights__item"
+								v-if="light.state.colour"
+								v-text="`colour: ${light.state.colour};`"/>
+							<span
+								class="ThemesList__table__lights__item"
+								v-if="light.state.brightness"
+								v-text="`brightness: ${light.state.brightness};`"/>
+							<span
+								class="ThemesList__table__lights__item"
+								v-if="light.state.scene"
+								v-text="`scene: ${light.state.scene};`"/>
+						</template>
 					</div>
 
 				</template>
