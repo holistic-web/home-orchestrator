@@ -28,7 +28,11 @@
 			v-if="page.isLoading"
 			v-text="'Loading...'"/>
 
-		<template v-if="!page.isLoading">
+		<span
+			v-if="page.isSubmitting"
+			v-text="'Submitting...'"/>
+
+		<template v-if="!page.isLoading && !page.isSubmitting">
 			<h3>Lights</h3>
 			<div class="ThemesEdit__lights">
 
