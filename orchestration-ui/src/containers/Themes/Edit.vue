@@ -7,6 +7,12 @@
 
 				<b-button
 					class="ThemesEdit__header__button"
+					variant="warning"
+					v-text="'List'"
+					:to="{ name: 'themes.list' }"/>
+
+				<b-button
+					class="ThemesEdit__header__button"
 					variant="primary"
 					v-text="'Create Theme'"
 					:disabled="page.isSubmitting"
@@ -89,7 +95,7 @@ export default {
 				toastService.toast('Theme created');
 				this.$router.push({ name: 'themes.list' });
 			} catch (err) {
-				toastService.toast(err);
+				toastService.toast(err.message);
 			}
 			this.page.isSubmitting = false;
 		}
