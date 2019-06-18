@@ -19,16 +19,12 @@ Allows a user to manage and apply themes, which are pre saved states of how thin
 To get the project up and running:
 
 1. Ensure [Node.js](https://nodejs.org) is installed on the development machine
-2. Open a terminal and change directory to this folder (`/portfolio-management/admin-ui/`)
+2. Open a terminal and change directory to this folder
 3. Run `npm install` to install project dependencies
 4. Run `npm run serve` to host the project locally
-5. If you want to build the project (to deploy it), run `npm run build` and follow the instructions displayed
-
 
 ## Hosting and Deployment
-This site is hosted on firebase project 'Portfolio Fabricator'. Raise an issue to gain access if you don't have it already.
-
-It is deployed under the target name `portfolio-administration`, this can be seen in the Firebase Hosting Console.
+It is deployed under on the firebase project 'Home Orchestrator'. Raise an issue if you don't have access.
 
 To deploy the project:
 1. Ensure the steps in 'Getting started' all complete succesfully
