@@ -26,6 +26,8 @@
 
 - Could use some form of default layout component
 
+- Loading... and Submitting... messages should be replaced with icons
+
 
 ### Light Control
 
