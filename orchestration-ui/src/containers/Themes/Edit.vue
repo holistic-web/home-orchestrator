@@ -64,13 +64,7 @@
 
 				<section>
 					<h3>Lights</h3>
-					<div class="ThemesEdit__lights">
-						<light
-							v-for="(light, i) in themeInput.lights"
-							:key="light.name"
-							class="ThemesEdit__lights__item"
-							v-model="themeInput.lights[i]"/>
-					</div>
+					<light-list v-model="themeInput.lights"/>
 				</section>
 
 			</template>
@@ -96,11 +90,11 @@
 import { cloneDeep } from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
 import toastService from '../../lib/toastService';
-import Light from '../Lights/components/Light.vue';
+import LightList from '../Lights/components/LightList.vue';
 
 export default {
 	components: {
-		Light
+		LightList
 	},
 	data() {
 		return {
