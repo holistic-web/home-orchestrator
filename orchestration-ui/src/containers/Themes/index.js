@@ -4,7 +4,7 @@ import Edit from './Edit.vue';
 const routes = [
 	{
 		name: 'themes.list',
-		path: '/theme',
+		path: '/themes',
 		component: List,
 		menuName: 'Themes'
 	},
