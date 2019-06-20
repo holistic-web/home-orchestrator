@@ -108,8 +108,7 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			lights: 'lights/lights',
-			theme: 'themes/theme'
+			lights: 'lights/lights'
 		}),
 		isInCreateMode() {
 			return this.$route.name === 'themes.create';
@@ -137,8 +136,7 @@ export default {
 				this.themeInput.lights = cloneDeep(this.lights);
 			} else {
 				const { id } = this.$route.params;
-				await this.fetchTheme(id);
-				this.themeInput = this.theme;
+				this.themeInput = await this.fetchTheme(id);
 			}
 			this.page.isLoading = false;
 		},
@@ -181,8 +179,11 @@ export default {
 			this.page.isConfirmDeleteModalVisible = false;
 		}
 	},
-	created() {
-		this.setUpPage();
+	watch: {
+		$route: {
+			immediate: true,
+			handler: 'setUpPage'
+		}
 	}
 };
 
