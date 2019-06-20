@@ -9,7 +9,7 @@
 
 ## Sharing
 
-- other users should be able to sign up and have their own lights
+- other users should be able to sign up and have their own lights and themes
 
 - they should be able to set their own authenticated users
 
@@ -31,8 +31,15 @@
 
 ### Light Control
 
-- these should use native apis rather than IFTTT if possibel to reduce response times
-
-- relevant IFTTT triggers should be managed through the IFTTT API
+- relevant IFTTT triggers be created as part of a 'create light process'
 
 - lights should be able to be grouped to be treated as one
+
+
+### Button Control
+- buttons should be able to apply scenes
+
+### Button Control
+- buttons should be able to apply scenes
+
+- relevant ifttt triggers should be setup buttons
