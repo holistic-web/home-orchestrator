@@ -5,7 +5,6 @@
 		:header-text-variant="headerTextVariant"
 		:header-bg-variant="headerBgVariant"
 		:ok-variant="okVariant"
-		cancel-variant="info"
 		@ok="$emit('ok')"
 		@hidden="$emit('hidden')">
 		<span v-text="text"/>

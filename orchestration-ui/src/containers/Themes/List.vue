@@ -30,30 +30,7 @@
 
 				<template slot="lights" slot-scope="data">
 
-					<div
-						class="ThemesList__lights"
-						v-for="light in data.item.lights"
-						:key="light.name">
-						<b
-							class="ThemesList__lights__item"
-							v-text="`${light.name}:`"/>
-
-						<span v-if="!light.state.on" v-text="'off'"/>
-						<template v-else>
-							<span
-								class="ThemesList__lights__item"
-								v-if="light.state.colour"
-								v-text="`colour: ${light.state.colour};`"/>
-							<span
-								class="ThemesList__lights__item"
-								v-if="light.state.brightness"
-								v-text="`brightness: ${light.state.brightness};`"/>
-							<span
-								class="ThemesList__lights__item"
-								v-if="light.state.scene"
-								v-text="`scene: ${light.state.scene};`"/>
-						</template>
-					</div>
+					<lights-preview :lights="data.item.lights"/>
 
 				</template>
 
@@ -97,10 +74,12 @@
 import { mapGetters, mapActions } from 'vuex';
 import toastService from '../../lib/toastService';
 import DefaultLayout from '../../components/DefaultLayout.vue';
+import LightsPreview from '../Lights/components/LightsPreview.vue';
 
 export default {
 	components: {
-		DefaultLayout
+		DefaultLayout,
+		LightsPreview
 	},
 	data() {
 		return {
@@ -150,13 +129,6 @@ export default {
 <style lang="scss">
 
 .ThemesList {
-
-	&__lights {
-
-		&__item {
-			margin-right: 1rem;
-		}
-	}
 
 	&__actions {
 		display: flex;

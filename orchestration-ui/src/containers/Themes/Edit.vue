@@ -8,27 +8,33 @@
 		<template v-slot:actions>
 			<b-button
 				variant="info"
-				v-text="'List View'"
+				v-text="'List'"
 				:to="{ name: 'themes.list' }"/>
 
 			<b-button
 				v-if="!isInCreateMode"
 				variant="danger"
-				v-text="'Delete Theme'"
+				v-text="'Delete'"
 				:disabled="page.isSubmitting"
 				@click="openConfirmDeleteModal"/>
 
 			<b-button
+				variant="primary"
+				v-text="'Preview'"
+				:disabled="page.isSubmitting"
+				@click="onPreviewClick"/>
+
+			<b-button
 				v-if="isInCreateMode"
-				variant="outline-primary"
-				v-text="'Create Theme'"
+				variant="outline-info"
+				v-text="'Create'"
 				:disabled="isSubmitDisabled"
 				@click="onCreateClick"/>
 
 			<b-button
 				v-if="!isInCreateMode"
 				variant="outline-info"
-				v-text="'Update Theme'"
+				v-text="'Update'"
 				:disabled="isSubmitDisabled"
 				@click="onUpdateClick"/>
 		</template>
@@ -68,7 +74,7 @@ import { mapGetters, mapActions } from 'vuex';
 import toastService from '../../lib/toastService';
 import DefaultLayout from '../../components/DefaultLayout.vue';
 import ConfirmModal from '../../components/ConfirmModal.vue';
-import LightList from '../Lights/components/LightList.vue';
+import LightList from '../Lights/components/List.vue';
 
 export default {
 	components: {
@@ -107,7 +113,8 @@ export default {
 			fetchTheme: 'themes/fetchTheme',
 			updateTheme: 'themes/updateTheme',
 			createTheme: 'themes/createTheme',
-			deleteTheme: 'themes/deleteTheme'
+			deleteTheme: 'themes/deleteTheme',
+			applyTheme: 'themes/applyTheme'
 		}),
 		async setUpPage() {
 			this.page.isLoading = true;
@@ -141,6 +148,16 @@ export default {
 			}
 			this.page.isSubmitting = false;
 		},
+		async onPreviewClick() {
+			this.page.isSubmitting = true;
+			try {
+				await this.applyTheme(this.themeInput);
+				toastService.toast('Theme applied');
+			} catch (err) {
+				toastService.toast(`Error applying theme: ${err}`);
+			}
+			this.page.isSubmitting = false;
+		},
 		async onDeleteClick() {
 			this.page.isSubmitting = true;
 			try {
@@ -148,7 +165,7 @@ export default {
 				toastService.toast('Theme deleted');
 				this.$router.push({ name: 'themes.list' });
 			} catch (err) {
-				toastService.toast(err.message);
+				toastService.toast(`Error deleting theme: ${err}`);
 			}
 			this.page.isSubmitting = false;
 		},
