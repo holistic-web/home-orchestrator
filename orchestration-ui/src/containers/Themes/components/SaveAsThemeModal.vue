@@ -2,7 +2,7 @@
 	<b-modal
 		:visible="visible"
 		title="Save as Theme"
-		ok-variant="info"
+		ok-variant="outline-info"
 		ok-title="Save"
 		:ok-disabled="isSubmitDisabled"
 		@ok="onSubmit"

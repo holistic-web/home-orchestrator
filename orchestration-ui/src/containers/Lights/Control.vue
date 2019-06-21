@@ -12,7 +12,7 @@
 				@click="fetch"/>
 
 			<b-btn
-				variant="info"
+				variant="outline-info"
 				v-text="'Save as Theme'"
 				@click="showSaveAsThemeModal"/>
 
