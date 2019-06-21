@@ -1,89 +1,81 @@
 <template>
-	<div class="ThemesEdit">
+	<b-container class="ThemesEdit">
 
-		<b-container class="ThemesEdit__content">
+		<section class="Header">
 
-			<section class="ThemesEdit__header">
+			<h2 v-text="titleText"/>
 
-				<h2 v-text="titleText"/>
+			<div class="Header__buttons">
 
-				<div class="ThemesEdit__header__buttons">
+				<b-button
+					class="Header__button"
+					variant="info"
+					v-text="'List View'"
+					:to="{ name: 'themes.list' }"/>
 
-					<b-button
-						class="ThemesEdit__header__button"
-						variant="info"
-						v-text="'List View'"
-						:to="{ name: 'themes.list' }"/>
+				<b-button
+					v-if="!isInCreateMode"
+					class="Header__button"
+					variant="danger"
+					v-text="'Delete Theme'"
+					:disabled="page.isSubmitting"
+					@click="openConfirmDeleteModal"/>
 
-					<b-button
-						v-if="!isInCreateMode"
-						class="ThemesEdit__header__button"
-						variant="danger"
-						v-text="'Delete Theme'"
-						:disabled="page.isSubmitting"
-						@click="openConfirmDeleteModal"/>
+				<b-button
+					v-if="isInCreateMode"
+					class="Header__button"
+					variant="outline-primary"
+					v-text="'Create Theme'"
+					:disabled="isSubmitDisabled"
+					@click="onCreateClick"/>
 
-					<b-button
-						v-if="isInCreateMode"
-						class="ThemesEdit__header__button"
-						variant="outline-primary"
-						v-text="'Create Theme'"
-						:disabled="isSubmitDisabled"
-						@click="onCreateClick"/>
+				<b-button
+					v-if="!isInCreateMode"
+					class="Header__button"
+					variant="outline-info"
+					v-text="'Update Theme'"
+					:disabled="isSubmitDisabled"
+					@click="onUpdateClick"/>
 
-					<b-button
-						v-if="!isInCreateMode"
-						class="ThemesEdit__header__button"
-						variant="outline-info"
-						v-text="'Update Theme'"
-						:disabled="isSubmitDisabled"
-						@click="onUpdateClick"/>
+			</div>
 
-				</div>
+		</section>
 
+		<span
+			v-if="page.isLoading"
+			v-text="'Loading...'"/>
+
+		<span
+			v-if="page.isSubmitting"
+			v-text="'Submitting...'"/>
+
+		<template v-if="!page.isLoading && !page.isSubmitting">
+
+			<b-form-group
+				label="Name"
+				label-for="ThemesEdit__name">
+				<b-form-input
+					id="ThemesEdit__name"
+					v-model="themeInput.name"
+					trim/>
+			</b-form-group>
+
+			<section>
+				<h3>Lights</h3>
+				<light-list v-model="themeInput.lights"/>
 			</section>
 
-			<span
-				v-if="page.isLoading"
-				v-text="'Loading...'"/>
+			<confirm-modal
+				:visible="page.isConfirmDeleteModalVisible"
+				title="Delete Theme"
+				text="Are you sure you want to delete this theme?"
+				:danger="true"
+				@ok="onDeleteClick"
+				@hidden="hideConfirmDeleteModal"/>
 
-			<span
-				v-if="page.isSubmitting"
-				v-text="'Submitting...'"/>
+		</template>
 
-			<template v-if="!page.isLoading && !page.isSubmitting">
-
-				<b-form-group
-					label="Name"
-					label-for="ThemesEdit__name">
-					<b-form-input
-						id="ThemesEdit__name"
-						v-model="themeInput.name"
-						trim/>
-				</b-form-group>
-
-				<section>
-					<h3>Lights</h3>
-					<light-list v-model="themeInput.lights"/>
-				</section>
-
-			</template>
-
-		</b-container>
-
-		<b-modal
-			:visible="page.isConfirmDeleteModalVisible"
-			title="Delete Theme"
-			header-text-variant="light"
-			header-bg-variant="danger"
-			ok-variant="danger"
-			cancel-variant="info"
-			@ok="onDeleteClick"
-			@hidden="hideConfirmDeleteModal">
-			<span v-text="'Are you sure you want to delete this theme?'"/>
-		</b-modal>
-
-	</div>
+	</b-container>
 </template>
 
 <script>
@@ -91,10 +83,12 @@ import { cloneDeep } from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
 import toastService from '../../lib/toastService';
 import LightList from '../Lights/components/LightList.vue';
+import ConfirmModal from '../../components/ConfirmModal.vue';
 
 export default {
 	components: {
-		LightList
+		LightList,
+		ConfirmModal
 	},
 	data() {
 		return {
@@ -194,7 +188,7 @@ export default {
 .ThemesEdit {
 
 	&__content {
-		margin-top: 1rem;
+		padding-top: 1rem;
 		display: flex;
 		flex-direction: column;
 	}

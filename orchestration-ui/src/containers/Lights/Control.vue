@@ -1,20 +1,20 @@
 <template>
-	<b-container class="Lights">
+	<b-container class="LightsControl">
 
-		<section class="Lights__header">
+		<section class="Header">
 
 			<h2>Lights</h2>
 
-			<div class="Lights__header__buttons">
+			<div class="Header__buttons">
 				<b-button
-					class="Lights__header__button"
+					class="Header__button"
 					variant="info"
 					v-text="'Refresh'"
 					@click="fetchLightsAndSetupPage"/>
 
 				<b-btn
 					v-if="!page.isSubmitting"
-					class="Lights__header__button"
+					class="Header__button"
 					variant="primary"
 					v-text="'Update Lights'"
 					@click="submit"/>
@@ -93,40 +93,10 @@ export default {
 
 <style lang="scss">
 
-.Lights {
-	margin-top: 1rem;
+.LightsControl {
+	padding-top: 1rem;
 	display: flex;
 	flex-direction: column;
-
-	&__header {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		margin-bottom: 1rem;
-
-		@media all and (min-width: 768px) {
-			flex-direction: row;
-		}
-
-		&__buttons {
-			display: flex;
-			flex-direction: column;
-
-			@media all and (min-width: 768px) {
-				flex-direction: row;
-			}
-		}
-
-		&__button {
-			margin-bottom: 1rem;
-
-			@media all and (min-width: 768px) {
-				margin-bottom: 0;
-				margin-left: 1rem;
-			}
-
-		}
-	}
 }
 
 </style>

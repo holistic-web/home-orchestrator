@@ -1,20 +1,20 @@
 <template>
 	<b-container class="ThemesList">
 
-		<section class="ThemesList__header">
+		<section class="Header">
 
 			<h2>Themes</h2>
 
-			<div class="ThemesList__header__buttons">
+			<div class="Header__buttons">
 
 				<b-button
-					class="ThemesList__header__button"
+					class="Header__button"
 					variant="info"
 					v-text="'Refresh'"
 					@click="fetchThemesAndSetupPage"/>
 
 				<b-button
-					class="ThemesList__header__button"
+					class="Header__button"
 					variant="outline-info"
 					v-text="'New Theme'"
 					:to="{ name: 'themes.create' }"/>
@@ -155,39 +155,9 @@ export default {
 <style lang="scss">
 
 .ThemesList {
-	margin-top: 1rem;
+	padding-top: 1rem;
 	display: flex;
 	flex-direction: column;
-
-	&__header {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		margin-bottom: 1rem;
-
-		@media all and (min-width: 768px) {
-			flex-direction: row;
-		}
-
-		&__buttons {
-			display: flex;
-			flex-direction: column;
-
-			@media all and (min-width: 768px) {
-				flex-direction: row;
-			}
-		}
-
-		&__button {
-			margin-bottom: 1rem;
-
-			@media all and (min-width: 768px) {
-				margin-bottom: 0;
-				margin-left: 1rem;
-			}
-
-		}
-	}
 
 	&__table {
 
