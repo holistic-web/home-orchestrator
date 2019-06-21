@@ -35,7 +35,10 @@
 
 
 ### Button Control
+
 - buttons should be able to apply scenes
+
+- user should be able to add a button and have it set up relevant IFTTT triggers
 
 ### Button Control
 - buttons should be able to apply scenes
