@@ -36,38 +36,6 @@ export default {
 	}
 }
 
-/* Re useable classes */
-.Header {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	margin-bottom: 1rem;
-
-	@media all and (min-width: 768px) {
-		flex-direction: row;
-	}
-
-	&__buttons {
-		display: flex;
-		flex-direction: column;
-
-		@media all and (min-width: 768px) {
-			flex-direction: row;
-		}
-	}
-
-	&__button {
-		margin-bottom: 1rem;
-		height: fit-content;
-
-		@media all and (min-width: 768px) {
-			margin-bottom: 0;
-			margin-left: 1rem;
-		}
-
-	}
-}
-
 /* Bootstrap Vue Customisation */
 
 // radio buttons that are clickable have mouse cursor

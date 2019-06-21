@@ -1,33 +1,23 @@
 <template>
-	<b-container class="ThemesList">
+	<default-layout :isLoading="page.isLoading" :isSubmitting="page.isSubmitting">
 
-		<section class="Header">
+		<template v-slot:title>
+			Themes
+		</template>
 
-			<h2>Themes</h2>
+		<template v-slot:actions>
+			<b-button
+				variant="info"
+				v-text="'Refresh'"
+				@click="fetchThemesAndSetupPage"/>
 
-			<div class="Header__buttons">
+			<b-button
+				variant="outline-info"
+				v-text="'New Theme'"
+				:to="{ name: 'themes.create' }"/>
+		</template>
 
-				<b-button
-					class="Header__button"
-					variant="info"
-					v-text="'Refresh'"
-					@click="fetchThemesAndSetupPage"/>
-
-				<b-button
-					class="Header__button"
-					variant="outline-info"
-					v-text="'New Theme'"
-					:to="{ name: 'themes.create' }"/>
-
-			</div>
-
-		</section>
-
-		<span
-			v-if="page.isLoading"
-			v-text="'Loading...'"/>
-
-		<template v-if="!page.isLoading">
+		<template v-slot:content>
 
 			<span
 				v-if="themes.length === 0"
@@ -41,25 +31,25 @@
 				<template slot="lights" slot-scope="data">
 
 					<div
-						class="ThemesList__table__lights"
+						class="ThemesList__lights"
 						v-for="light in data.item.lights"
 						:key="light.name">
 						<b
-							class="ThemesList__table__lights__item"
+							class="ThemesList__lights__item"
 							v-text="`${light.name}:`"/>
 
 						<span v-if="!light.state.on" v-text="'off'"/>
 						<template v-else>
 							<span
-								class="ThemesList__table__lights__item"
+								class="ThemesList__lights__item"
 								v-if="light.state.colour"
 								v-text="`colour: ${light.state.colour};`"/>
 							<span
-								class="ThemesList__table__lights__item"
+								class="ThemesList__lights__item"
 								v-if="light.state.brightness"
 								v-text="`brightness: ${light.state.brightness};`"/>
 							<span
-								class="ThemesList__table__lights__item"
+								class="ThemesList__lights__item"
 								v-if="light.state.scene"
 								v-text="`scene: ${light.state.scene};`"/>
 						</template>
@@ -71,22 +61,22 @@
 					slot="actions"
 					slot-scope="data">
 
-					<div class="ThemesList__table__actions">
+					<div class="ThemesList__actions">
 
 						<b-btn
 							v-if="!data.item.isSubmitting"
-							class="ThemesList__table__actions__item"
+							class="ThemesList__actions__item"
 							variant="primary"
 							v-text="'Apply'"
 							@click="applyThemeToItem(data.item)"/>
 
 						<span
 							v-if="data.item.isSubmitting"
-							class="ThemesList__table__actions__item"
+							class="ThemesList__actions__item"
 							v-text="'Submitting...'"/>
 
 						<b-btn
-							class="ThemesList__table__actions__item"
+							class="ThemesList__actions__item"
 							variant="outline-info"
 							v-text="'Edit'"
 							:to="{ name: 'themes.edit', params: { id: data.item._id } }"/>
@@ -100,18 +90,23 @@
 
 		</template>
 
-	</b-container>
+	</default-layout>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import toastService from '../../lib/toastService';
+import DefaultLayout from '../../components/DefaultLayout.vue';
 
 export default {
+	components: {
+		DefaultLayout
+	},
 	data() {
 		return {
 			page: {
-				isLoading: false
+				isLoading: false,
+				isSubmitting: false
 			},
 			tableFields: [
 				'name',
@@ -155,40 +150,33 @@ export default {
 <style lang="scss">
 
 .ThemesList {
-	padding-top: 1rem;
-	display: flex;
-	flex-direction: column;
 
-	&__table {
+	&__lights {
 
-		&__lights {
-
-			&__item {
-				margin-right: 1rem;
-			}
-		}
-
-		&__actions {
-			display: flex;
-			flex-direction: column;
-			justify-content: flex-end;
-
-			@media all and (min-width: 768px) {
-				flex-direction: row-reverse;
-				justify-content: flex-start;
-			}
-
-			&__item {
-				margin-bottom: 1rem;
-
-				@media all and (min-width: 768px) {
-					margin-bottom: 0;
-					margin-left: 1rem;
-				}
-			}
+		&__item {
+			margin-right: 1rem;
 		}
 	}
 
+	&__actions {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+
+		@media all and (min-width: 768px) {
+			flex-direction: row-reverse;
+			justify-content: flex-start;
+		}
+
+		&__item {
+			margin-bottom: 1rem;
+
+			@media all and (min-width: 768px) {
+				margin-bottom: 0;
+				margin-left: 1rem;
+			}
+		}
+	}
 
 }
 

@@ -1,55 +1,39 @@
 <template>
-	<b-container class="ThemesEdit">
+	<default-layout :isLoading="page.isLoading" :isSubmitting="page.isSubmitting">
 
-		<section class="Header">
+		<template v-slot:title>
+			{{ titleText }}
+		</template>
 
-			<h2 v-text="titleText"/>
+		<template v-slot:actions>
+			<b-button
+				variant="info"
+				v-text="'List View'"
+				:to="{ name: 'themes.list' }"/>
 
-			<div class="Header__buttons">
+			<b-button
+				v-if="!isInCreateMode"
+				variant="danger"
+				v-text="'Delete Theme'"
+				:disabled="page.isSubmitting"
+				@click="openConfirmDeleteModal"/>
 
-				<b-button
-					class="Header__button"
-					variant="info"
-					v-text="'List View'"
-					:to="{ name: 'themes.list' }"/>
+			<b-button
+				v-if="isInCreateMode"
+				variant="outline-primary"
+				v-text="'Create Theme'"
+				:disabled="isSubmitDisabled"
+				@click="onCreateClick"/>
 
-				<b-button
-					v-if="!isInCreateMode"
-					class="Header__button"
-					variant="danger"
-					v-text="'Delete Theme'"
-					:disabled="page.isSubmitting"
-					@click="openConfirmDeleteModal"/>
+			<b-button
+				v-if="!isInCreateMode"
+				variant="outline-info"
+				v-text="'Update Theme'"
+				:disabled="isSubmitDisabled"
+				@click="onUpdateClick"/>
+		</template>
 
-				<b-button
-					v-if="isInCreateMode"
-					class="Header__button"
-					variant="outline-primary"
-					v-text="'Create Theme'"
-					:disabled="isSubmitDisabled"
-					@click="onCreateClick"/>
-
-				<b-button
-					v-if="!isInCreateMode"
-					class="Header__button"
-					variant="outline-info"
-					v-text="'Update Theme'"
-					:disabled="isSubmitDisabled"
-					@click="onUpdateClick"/>
-
-			</div>
-
-		</section>
-
-		<span
-			v-if="page.isLoading"
-			v-text="'Loading...'"/>
-
-		<span
-			v-if="page.isSubmitting"
-			v-text="'Submitting...'"/>
-
-		<template v-if="!page.isLoading && !page.isSubmitting">
+		<template v-slot:content>
 
 			<b-form-group
 				label="Name"
@@ -75,20 +59,22 @@
 
 		</template>
 
-	</b-container>
+	</default-layout>
 </template>
 
 <script>
 import { cloneDeep } from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
 import toastService from '../../lib/toastService';
-import LightList from '../Lights/components/LightList.vue';
+import DefaultLayout from '../../components/DefaultLayout.vue';
 import ConfirmModal from '../../components/ConfirmModal.vue';
+import LightList from '../Lights/components/LightList.vue';
 
 export default {
 	components: {
-		LightList,
-		ConfirmModal
+		DefaultLayout,
+		ConfirmModal,
+		LightList
 	},
 	data() {
 		return {
@@ -182,59 +168,3 @@ export default {
 };
 
 </script>
-
-<style lang="scss">
-
-.ThemesEdit {
-
-	&__content {
-		padding-top: 1rem;
-		display: flex;
-		flex-direction: column;
-	}
-
-	&__header {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		margin-bottom: 1rem;
-
-		@media all and (min-width: 768px) {
-			flex-direction: row;
-		}
-
-		&__buttons {
-			display: flex;
-			flex-direction: column;
-
-			@media all and (min-width: 768px) {
-				flex-direction: row;
-			}
-		}
-
-		&__button {
-			margin-bottom: 1rem;
-
-			@media all and (min-width: 768px) {
-				margin-bottom: 0;
-				margin-left: 1rem;
-			}
-
-		}
-	}
-
-	&__lights {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-
-		&__item {
-			width: 100%;
-			margin: 0 1rem;
-
-			&:first-of-type { margin-left: 0; }
-			&:last-of-type { margin-right: 0; }
-		}
-	}
-}
-</style>

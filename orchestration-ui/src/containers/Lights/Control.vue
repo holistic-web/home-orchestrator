@@ -1,50 +1,42 @@
 <template>
-	<b-container class="LightsControl">
+	<default-layout :isLoading="page.isLoading" :isSubmitting="page.isSubmitting">
 
-		<section class="Header">
+		<template v-slot:title>
+			Lights
+		</template>
 
-			<h2>Lights</h2>
+		<template v-slot:actions>
+			<b-button
+				variant="info"
+				v-text="'Refresh'"
+				@click="fetchLightsAndSetupPage"/>
 
-			<div class="Header__buttons">
-				<b-button
-					class="Header__button"
-					variant="info"
-					v-text="'Refresh'"
-					@click="fetchLightsAndSetupPage"/>
+			<b-btn
+				variant="primary"
+				v-text="'Update Lights'"
+				:disabled="page.isSubmitting"
+				@click="submit"/>
+		</template>
 
-				<b-btn
-					v-if="!page.isSubmitting"
-					class="Header__button"
-					variant="primary"
-					v-text="'Update Lights'"
-					@click="submit"/>
-			</div>
+		<template v-slot:content>
 
-		</section>
+			<light-list v-model="lightsInputs"/>
 
-		<span
-			v-if="page.isLoading"
-			v-text="'Loading...'"/>
-		<span
-			v-if="page.isSubmitting"
-			v-text="'Submitting...'"/>
+		</template>
 
-		<light-list
-			v-if="!page.isLoading && !page.isSubmitting"
-			v-model="lightsInputs"/>
-
-
-	</b-container>
+	</default-layout>
 </template>
 
 <script>
 import { cloneDeep } from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
 import toastService from '../../lib/toastService';
+import DefaultLayout from '../../components/DefaultLayout.vue';
 import LightList from './components/LightList.vue';
 
 export default {
 	components: {
+		DefaultLayout,
 		LightList
 	},
 	data() {
@@ -90,13 +82,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="scss">
-
-.LightsControl {
-	padding-top: 1rem;
-	display: flex;
-	flex-direction: column;
-}
-
-</style>
