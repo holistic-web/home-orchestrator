@@ -1,8 +1,7 @@
-// const functions = require('firebase-functions');
+const functions = require('firebase-functions');
 
 const config = {
-	// IFTTT_KEY: functions.config().ifttt.key,
-	IFTTT_KEY: '12345'
+	IFTTT_KEY: functions.config().ifttt.key
 };
 
 module.exports = config;
