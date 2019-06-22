@@ -2,45 +2,41 @@
 
 ## General
 
-- the concepts of `Themes` storing a state and `Scenes` setting a light should be swapped
+- terminology for 'Themes' (being the state of things) and 'Scenes' (a mode for an individual light) should be swapped
 
-- the site could use some design tender love and care, including a favicon
+## Multiple Users
 
+- the sign up screen should allow a user to view 'networks' (homes) they are a member of
 
-## Sharing
+- the sign up screen should allow a user to create a personal network if they haven't already.
 
-- other users should be able to sign up and have their own lights and themes
-
-- they should be able to set their own authenticated users
+- inviting a user to a 'network' (home) should send them an email
 
 
 ### Orchestration UI
 
-- could use some form of navigation aid or breadcrumb
+- design and UX tender love and care would be very welcome, including a favicon
+
+- could use some form of navigation aid or breadcrumb to show a user where they are in the site, maybe a right drawer menu?
 
 - scenes should have something to indicate what they look like in the UI
 
-- should be able to update lights one by one
+- lights should be displayed using a palette rather than as hex code and brightness
 
-- user experience for lights should be smoother: if off don't show inputs for lights
+- light control user experience should be improved, collapse colourpicker when not in use and don't show controls if light is off
 
 - Loading... and Submitting... messages should be replaced with icons
 
 
 ### Light Control
 
-- relevant IFTTT triggers be created as part of a 'create light process'
+- relevant IFTTT triggers be created as part of a 'create light process' allowing users to set up their own lights
 
-- lights should be able to be grouped to be treated as one
+- lights should be able to be grouped to be treated as one device
 
-
-### Button Control
-
-- buttons should be able to apply scenes
-
-- user should be able to add a button and have it set up relevant IFTTT triggers
 
 ### Button Control
-- buttons should be able to apply scenes
 
-- relevant ifttt triggers should be setup buttons
+- buttons should be able to set a new state for the network
+
+- user should be able to add a button and have it set up relevant IFTTT triggers, similar to what's planned above for lights

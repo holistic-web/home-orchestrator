@@ -4,13 +4,13 @@ import firebase from 'firebase';
 import VuexPersistence from 'vuex-persist';
 import config from '../config';
 import accountStore from './modules/account';
+import usersStore from './modules/users';
 import lightsStore from './modules/lights';
 import themeStore from './modules/themes';
 
 Vue.use(Vuex);
 
-const app = firebase.initializeApp(config.firebase);
-const db = app.firestore();
+firebase.initializeApp(config.firebase);
 const provider = new firebase.auth.GoogleAuthProvider();
 
 const persistedState = new VuexPersistence({
@@ -22,12 +22,12 @@ const persistedState = new VuexPersistence({
 
 const storeConfig = {
 	state: {
-		db,
 		firebase,
 		provider
 	},
 	modules: {
 		account: accountStore,
+		users: usersStore,
 		lights: lightsStore,
 		themes: themeStore
 	},

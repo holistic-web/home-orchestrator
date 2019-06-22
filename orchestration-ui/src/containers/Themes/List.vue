@@ -38,22 +38,22 @@
 					slot="actions"
 					slot-scope="data">
 
-					<div class="ThemesList__actions">
+					<div class="Table__actions">
 
 						<b-btn
 							v-if="!data.item.isSubmitting"
-							class="ThemesList__actions__item"
+							class="Table__actions__item"
 							variant="primary"
 							v-text="'Apply'"
 							@click="applyThemeToItem(data.item)"/>
 
 						<span
 							v-if="data.item.isSubmitting"
-							class="ThemesList__actions__item"
+							class="Table__actions__item"
 							v-text="'Submitting...'"/>
 
 						<b-btn
-							class="ThemesList__actions__item"
+							class="Table__actions__item"
 							variant="outline-info"
 							v-text="'Edit'"
 							:to="{ name: 'themes.edit', params: { id: data.item._id } }"/>
@@ -125,31 +125,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="scss">
-
-.ThemesList {
-
-	&__actions {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-end;
-
-		@media all and (min-width: 768px) {
-			flex-direction: row-reverse;
-			justify-content: flex-start;
-		}
-
-		&__item {
-			margin-bottom: 1rem;
-
-			@media all and (min-width: 768px) {
-				margin-bottom: 0;
-				margin-left: 1rem;
-			}
-		}
-	}
-
-}
-
-</style>

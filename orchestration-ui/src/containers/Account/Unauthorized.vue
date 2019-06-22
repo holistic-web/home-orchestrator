@@ -35,7 +35,6 @@ export default {
 
 <style lang="scss">
 .Unauthorized {
-	height: -webkit-fill-available;
 
 	&__inner {
 		height: -webkit-fill-available;

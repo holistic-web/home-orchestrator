@@ -81,6 +81,11 @@ export default {
 			}
 			this.isSubmitting = false;
 		}
+	},
+	watch: {
+		visible() {
+			this.name = null;
+		}
 	}
 };
 </script>

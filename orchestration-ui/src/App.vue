@@ -36,6 +36,30 @@ export default {
 	}
 }
 
+/* Reusable classes */
+.Table {
+
+	&__actions {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+
+		@media all and (min-width: 768px) {
+			flex-direction: row-reverse;
+			justify-content: flex-start;
+		}
+
+		&__item {
+			margin-bottom: 1rem;
+
+			@media all and (min-width: 768px) {
+				margin-bottom: 0;
+				margin-left: 1rem;
+			}
+		}
+	}
+}
+
 /* Bootstrap Vue Customisation */
 
 // radio buttons that are clickable have mouse cursor
