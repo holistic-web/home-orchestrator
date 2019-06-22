@@ -2,7 +2,7 @@
 The Firestore database for this project.
 
 ## Access Rules
-These are defined in firestore.rules
+These are defined in firestore.rules, it is currently locked to both read and writes as these are managed through the cloud functions.
 
 ## Indexes
 These are defined in firestore.indexes.json
@@ -20,3 +20,6 @@ The lights collection stores each light. The name property is tightly coupled to
 
 ### Themes
 The themes collection storing themes saved by a user.
+
+### Users
+The users collection storing who can modify the site.

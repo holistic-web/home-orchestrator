@@ -10,6 +10,8 @@
 
 - the sign up screen should allow a user to create a personal network if they haven't already.
 
+- inviting a user to a 'network' (home) should send them an email
+
 
 ### Orchestration UI
 

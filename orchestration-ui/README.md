@@ -6,13 +6,16 @@ It hosted at: [https://holistic-home-5134d.web.app](https://holistic-home-5134d.
 ## Architecture
 
 ### Account
-The account section consists of the login page, login is done through firebase with Google authentication. Once authenticated the account store in vuex confirms that the user is on the approved list of unique id's in firebase.
+The login page, login is done through firebase with Google authentication. Once authenticated the account store in vuex confirms that the user is on the approved list of unique id's in firebase.
 
 ### Lights
-Allows the user to see the stored state of lights and set them using the `updateLights` cloud function.
+See the stored state of lights and set them using the `updateLights` cloud function.
 
 ### Themes
-Allows a user to manage and apply themes, which are pre saved states of how things should be. Creating themes is managed with the `createTheme` cloud function.
+Manage and apply themes, which are pre saved states of how things should be. Creating themes is managed with the `createTheme` cloud function.
+
+### Users
+Edit permissions and add / delete users.
 
 
 ## Getting Started

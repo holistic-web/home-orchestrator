@@ -1,23 +1,14 @@
 # Cloud Functions
-These are the cloud functions for this project, hosted on Firebase.
+These are the cloud functions for this project, hosted on Firebase. If they haven't been used in a while it make ~15 seconds for the project to spin up.
 
 ### Deploying
-Ensure `firebase-tools` is installed globally and then run `firebase deploy` from this folder.
+Ensure `firebase-tools` is installed globally and then run `firebase deploy` from this folder to deploy all functions.
 
 ## Authentication
-Authentication is currently managed by checking against an array approved of user ids.
+Authentication is managed by checking is a user is present in the `users` collection and that they have the correct access rights.
 
 ## Functions
-
-### Update Lights
-Allows a user to update the lights and the corresponding database values.
-
-It currently uses IFTTT triggers to control the lights, they are:
-- _{lightName}_-turn-on
-- _{lightName}_-turn-off
-- _{lightName}_-set-scene-_{sceneName}_
-- _{lightName}_-set-brightness
-- _{lightName}_-set-colour
-
-### Create Theme
-Allows a user to create a theme and adds it to the themes store.
+The total list of functions can be found in the functions folder in `index.js`. There are three core modules currently:
+- users: `getUser`, `getUsers`, `createUser`, `updateUserRole`, `deleteUser`
+- lights: `getLights`, `updateLights`
+- themes: `getTheme`, `getThemes`, `createTheme`, `updateTheme`, `deleteTheme`
