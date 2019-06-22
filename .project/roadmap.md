@@ -1,6 +1,6 @@
 # Roadmap
 
-## General
+## General
 
 - terminology for 'Themes' (being the state of things) and 'Scenes' (a mode for an individual light) should be swapped
 
