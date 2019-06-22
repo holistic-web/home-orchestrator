@@ -1,7 +1,7 @@
 # Home Orchestrator
 This is a project to manage home tasks and automation.
 
-![website](./project/assets/ui-22_06_19.png)
+![website](./.project/assets/ui-22_06_19.png)
 
 ## Useful Links
 - [https://holistic-home-5134d.web.app](https://holistic-home-5134d.web.app)
