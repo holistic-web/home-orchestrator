@@ -17,7 +17,7 @@ export default {
 	actions: {
 		async fetchTheme({ commit, rootState }, id) {
 			const fetchTheme = rootState.firebase.functions().httpsCallable('getTheme');
-			const theme = await fetchTheme(id);
+			const { data: theme } = await fetchTheme(id);
 			commit('SET_THEME', theme);
 			return theme;
 		},
