@@ -14,18 +14,17 @@ export default {
 		}
 	},
 	actions: {
-		async fetchThemes({ commit, rootState }, options = {}) {
-			const themesSnapshots = await rootState.db.collection('themes').get();
-			const themes = themesSnapshots.docs.map(doc => doc.data());
-			if (!options.skipCommit) commit('SET_THEMES', themes);
-			return themes;
-		},
 		async fetchTheme({ commit, rootState }, id, options = {}) {
-			const themeRef = rootState.db.collection('themes').doc(id);
-			const themeSnapshot = await themeRef.get();
-			const theme = themeSnapshot.data();
+			const fetchTheme = rootState.firebase.functions().httpsCallable('fetchTheme');
+			const theme = await fetchTheme(id);
 			if (!options.skipCommit) commit('SET_THEME', theme);
 			return theme;
+		},
+		async fetchThemes({ commit, rootState }, options = {}) {
+			const fetchThemes = rootState.firebase.functions().httpsCallable('fetchThemes');
+			const themes = await fetchThemes();
+			if (!options.skipCommit) commit('SET_THEMES', themes);
+			return themes;
 		},
 		async updateTheme({ rootState }, theme) {
 			const updateTheme = rootState.firebase.functions().httpsCallable('updateTheme');
