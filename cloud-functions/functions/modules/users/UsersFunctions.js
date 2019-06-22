@@ -1,71 +1,90 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const getValidUser = require('../../lib/getValidUser');
 
-exports.createUser = functions.https.onCall(async (data, context) => {
+exports.getUser = functions.https.onCall(async (email, context) => {
+	console.log('> getUser~ called with: ' + JSON.stringify({ email, auth: context.auth }, null, 4));
+	await getValidUser(context);
 
-	// Authenticate the request
-	console.log('> createUser~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
-	const allowedUsers = [
-		'7RAvkf9IHVSGEWeu5E3fUYR2dqi1', // Kylie
-		'Op8k7VRQNkg0tK7GsCXks0jMj3l2', // Michael
-		'6aICVvLNqbeVkvGlcOjddpvH1S63'	// Andrew
-	];
-	const requestUserId = context.auth.uid;
-	if (!allowedUsers.includes(requestUserId)) throw new Error('not authenticated');
+	// Fetch the user
+	const userDoc = admin.firestore().collection('users').doc(email);
+	const userSnap = await userDoc.get();
+	const user = userSnap.data();
+	return user;
+});
 
-	const theme = {
-		name: data.name,
-		lights: data.lights
+exports.getUsers = functions.https.onCall(async (data, context) => {
+	console.log('> getUsers~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
+	await getValidUser(context);
+
+	// Fetch the users
+	const usersSnapshot = await admin.firestore().collection('users').get();
+	const users = usersSnapshot.docs.map(doc => doc.data());
+	return users;
+});
+
+exports.createUser = functions.https.onCall(async ({ email, role }, context) => {
+	console.log('> createUser~ called with: ' + JSON.stringify({ email, role, auth: context.auth }, null, 4));
+	const user = await getValidUser(context);
+	if (!['owner', 'admin'].includes(user.role)) {
+		throw new Error('admin only operation');
+	}
+
+	const newUser = {
+		email: email,
+		role: role || 'member'
 	};
 
 	// Update the Database
-	console.log('> createUser~ writing to themes collection');
-	const themeDocumentRef = admin.firestore().collection('themes').doc();
-	theme._id = themeDocumentRef.id;
-	await themeDocumentRef.set(theme);
+	console.log('> createUser~ writing to users collection');
+	const newUserDocumentRef = admin.firestore().collection('users').doc(email);
+	await newUserDocumentRef.set(newUser);
 	return 'success';
 });
 
-exports.updateTheme = functions.https.onCall(async (data, context) => {
+exports.updateUserRole = functions.https.onCall(async ({ email, role }, context) => {
+	console.log('> updateUserRole~ called with: ' + JSON.stringify({ email, role, auth: context.auth }, null, 4));
+	const user = await getValidUser(context);
+	if (!['owner', 'admin'].includes(user.role)) {
+		throw new Error('admin only operation');
+	}
 
-	// Authenticate the request
-	console.log('> updateTheme~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
-	const allowedUsers = [
-		'7RAvkf9IHVSGEWeu5E3fUYR2dqi1', // Kylie
-		'Op8k7VRQNkg0tK7GsCXks0jMj3l2', // Michael
-		'6aICVvLNqbeVkvGlcOjddpvH1S63'	// Andrew
-	];
-	const requestUserId = context.auth.uid;
-	if (!allowedUsers.includes(requestUserId)) throw new Error('not authenticated');
-
-	const theme = {
-		name: data.name,
-		lights: data.lights,
-		_id: data._id
+	const newUser = {
+		role: role || 'member'
 	};
 
 	// Update the Database
-	console.log('> updateTheme~ writing to themes collection');
-	const themeDocumentRef = admin.firestore().collection('themes').doc(theme._id);
-	await themeDocumentRef.set(theme);
+	console.log('> updateUserRole~ writing to users collection');
+	const updatedUserDoc = admin.firestore().collection('users').doc(email);
+
+	// Check they aren't an owner
+	const updatedUserSnap = await updatedUserDoc.get();
+	const updatedUser = updatedUserSnap.data();
+	if (updatedUser.role === 'owner') throw new Error('can\'t edit owner\'s role');
+
+	await updatedUserDoc.update(newUser);
 	return 'success';
 });
 
-exports.deleteTheme = functions.https.onCall(async (data, context) => {
 
-	// Authenticate the request
-	console.log('> updateTheme~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
-	const allowedUsers = [
-		'7RAvkf9IHVSGEWeu5E3fUYR2dqi1', // Kylie
-		'Op8k7VRQNkg0tK7GsCXks0jMj3l2', // Michael
-		'6aICVvLNqbeVkvGlcOjddpvH1S63'	// Andrew
-	];
-	const requestUserId = context.auth.uid;
-	if (!allowedUsers.includes(requestUserId)) throw new Error('not authenticated');
+exports.deleteUser = functions.https.onCall(async (email, context) => {
+	console.log('> deleteUser~ called with: ' + JSON.stringify({ email, auth: context.auth }, null, 4));
+	const user = await getValidUser(context);
+	if (!['owner', 'admin'].includes(user.role)) {
+		throw new Error('admin only operation');
+	}
 
 	// Update the Database
-	console.log('> updateTheme~ writing to themes collection');
-	const themeDocumentRef = admin.firestore().collection('themes').doc(data._id);
-	await themeDocumentRef.delete();
+	console.log('> deleteUser~ writing to users collection');
+	const deletedUserDoc = admin.firestore().collection('users').doc(email);
+
+	// Check they aren't an owner or an admin
+	const deletedUserSnap = await deletedUserDoc.get();
+	const deletedUser = deletedUserSnap.data();
+	if (['owner', 'admin'].includes(deletedUser.role)) {
+		throw new Error('can\'t delete admin user');
+	}
+
+	await deletedUserDoc.delete();
 	return 'success';
 });

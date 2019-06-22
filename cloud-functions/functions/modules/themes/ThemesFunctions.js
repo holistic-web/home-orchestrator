@@ -1,36 +1,20 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const getValidUser = require('../../lib/getValidUser');
 
 exports.getTheme = functions.https.onCall(async (id, context) => {
-
-	// Authenticate the request
-	console.log('> getTheme~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
-	const allowedUsers = [
-		'kyliechung13@gmail.com', // Kylie
-		'michael.fitzhavey@gmail.com', // Michael MGgWe75HRAeEsjEoLyVTHwydgVy1
-		'andrew12lewis@gmail.com' // Andrew
-	];
-	const requestUserEmail = context.auth.token.email;
-	if (!allowedUsers.includes(requestUserEmail)) throw new Error('not authenticated');
+	console.log('> getTheme~ called with: ' + JSON.stringify({ id, auth: context.auth }, null, 4));
+	await getValidUser(context);
 
 	// Fetch the theme
-	const themeRef = await admin.firestore().collection('themes').doc(id);
-	const themeSnapshot = await themeRef.get();
+	const themeSnapshot = await admin.firestore().collection('themes').doc(id).get();
 	const theme = themeSnapshot.data();
 	return theme;
 });
 
 exports.getThemes = functions.https.onCall(async (data, context) => {
-
-	// Authenticate the request
 	console.log('> getThemes~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
-	const allowedUsers = [
-		'kyliechung13@gmail.com', // Kylie
-		'michael.fitzhavey@gmail.com', // Michael MGgWe75HRAeEsjEoLyVTHwydgVy1
-		'andrew12lewis@gmail.com' // Andrew
-	];
-	const requestUserEmail = context.auth.token.email;
-	if (!allowedUsers.includes(requestUserEmail)) throw new Error('not authenticated');
+	await getValidUser(context);
 
 	// Fetch the themes
 	const themesSnapshot = await admin.firestore().collection('themes').get();
@@ -39,14 +23,9 @@ exports.getThemes = functions.https.onCall(async (data, context) => {
 });
 
 exports.createTheme = functions.https.onCall(async (data, context) => {
-
-	// Authenticate the request
 	console.log('> createTheme~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
-	const allowedUsers = [
-		'kyliechung13@gmail.com', // Kylie
-		'michael.fitzhavey@gmail.com', // Michael MGgWe75HRAeEsjEoLyVTHwydgVy1
-		'andrew12lewis@gmail.com' // Andrew
-	];
+	await getValidUser(context);
+
 	const requestUserEmail = context.auth.token.email;
 	if (!allowedUsers.includes(requestUserEmail)) throw new Error('not authenticated');
 
@@ -56,7 +35,7 @@ exports.createTheme = functions.https.onCall(async (data, context) => {
 	};
 
 	// Update the Database
-	console.log('> createTheme~ writing to themes collection');
+	console.loguserSnap('> createTheme~ writing to themes collection');
 	const themeDocumentRef = admin.firestore().collection('themes').doc();
 	theme._id = themeDocumentRef.id;
 	await themeDocumentRef.set(theme);
@@ -64,14 +43,9 @@ exports.createTheme = functions.https.onCall(async (data, context) => {
 });
 
 exports.updateTheme = functions.https.onCall(async (data, context) => {
-
-	// Authenticate the request
 	console.log('> updateTheme~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
-	const allowedUsers = [
-		'kyliechung13@gmail.com', // Kylie
-		'michael.fitzhavey@gmail.com', // Michael MGgWe75HRAeEsjEoLyVTHwydgVy1
-		'andrew12lewis@gmail.com' // Andrew
-	];
+	await getValidUser(context);
+
 	const requestUserEmail = context.auth.token.email;
 	if (!allowedUsers.includes(requestUserEmail)) throw new Error('not authenticated');
 
@@ -89,15 +63,8 @@ exports.updateTheme = functions.https.onCall(async (data, context) => {
 });
 
 exports.deleteTheme = functions.https.onCall(async (data, context) => {
-
-	// Authenticate the request
-	const allowedUsers = [
-		'kyliechung13@gmail.com', // Kylie
-		'michael.fitzhavey@gmail.com', // Michael MGgWe75HRAeEsjEoLyVTHwydgVy1
-		'andrew12lewis@gmail.com' // Andrew
-	];
-	const requestUserEmail = context.auth.token.email;
-	if (!allowedUsers.includes(requestUserEmail)) throw new Error('not authenticated');
+	console.log('> deleteTheme~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
+	await getValidUser(context);
 
 	// Update the Database
 	console.log('> updateTheme~ writing to themes collection');

@@ -3,7 +3,8 @@
 export default {
 	namespaced: true,
 	state: {
-		themes: []
+		themes: [],
+		theme: null
 	},
 	mutations: {
 		SET_THEMES(state, themes) {
@@ -14,10 +15,10 @@ export default {
 		}
 	},
 	actions: {
-		async fetchTheme({ commit, rootState }, id, options = {}) {
+		async fetchTheme({ commit, rootState }, id) {
 			const fetchTheme = rootState.firebase.functions().httpsCallable('getTheme');
 			const theme = await fetchTheme(id);
-			if (!options.skipCommit) commit('SET_THEME', theme);
+			commit('SET_THEME', theme);
 			return theme;
 		},
 		async fetchThemes({ commit, rootState }, options = {}) {

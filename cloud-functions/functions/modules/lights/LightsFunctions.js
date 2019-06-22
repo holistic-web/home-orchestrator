@@ -1,18 +1,11 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const getValidUser = require('../../lib/getValidUser');
 const LightsController = require('./LightsController');
 
 exports.getLights = functions.https.onCall(async (data, context) => {
-
-	// Authenticate the request
 	console.log('> getLights~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
-	const allowedUsers = [
-		'kyliechung13@gmail.com', // Kylie
-		'michael.fitzhavey@gmail.com', // Michael MGgWe75HRAeEsjEoLyVTHwydgVy1
-		'andrew12lewis@gmail.com' // Andrew
-	];
-	const requestUserEmail = context.auth.token.email;
-	if (!allowedUsers.includes(requestUserEmail)) throw new Error('not authenticated');
+	await getValidUser(context);
 
 	// Fetch the lights
 	const lightsSnapshots = await admin.firestore().collection('lights').get();
@@ -21,16 +14,8 @@ exports.getLights = functions.https.onCall(async (data, context) => {
 });
 
 exports.updateLights = functions.https.onCall(async (lights, context) => {
-
-	// Authenticate the request
 	console.log('> updateLights~ called with: ' + JSON.stringify({ lights, auth: context.auth }, null, 4));
-	const allowedUsers = [
-		'kyliechung13@gmail.com', // Kylie
-		'michael.fitzhavey@gmail.com', // Michael MGgWe75HRAeEsjEoLyVTHwydgVy1
-		'andrew12lewis@gmail.com' // Andrew
-	];
-	const requestUserEmail = context.auth.token.email;
-	if (!allowedUsers.includes(requestUserEmail)) throw new Error('not authenticated');
+	await getValidUser(context);
 
 	// Update the Database
 	console.log('> updateLights~ writing to lights collection');

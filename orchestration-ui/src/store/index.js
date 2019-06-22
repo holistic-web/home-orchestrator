@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import VuexPersistence from 'vuex-persist';
 import config from '../config';
 import accountStore from './modules/account';
+import usersStore from './modules/users';
 import lightsStore from './modules/lights';
 import themeStore from './modules/themes';
 
@@ -26,6 +27,7 @@ const storeConfig = {
 	},
 	modules: {
 		account: accountStore,
+		users: usersStore,
 		lights: lightsStore,
 		themes: themeStore
 	},
