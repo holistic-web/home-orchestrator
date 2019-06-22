@@ -15,14 +15,14 @@ export default {
 	},
 	actions: {
 		async fetchTheme({ commit, rootState }, id, options = {}) {
-			const fetchTheme = rootState.firebase.functions().httpsCallable('fetchTheme');
+			const fetchTheme = rootState.firebase.functions().httpsCallable('getTheme');
 			const theme = await fetchTheme(id);
 			if (!options.skipCommit) commit('SET_THEME', theme);
 			return theme;
 		},
 		async fetchThemes({ commit, rootState }, options = {}) {
-			const fetchThemes = rootState.firebase.functions().httpsCallable('fetchThemes');
-			const themes = await fetchThemes();
+			const fetchThemes = rootState.firebase.functions().httpsCallable('getThemes');
+			const { data: themes } = await fetchThemes();
 			if (!options.skipCommit) commit('SET_THEMES', themes);
 			return themes;
 		},

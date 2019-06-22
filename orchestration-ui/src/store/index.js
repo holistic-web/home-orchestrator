@@ -9,8 +9,7 @@ import themeStore from './modules/themes';
 
 Vue.use(Vuex);
 
-const app = firebase.initializeApp(config.firebase);
-const db = app.firestore();
+firebase.initializeApp(config.firebase);
 const provider = new firebase.auth.GoogleAuthProvider();
 
 const persistedState = new VuexPersistence({
@@ -22,7 +21,6 @@ const persistedState = new VuexPersistence({
 
 const storeConfig = {
 	state: {
-		db,
 		firebase,
 		provider
 	},

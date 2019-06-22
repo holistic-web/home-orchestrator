@@ -12,8 +12,8 @@ export default {
 	},
 	actions: {
 		async fetchLights({ commit, rootState }, options = {}) {
-			const fetchLights = rootState.firebase.functions().httpsCallable('fetchLights');
-			const lights = await fetchLights();
+			const fetchLights = rootState.firebase.functions().httpsCallable('getLights');
+			const { data: lights } = await fetchLights();
 			if (!options.skipCommit) commit('SET_LIGHTS', lights);
 			return lights;
 		},
