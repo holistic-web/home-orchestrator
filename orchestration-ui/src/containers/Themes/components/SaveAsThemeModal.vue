@@ -58,7 +58,7 @@ export default {
 	},
 	computed: {
 		isSubmitDisabled() {
-			return !this.name;
+			return !this.name || this.isSubmitting;
 		}
 	},
 	methods: {
