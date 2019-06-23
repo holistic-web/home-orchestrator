@@ -32,7 +32,7 @@ exports.createTheme = functions.https.onCall(async (data, context) => {
 	};
 
 	// Update the Database
-	console.loguserSnap('> createTheme~ writing to themes collection');
+	console.log('> createTheme~ writing to themes collection');
 	const themeDocumentRef = admin.firestore().collection('themes').doc();
 	theme._id = themeDocumentRef.id;
 	await themeDocumentRef.set(theme);
