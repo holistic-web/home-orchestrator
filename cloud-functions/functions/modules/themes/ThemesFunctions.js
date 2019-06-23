@@ -26,9 +26,6 @@ exports.createTheme = functions.https.onCall(async (data, context) => {
 	console.log('> createTheme~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
 	await getValidUser(context);
 
-	const requestUserEmail = context.auth.token.email;
-	if (!allowedUsers.includes(requestUserEmail)) throw new Error('not authenticated');
-
 	const theme = {
 		name: data.name,
 		lights: data.lights
@@ -45,9 +42,6 @@ exports.createTheme = functions.https.onCall(async (data, context) => {
 exports.updateTheme = functions.https.onCall(async (data, context) => {
 	console.log('> updateTheme~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
 	await getValidUser(context);
-
-	const requestUserEmail = context.auth.token.email;
-	if (!allowedUsers.includes(requestUserEmail)) throw new Error('not authenticated');
 
 	const theme = {
 		name: data.name,
