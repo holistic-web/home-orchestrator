@@ -9,7 +9,8 @@ This document will guide you through setting up lights with the Home Orchestrato
 		type: 'hue',
 		state: {
 			on: false
-		}
+		},
+		key: 'IFTT_SECRET_KEY'
 	}
 	```
 

@@ -1,4 +1,3 @@
-const config = require('../../config');
 const axios = require('axios');
 
 class LightsController {
@@ -48,7 +47,8 @@ class LightsController {
 	}
 
 	_getRequestPath(light, actionName) {
-		let path = `https://maker.ifttt.com/trigger/${light.name}-${actionName}/with/key/${config.IFTTT_KEY}`;
+		const IFTTT_KEY = light.key;
+		let path = `https://maker.ifttt.com/trigger/${light.name}-${actionName}/with/key/${IFTTT_KEY}`;
 		console.log('> LightsController/_getRequestPath~ generated request path: ' + path);
 		return path;
 	}
