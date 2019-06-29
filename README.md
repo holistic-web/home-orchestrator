@@ -14,3 +14,6 @@ This is a project to manage home tasks and automation.
 - [cloud-functions](/cloud-functions): _cloud functions acting as a serverless API_
 - [database](/database): _the database for this project_
 - [orchestration-ui](/orchestration-ui): _user interface through which one can orchestrate the home_
+
+## Guides
+- To add a new light to the system, follow this guide: [/.project/guides/light_setup.md](/.project/guides/light_setup.md)
