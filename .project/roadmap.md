@@ -13,7 +13,7 @@
 - inviting a user to a 'network' (home) should send them an email
 
 
-### Orchestration UI
+## Orchestration UI
 
 - design and UX tender love and care would be very welcome, including a favicon
 
@@ -28,7 +28,7 @@
 - Loading... and Submitting... messages should be replaced with icons
 
 
-### Light Control
+## Light Control
 
 - relevant IFTTT triggers be created as part of a 'create light process' allowing users to set up their own lights
 
