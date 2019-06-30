@@ -7,6 +7,7 @@ import accountStore from './modules/account';
 import usersStore from './modules/users';
 import lightsStore from './modules/lights';
 import themeStore from './modules/themes';
+import networkStore from './modules/networks';
 
 Vue.use(Vuex);
 
@@ -29,7 +30,8 @@ const storeConfig = {
 		account: accountStore,
 		users: usersStore,
 		lights: lightsStore,
-		themes: themeStore
+		themes: themeStore,
+		networks: networkStore
 	},
 	plugins: [
 		persistedState.plugin
