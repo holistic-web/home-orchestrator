@@ -1,5 +1,5 @@
 <template>
-	<header v-if="!isAccountPage">
+	<header v-if="!isUnauthorizedPage">
 		<b-navbar class="AppHeader" toggleable="lg" type="dark" variant="info">
 
 			<div class="AppHeader__leftSection">
@@ -45,9 +45,9 @@ export default {
 		})
 	},
 	computed: {
-		isAccountPage() {
-			const isAccountPage = this.$route.name.startsWith('account.');
-			return isAccountPage;
+		isUnauthorizedPage() {
+			const isUnauthorizedPage = this.$route.name === 'account.unauthorized';
+			return isUnauthorizedPage;
 		},
 		menuItems() {
 			const menuItems = routes.filter(route => route.menuName);
