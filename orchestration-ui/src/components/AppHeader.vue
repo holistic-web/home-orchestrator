@@ -23,11 +23,11 @@
 			</div>
 
 			<div class="AppHeader__rightSection">
-				<b-btn
+				<!-- <b-btn
 					variant="outline-danger"
 					size="sm"
 					v-text="'Log Out'"
-					@click="logOutUser"/>
+					@click="logOutUser"/> -->
 			</div>
 
 		</b-navbar>
@@ -35,15 +35,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 import routes from '../router/routes';
 
 export default {
-	methods: {
-		...mapActions({
-			logOutUser: 'account/logOut'
-		})
-	},
 	computed: {
 		isUnauthorizedPage() {
 			const isUnauthorizedPage = this.$route.name === 'account.unauthorized';
