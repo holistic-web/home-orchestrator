@@ -17,7 +17,7 @@
 				:to="{ name: 'themes.create' }"/>
 		</template>
 
-		<template v-slot:content>
+		<template pv-slot:content>
 
 			<span
 				v-if="themes.length === 0"
