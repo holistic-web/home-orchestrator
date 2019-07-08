@@ -22,7 +22,12 @@
 
 			</section>
 
-			<h3>Networks</h3>
+			<section class="AccountPage__networks">
+				<h3>Networks</h3>
+
+				{{networks}}
+
+			</section>
 
 		</template>
 
@@ -47,13 +52,19 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			account: 'account/account'
+			account: 'account/account',
+			networks: 'networks/networks'
 		})
 	},
 	methods: {
 		...mapActions({
+			fetchNetworks: 'networks/fetchNetworks',
+			setCurrentNetwork: 'netwroks/setCurrentNetwork',
 			logOutUser: 'account/logOut'
 		})
+	},
+	created() {
+		this.fetchNetworks();
 	}
 };
 </script>
@@ -61,6 +72,7 @@ export default {
 <style lang="scss">
 
 .AccountPage {
+
 	&__account {
 		margin-bottom: 2rem;
 		display: flex;
@@ -72,6 +84,11 @@ export default {
 			flex-direction: row;
 			justify-content: space-between;
 		}
+	}
+
+	&__networks {
+		display: flex;
+		flex-direction: column;
 	}
 }
 </style>
