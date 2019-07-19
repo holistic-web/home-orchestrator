@@ -25,7 +25,29 @@
 			<section class="AccountPage__networks">
 				<h3>Networks</h3>
 
-				{{networks}}
+				<span
+					v-if="networks.length === 0"
+					v-text="'There are no networks to display.'"/>
+
+				<b-table
+					v-else
+					:items="networks"
+					:fields="tableFields">
+
+					<template slot="users" slot-scope="data">
+						{{data.item.users.length + 1}}
+					</template>
+
+					<template slot="actions" slot-scope="data">
+						<b-button
+							variant="outline-primary"
+							size="sm"
+							v-text="'Set Active'"
+							:disabled="isSetNetworkActiveDisabled(data.item)"
+							@click="setCurrentNetwork(data.item)"/>
+					</template>
+
+				</b-table>
 
 			</section>
 
@@ -47,24 +69,40 @@ export default {
 			page: {
 				isLoading: false,
 				isSubmtting: false
-			}
+			},
+			tableFields: [
+				'name',
+				'owner',
+				'users',
+				{ key: 'actions', label: '' }
+			]
 		};
 	},
 	computed: {
 		...mapGetters({
 			account: 'account/account',
+			network: 'networks/network',
 			networks: 'networks/networks'
 		})
 	},
 	methods: {
 		...mapActions({
 			fetchNetworks: 'networks/fetchNetworks',
-			setCurrentNetwork: 'netwroks/setCurrentNetwork',
+			setCurrentNetwork: 'networks/setCurrentNetwork',
 			logOutUser: 'account/logOut'
-		})
+		}),
+		async setupPage() {
+			this.page.isLoading = true;
+			await this.fetchNetworks();
+			this.page.isLoading = false;
+		},
+		isSetNetworkActiveDisabled(network) {
+			if (!this.network) return false;
+			return this.network._id === network._id;
+		}
 	},
 	created() {
-		this.fetchNetworks();
+		this.setupPage();
 	}
 };
 </script>
