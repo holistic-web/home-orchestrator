@@ -23,11 +23,7 @@
 			</div>
 
 			<div class="AppHeader__rightSection">
-				<!-- <b-btn
-					variant="outline-danger"
-					size="sm"
-					v-text="'Log Out'"
-					@click="logOutUser"/> -->
+				<pre class="AppHeader__networkName" v-text="network.name"/>
 			</div>
 
 		</b-navbar>
@@ -35,10 +31,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import routes from '../router/routes';
 
 export default {
 	computed: {
+		...mapGetters({
+			network: 'networks/network'
+		}),
 		isUnauthorizedPage() {
 			const isUnauthorizedPage = this.$route.name === 'account.unauthorized';
 			return isUnauthorizedPage;
@@ -104,6 +104,11 @@ export default {
 			}
 
 		}
+
+	}
+
+	&__networkName {
+		margin-bottom: 0;
 	}
 }
 </style>
