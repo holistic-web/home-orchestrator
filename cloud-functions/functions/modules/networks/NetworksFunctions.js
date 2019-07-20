@@ -4,7 +4,7 @@ const getValidUser = require('../../lib/getValidUser');
 
 exports.getNetworks = functions.https.onCall(async (data, context) => {
 	console.log('> getNetworks~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
-	const user = await getValidUser(context);
+	const user = await getValidUser(context, networkId);
 	console.log('user: ', user);
 
 	// Fetch the networks

@@ -12,6 +12,8 @@
 
 - inviting a user to a 'network' (home) should send them an email
 
+- owner's of a network should be able to designate a new owner
+
 
 ## Orchestration UI
 

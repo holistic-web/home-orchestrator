@@ -2,30 +2,30 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const getValidUser = require('../../lib/getValidUser');
 
-exports.getUser = functions.https.onCall(async (email, context) => {
-	console.log('> getUser~ called with: ' + JSON.stringify({ email, auth: context.auth }, null, 4));
-	await getValidUser(context);
+exports.getUser = functions.https.onCall(async ({ email, networkId }, context) => {
+	console.log('> getUser~ called with: ' + JSON.stringify({ email, networkId, auth: context.auth }, null, 4));
+	await getValidUser(context, networkId);
 
 	// Fetch the user
-	const userDoc = admin.firestore().collection('users').doc(email);
+	const userDoc = admin.firestore().collection('networks').doc(networkId).collection('users').doc(email);
 	const userSnap = await userDoc.get();
 	const user = userSnap.data();
 	return user;
 });
 
-exports.getUsers = functions.https.onCall(async (data, context) => {
-	console.log('> getUsers~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
-	await getValidUser(context);
+exports.getUsers = functions.https.onCall(async (networkId, context) => {
+	console.log('> getUsers~ called with: ' + JSON.stringify({ networkId, auth: context.auth }, null, 4));
+	await getValidUser(context, networkId);
 
 	// Fetch the users
-	const usersSnapshot = await admin.firestore().collection('users').get();
+	const usersSnapshot = await admin.firestore().collection('networks').doc(networkId).collection('users').get();
 	const users = usersSnapshot.docs.map(doc => doc.data());
 	return users;
 });
 
-exports.createUser = functions.https.onCall(async ({ email, role }, context) => {
-	console.log('> createUser~ called with: ' + JSON.stringify({ email, role, auth: context.auth }, null, 4));
-	const user = await getValidUser(context);
+exports.createUser = functions.https.onCall(async ({ email, role, networkId }, context) => {
+	console.log('> createUser~ called with: ' + JSON.stringify({ email, role, networkId, auth: context.auth }, null, 4));
+	const user = await getValidUser(context, networkId);
 	if (!['owner', 'admin'].includes(user.role)) {
 		throw new Error('admin only operation');
 	}
@@ -37,14 +37,14 @@ exports.createUser = functions.https.onCall(async ({ email, role }, context) => 
 
 	// Update the Database
 	console.log('> createUser~ writing to users collection');
-	const newUserDocumentRef = admin.firestore().collection('users').doc(email);
+	const newUserDocumentRef = admin.firestore().collection('networks').doc(networkId).collection('users').doc(email);
 	await newUserDocumentRef.set(newUser);
 	return 'success';
 });
 
-exports.updateUserRole = functions.https.onCall(async ({ email, role }, context) => {
-	console.log('> updateUserRole~ called with: ' + JSON.stringify({ email, role, auth: context.auth }, null, 4));
-	const user = await getValidUser(context);
+exports.updateUserRole = functions.https.onCall(async ({ email, role, networkId }, context) => {
+	console.log('> updateUserRole~ called with: ' + JSON.stringify({ email, role, networkId, auth: context.auth }, null, 4));
+	const user = await getValidUser(context, networkId);
 	if (!['owner', 'admin'].includes(user.role)) {
 		throw new Error('admin only operation');
 	}
@@ -55,7 +55,7 @@ exports.updateUserRole = functions.https.onCall(async ({ email, role }, context)
 
 	// Update the Database
 	console.log('> updateUserRole~ writing to users collection');
-	const updatedUserDoc = admin.firestore().collection('users').doc(email);
+	const updatedUserDoc = admin.firestore().collection('networks').doc(networkId).collection('users').doc(email);
 
 	// Check they aren't an owner
 	const updatedUserSnap = await updatedUserDoc.get();
@@ -67,16 +67,16 @@ exports.updateUserRole = functions.https.onCall(async ({ email, role }, context)
 });
 
 
-exports.deleteUser = functions.https.onCall(async (email, context) => {
-	console.log('> deleteUser~ called with: ' + JSON.stringify({ email, auth: context.auth }, null, 4));
-	const user = await getValidUser(context);
+exports.deleteUser = functions.https.onCall(async ({ email, networkId }, context) => {
+	console.log('> deleteUser~ called with: ' + JSON.stringify({ email, networkId, auth: context.auth }, null, 4));
+	const user = await getValidUser(context, networkId);
 	if (!['owner', 'admin'].includes(user.role)) {
 		throw new Error('admin only operation');
 	}
 
 	// Update the Database
 	console.log('> deleteUser~ writing to users collection');
-	const deletedUserDoc = admin.firestore().collection('users').doc(email);
+	const deletedUserDoc = admin.firestore().collection('networks').doc(networkId).collection('users').doc(email);
 
 	// Check they aren't an owner or an admin
 	const deletedUserSnap = await deletedUserDoc.get();

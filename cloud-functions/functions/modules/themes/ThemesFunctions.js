@@ -4,7 +4,7 @@ const getValidUser = require('../../lib/getValidUser');
 
 exports.getTheme = functions.https.onCall(async ({ id, networkId }, context) => {
 	console.log('> getTheme~ called with: ' + JSON.stringify({ id, networkId, auth: context.auth }, null, 4));
-	await getValidUser(context);
+	await getValidUser(context, networkId);
 
 	// Fetch the theme
 	const themeSnapshot = await admin.firestore().collection('networks').doc(networkId).collection('themes').doc(id).get();
@@ -14,7 +14,7 @@ exports.getTheme = functions.https.onCall(async ({ id, networkId }, context) => 
 
 exports.getThemes = functions.https.onCall(async (networkId, context) => {
 	console.log('> getThemes~ called with: ' + JSON.stringify({ networkId, auth: context.auth }, null, 4));
-	await getValidUser(context);
+	await getValidUser(context, networkId);
 
 	// Fetch the themes
 	const themesSnapshot = await admin.firestore().collection('networks').doc(networkId).collection('themes').get();
@@ -24,7 +24,7 @@ exports.getThemes = functions.https.onCall(async (networkId, context) => {
 
 exports.createTheme = functions.https.onCall(async ({ theme, networkId }, context) => {
 	console.log('> createTheme~ called with: ' + JSON.stringify({ theme, networkId, auth: context.auth }, null, 4));
-	await getValidUser(context);
+	await getValidUser(context, networkId);
 
 	theme = {
 		name: data.name,
@@ -41,7 +41,7 @@ exports.createTheme = functions.https.onCall(async ({ theme, networkId }, contex
 
 exports.updateTheme = functions.https.onCall(async ({ theme, networkId}, context) => {
 	console.log('> updateTheme~ called with: ' + JSON.stringify({ theme, networkId, auth: context.auth }, null, 4));
-	await getValidUser(context);
+	await getValidUser(context, networkId);
 
 	theme = {
 		name: theme.name,
@@ -58,7 +58,7 @@ exports.updateTheme = functions.https.onCall(async ({ theme, networkId}, context
 
 exports.deleteTheme = functions.https.onCall(async ({ theme, networkId }, context) => {
 	console.log('> deleteTheme~ called with: ' + JSON.stringify({ theme, networkId, auth: context.auth }, null, 4));
-	await getValidUser(context);
+	await getValidUser(context, networkId);
 
 	// Update the Database
 	console.log('> updateTheme~ writing to themes collection');

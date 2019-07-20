@@ -5,7 +5,7 @@ const LightsController = require('./LightsController');
 
 exports.getLights = functions.https.onCall(async (networkId, context) => {
 	console.log('> getLights~ called with: ' + JSON.stringify({ networkId, auth: context.auth }, null, 4));
-	await getValidUser(context);
+	await getValidUser(context, networkId);
 
 	// Fetch the lights\
 	const lightsSnapshots = await admin.firestore().collection('networks').doc(networkId).collection('lights').get();
@@ -15,7 +15,7 @@ exports.getLights = functions.https.onCall(async (networkId, context) => {
 
 exports.updateLights = functions.https.onCall(async ({ lights, networkId }, context) => {
 	console.log('> updateLights~ called with: ' + JSON.stringify({ lights, networkId,  auth: context.auth }, null, 4));
-	await getValidUser(context);
+	await getValidUser(context, networkId);
 
 	// Update the Database
 	console.log('> updateLights~ writing to lights collection');
