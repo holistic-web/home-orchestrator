@@ -110,8 +110,10 @@ export default {
 			user: 'users/user'
 		}),
 		isAdmin() {
-			if (!this.user) return false;
-			return ['owner', 'admin'].includes(this.user.role);
+			const { email } = this.account.user;
+			const user = this.users.find(u => u.email === email);
+			if (!user) return false;
+			return ['owner', 'admin'].includes(user.role);
 		},
 		fields() {
 			const fields = [...this.baseFields];
@@ -127,9 +129,7 @@ export default {
 		}),
 		async fetch() {
 			this.page.isLoading = true;
-			const { email } = this.account.user;
 			await Promise.all([
-				this.fetchUser(email),
 				this.fetchUsers()
 			]);
 			this.page.isLoading = false;

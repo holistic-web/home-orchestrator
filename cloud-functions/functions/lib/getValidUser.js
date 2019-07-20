@@ -1,4 +1,4 @@
-	const admin = require('firebase-admin');
+const admin = require('firebase-admin');
 
 module.exports = async (context, networkId) => {
 	const requestEmail = context.auth.token.email;
@@ -9,11 +9,11 @@ module.exports = async (context, networkId) => {
 	if (network.owner === requestEmail) {
 		return {
 			email: network.owner,
-			role: owner
+			role: 'owner'
 		}
 	}
 
-	const userDoc = admin.firestore().collection(networkId).collection('users').doc(requestEmail);
+	const userDoc = admin.firestore().collection('networks').doc(networkId).collection('users').doc(requestEmail);
 	const userSnap = await userDoc.get();
 	if (!userSnap.exists) throw new Error('not authenticated');
 	const user = userSnap.data();

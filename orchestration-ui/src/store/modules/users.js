@@ -24,8 +24,12 @@ export default {
 		},
 		async fetchUsers({ commit, rootState, rootGetters }, options = {}) {
 			const fetchUsers = rootState.firebase.functions().httpsCallable('getUsers');
-			const { _id: networkId } = rootGetters['networks/network'];
-			const { data: users } = await fetchUsers(networkId);
+			const network = rootGetters['networks/network'];
+			const { data: users } = await fetchUsers(network._id);
+			users.push({
+				email: network.owner,
+				role: 'owner'
+			});
 			if (!options.skipCommit) commit('SET_USERS', users);
 			return users;
 		},

@@ -4,8 +4,7 @@ const getValidUser = require('../../lib/getValidUser');
 
 exports.getNetworks = functions.https.onCall(async (data, context) => {
 	console.log('> getNetworks~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
-	const user = await getValidUser(context, networkId);
-	console.log('user: ', user);
+	const requestEmail = context.auth.token.email;
 
 	// Fetch the networks
 	const networkSnaps = await admin.firestore().collection('networks').get();
@@ -22,10 +21,10 @@ exports.getNetworks = functions.https.onCall(async (data, context) => {
 	await Promise.all(loadUsersPromises);
 
 	const filteredNetworks = networks.filter(network => {
-		if (network.owner === user.email) return true;
+		if (network.owner === requestEmail) return true;
 		let isNetworkUser = false;
 		network.users.forEach(networkUser => {
-			if (networkUser.email === user.email) {
+			if (networkUser.email === requestEmail) {
 				isNetworkUser = true;
 			}
 		});
