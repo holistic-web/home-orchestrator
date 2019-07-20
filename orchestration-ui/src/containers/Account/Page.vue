@@ -115,7 +115,11 @@ export default {
 		margin-bottom: 2rem;
 		display: flex;
 		flex-direction: column;
-		width: 50%;
+		width: 100%;
+
+		@media all and (min-width: 767px) {
+			width: 50%;
+		}
 
 		&__row {
 			display: flex;

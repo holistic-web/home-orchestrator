@@ -67,10 +67,12 @@ export default {
 	&__leftSection {
 		display: flex;
 		flex-direction: column;
+		margin-bottom: 1rem;
 
 		@media (min-width: 768px) {
 			flex-direction: row;
 			align-items: center;
+			margin-bottom: 0;
 		}
 	}
 
