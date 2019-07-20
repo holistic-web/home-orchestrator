@@ -18,9 +18,10 @@ export default {
 			if (!options.skipCommit) commit('SET_LIGHTS', lights);
 			return lights;
 		},
-		async updateLights({ rootState }, lights) {
+		async updateLights({ rootState, rootGetters }, lights) {
 			const updateLights = rootState.firebase.functions().httpsCallable('updateLights');
-			const result = await updateLights(lights);
+			const { _id: networkId } = rootGetters['networks/network'];
+			const result = await updateLights({ lights, networkId });
 			return result;
 		}
 	},

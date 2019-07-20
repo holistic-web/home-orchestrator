@@ -13,15 +13,15 @@ exports.getLights = functions.https.onCall(async (networkId, context) => {
 	return lights;
 });
 
-exports.updateLights = functions.https.onCall(async (lights, context) => {
-	console.log('> updateLights~ called with: ' + JSON.stringify({ lights, auth: context.auth }, null, 4));
+exports.updateLights = functions.https.onCall(async ({ lights, networkId }, context) => {
+	console.log('> updateLights~ called with: ' + JSON.stringify({ lights, networkId,  auth: context.auth }, null, 4));
 	await getValidUser(context);
 
 	// Update the Database
 	console.log('> updateLights~ writing to lights collection');
 	const batchWrite = admin.firestore().batch();
 	lights.forEach(light => {
-		lightRef = admin.firestore().collection('lights').doc(light._id);
+		lightRef = admin.firestore().collection('networks').doc(networkId).collection('lights').doc(light._id);
 		batchWrite.update(lightRef, light);
 	});
 	await batchWrite.commit();
