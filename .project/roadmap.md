@@ -6,11 +6,13 @@
 
 ## Multiple Users
 
-- the sign up screen should allow a user to view 'networks' (homes) they are a member of
+- a modal should open prompting network selection if one isn't currently selected
 
 - the sign up screen should allow a user to create a personal network if they haven't already.
 
 - inviting a user to a 'network' (home) should send them an email
+
+- owner's of a network should be able to designate a new owner
 
 
 ## Orchestration UI

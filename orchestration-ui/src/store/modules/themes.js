@@ -15,31 +15,36 @@ export default {
 		}
 	},
 	actions: {
-		async fetchTheme({ commit, rootState }, id) {
+		async fetchTheme({ commit, rootState, rootGetters }, id) {
 			const fetchTheme = rootState.firebase.functions().httpsCallable('getTheme');
-			const { data: theme } = await fetchTheme(id);
+			const { _id: networkId } = rootGetters['networks/network'];
+			const { data: theme } = await fetchTheme({ id, networkId });
 			commit('SET_THEME', theme);
 			return theme;
 		},
-		async fetchThemes({ commit, rootState }, options = {}) {
+		async fetchThemes({ commit, rootState, rootGetters }, options = {}) {
 			const fetchThemes = rootState.firebase.functions().httpsCallable('getThemes');
-			const { data: themes } = await fetchThemes();
+			const { _id: networkId } = rootGetters['networks/network'];
+			const { data: themes } = await fetchThemes(networkId);
 			if (!options.skipCommit) commit('SET_THEMES', themes);
 			return themes;
 		},
-		async updateTheme({ rootState }, theme) {
+		async updateTheme({ rootState, rootGetters }, theme) {
 			const updateTheme = rootState.firebase.functions().httpsCallable('updateTheme');
-			const result = await updateTheme(theme);
+			const { _id: networkId } = rootGetters['networks/network'];
+			const result = await updateTheme({ theme, networkId });
 			return result;
 		},
-		async createTheme({ rootState }, theme) {
+		async createTheme({ rootState, rootGetters }, theme) {
 			const createTheme = rootState.firebase.functions().httpsCallable('createTheme');
-			const result = await createTheme(theme);
+			const { _id: networkId } = rootGetters['networks/network'];
+			const result = await createTheme({ theme, networkId });
 			return result;
 		},
-		async deleteTheme({ rootState }, theme) {
+		async deleteTheme({ rootState, rootGetters }, theme) {
 			const deleteTheme = rootState.firebase.functions().httpsCallable('deleteTheme');
-			const result = await deleteTheme(theme);
+			const { _id: networkId } = rootGetters['networks/network'];
+			const result = await deleteTheme({ theme, networkId });
 			return result;
 		},
 		async applyTheme({ dispatch }, theme) {

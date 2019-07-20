@@ -11,15 +11,17 @@ export default {
 		}
 	},
 	actions: {
-		async fetchLights({ commit, rootState }, options = {}) {
-			const fetchLights = rootState.firebase.functions().httpsCallable('getLights');
-			const { data: lights } = await fetchLights();
+		async fetchLights({ commit, rootState, rootGetters }, options = {}) {
+			const getLights = rootState.firebase.functions().httpsCallable('getLights');
+			const { _id: networkId } = rootGetters['networks/network'];
+			const { data: lights } = await getLights(networkId);
 			if (!options.skipCommit) commit('SET_LIGHTS', lights);
 			return lights;
 		},
-		async updateLights({ rootState }, lights) {
+		async updateLights({ rootState, rootGetters }, lights) {
 			const updateLights = rootState.firebase.functions().httpsCallable('updateLights');
-			const result = await updateLights(lights);
+			const { _id: networkId } = rootGetters['networks/network'];
+			const result = await updateLights({ lights, networkId });
 			return result;
 		}
 	},

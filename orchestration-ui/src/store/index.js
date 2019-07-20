@@ -7,6 +7,7 @@ import accountStore from './modules/account';
 import usersStore from './modules/users';
 import lightsStore from './modules/lights';
 import themeStore from './modules/themes';
+import networkStore from './modules/networks';
 
 Vue.use(Vuex);
 
@@ -16,7 +17,8 @@ const provider = new firebase.auth.GoogleAuthProvider();
 const persistedState = new VuexPersistence({
 	supportCsircular: true,
 	modules: [
-		'account'
+		'account',
+		'networks'
 	]
 });
 
@@ -29,7 +31,8 @@ const storeConfig = {
 		account: accountStore,
 		users: usersStore,
 		lights: lightsStore,
-		themes: themeStore
+		themes: themeStore,
+		networks: networkStore
 	},
 	plugins: [
 		persistedState.plugin

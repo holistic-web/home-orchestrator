@@ -1,5 +1,5 @@
 <template>
-	<header v-if="!isAccountPage">
+	<header v-if="!isUnauthorizedPage">
 		<b-navbar class="AppHeader" toggleable="lg" type="dark" variant="info">
 
 			<div class="AppHeader__leftSection">
@@ -23,11 +23,7 @@
 			</div>
 
 			<div class="AppHeader__rightSection">
-				<b-btn
-					variant="outline-danger"
-					size="sm"
-					v-text="'Log Out'"
-					@click="logOutUser"/>
+				<pre class="AppHeader__networkName" v-text="network.name"/>
 			</div>
 
 		</b-navbar>
@@ -35,19 +31,17 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import routes from '../router/routes';
 
 export default {
-	methods: {
-		...mapActions({
-			logOutUser: 'account/logOut'
-		})
-	},
 	computed: {
-		isAccountPage() {
-			const isAccountPage = this.$route.name.startsWith('account.');
-			return isAccountPage;
+		...mapGetters({
+			network: 'networks/network'
+		}),
+		isUnauthorizedPage() {
+			const isUnauthorizedPage = this.$route.name === 'account.unauthorized';
+			return isUnauthorizedPage;
 		},
 		menuItems() {
 			const menuItems = routes.filter(route => route.menuName);
@@ -73,10 +67,12 @@ export default {
 	&__leftSection {
 		display: flex;
 		flex-direction: column;
+		margin-bottom: 1rem;
 
 		@media (min-width: 768px) {
 			flex-direction: row;
 			align-items: center;
+			margin-bottom: 0;
 		}
 	}
 
@@ -110,6 +106,11 @@ export default {
 			}
 
 		}
+
+	}
+
+	&__networkName {
+		margin-bottom: 0;
 	}
 }
 </style>

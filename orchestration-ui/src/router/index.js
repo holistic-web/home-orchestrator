@@ -12,7 +12,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
 	const isAuthenticated = !!store.getters['account/account'];
-	if (to.name.startsWith('account')) {
+	if (to.name === 'account.unauthorized') {
 		if (isAuthenticated) return next('/');
 		return next();
 	}
