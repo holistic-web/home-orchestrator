@@ -51,7 +51,7 @@ exports.updateTheme = functions.https.onCall(async ({ theme, networkId}, context
 
 	// Update the Database
 	console.log('> updateTheme~ writing to themes collection');
-	const themeDocumentRef = admin.firestore()..collection('networks').doc(networkId).collection('themes').doc(theme._id);
+	const themeDocumentRef = admin.firestore().collection('networks').doc(networkId).collection('themes').doc(theme._id);
 	await themeDocumentRef.set(theme);
 	return 'success';
 });
