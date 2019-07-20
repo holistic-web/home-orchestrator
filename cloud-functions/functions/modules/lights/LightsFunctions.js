@@ -3,12 +3,12 @@ const admin = require('firebase-admin');
 const getValidUser = require('../../lib/getValidUser');
 const LightsController = require('./LightsController');
 
-exports.getLights = functions.https.onCall(async (data, context) => {
-	console.log('> getLights~ called with: ' + JSON.stringify({ data, auth: context.auth }, null, 4));
+exports.getLights = functions.https.onCall(async (networkId, context) => {
+	console.log('> getLights~ called with: ' + JSON.stringify({ networkId, auth: context.auth }, null, 4));
 	await getValidUser(context);
 
-	// Fetch the lights
-	const lightsSnapshots = await admin.firestore().collection('lights').get();
+	// Fetch the lights\
+	const lightsSnapshots = await admin.firestore().collection('networks').doc(networkId).collection('lights').get();
 	const lights = lightsSnapshots.docs.map(doc => doc.data());
 	return lights;
 });
