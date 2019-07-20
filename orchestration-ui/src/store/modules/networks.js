@@ -15,11 +15,8 @@ export default {
 		}
 	},
 	actions: {
-		async fetchNetwork({ commit, rootState }, id) {
-			const fetchNetwork = rootState.firebase.functions().httpsCallable('getNetwork');
-			const { data: network } = await fetchNetwork(id);
+		setCurrentNetwork({ commit }, network) {
 			commit('SET_NETWORK', network);
-			return network;
 		},
 		async fetchNetworks({ commit, rootState }, options = {}) {
 			const fetchNetworks = rootState.firebase.functions().httpsCallable('getNetworks');

@@ -34,10 +34,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import routes from '../router/routes';
 
 export default {
 	computed: {
+		...mapGetters({
+			network: 'networks/network'
+		}),
 		isUnauthorizedPage() {
 			const isUnauthorizedPage = this.$route.name === 'account.unauthorized';
 			return isUnauthorizedPage;
@@ -66,10 +70,12 @@ export default {
 	&__leftSection {
 		display: flex;
 		flex-direction: column;
+		margin-bottom: 1rem;
 
 		@media (min-width: 768px) {
 			flex-direction: row;
 			align-items: center;
+			margin-bottom: 0;
 		}
 	}
 
@@ -103,6 +109,11 @@ export default {
 			}
 
 		}
+
+	}
+
+	&__networkName {
+		margin-bottom: 0;
 	}
 }
 </style>
