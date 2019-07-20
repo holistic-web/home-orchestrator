@@ -23,11 +23,10 @@
 			</div>
 
 			<div class="AppHeader__rightSection">
-				<!-- <b-btn
-					variant="outline-danger"
-					size="sm"
-					v-text="'Log Out'"
-					@click="logOutUser"/> -->
+				<pre
+					v-if="network"
+					class="AppHeader__networkName"
+					v-text="network.name"/>
 			</div>
 
 		</b-navbar>
