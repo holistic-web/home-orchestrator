@@ -2,6 +2,10 @@ const axios = require('axios');
 
 class LightsController {
 
+	constructor(IFTTT_KEY) {
+		this.IFTTT_KEY = IFTTT_KEY;
+	}
+
 	async updateLight(light) {
 		console.log('> LightsController/updateLight~ called with: ' + JSON.stringify(light, null, 4));
 
@@ -47,8 +51,7 @@ class LightsController {
 	}
 
 	_getRequestPath(light, actionName) {
-		const IFTTT_KEY = light.key;
-		let path = `https://maker.ifttt.com/trigger/${light.name}-${actionName}/with/key/${IFTTT_KEY}`;
+		let path = `https://maker.ifttt.com/trigger/${light.name}-${actionName}/with/key/${this.IFTTT_KEY}`;
 		console.log('> LightsController/_getRequestPath~ generated request path: ' + path);
 		return path;
 	}

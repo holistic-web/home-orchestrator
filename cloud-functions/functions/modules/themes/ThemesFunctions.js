@@ -27,8 +27,8 @@ exports.createTheme = functions.https.onCall(async ({ theme, networkId }, contex
 	await getValidUser(context, networkId);
 
 	theme = {
-		name: data.name,
-		lights: data.lights
+		name: theme.name,
+		lights: theme.lights
 	};
 
 	// Update the Database
@@ -62,7 +62,7 @@ exports.deleteTheme = functions.https.onCall(async ({ theme, networkId }, contex
 
 	// Update the Database
 	console.log('> updateTheme~ writing to themes collection');
-	const themeDocumentRef = admin.firestore().collection('networkId').doc(networkId).collection('themes').doc(data._id);
+	const themeDocumentRef = admin.firestore().collection('networkId').doc(networkId).collection('themes').doc(theme._id);
 	await themeDocumentRef.delete();
 	return 'success';
 });

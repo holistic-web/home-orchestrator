@@ -26,9 +26,15 @@ exports.updateLights = functions.https.onCall(async ({ lights, networkId }, cont
 	});
 	await batchWrite.commit();
 
+	// Get the IFTTT key
+	const networkDoc = admin.firestore().collection('networks').doc(networkId);
+	const networkSnap = await networkDoc.get();
+	const network = networkSnap.data();
+	const IFTTT_KEY = network.variables.IFTTT_KEY;
+
 	// Update the lights
 	console.log('> updateLights~ updating the lights\' state');
-	const lightsController = new LightsController();
+	const lightsController = new LightsController(IFTTT_KEY);
 	await lightsController.updateLights(lights);
 
 	console.log('> updateLights~ completed successfully');
