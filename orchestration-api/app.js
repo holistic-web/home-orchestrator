@@ -14,20 +14,6 @@ const app = express();
 
 app.use('/lights', routes.LightController)
 
-app.get('/', (req, res) => {
-
-	lightService.updateLight(
-		{
-			_id: 'gViRNLbSdLGpvIlNaJ7K',
-			state: {
-				on: false
-			}
-		},
-		'f99ph-pwoW8DYe8iqmt4pOtihqga4bJFMmgVccGhDah'
-	);
-	return res.send('ok');
-});
-
 app.listen(process.env.PORT, () =>
   console.log(`Orchestration API listening on port ${process.env.PORT}!`),
 );
