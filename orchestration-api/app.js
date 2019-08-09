@@ -1,4 +1,3 @@
-process.env.GOOGLE_APPLICATION_CREDENTIALS = '';
 process.env.PORT = 3000;
 
 const express = require('express');
