@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+const axios = require('axios');
 
 export default {
 	namespaced: true,
@@ -19,9 +20,10 @@ export default {
 			return lights;
 		},
 		async updateLights({ rootState, rootGetters }, lights) {
-			const updateLights = rootState.firebase.functions().httpsCallable('updateLights');
+			// const updateLights = rootState.firebase.functions().httpsCallable('updateLights');
 			const { _id: networkId } = rootGetters['networks/network'];
-			const result = await updateLights({ lights, networkId });
+			// const result = await updateLights({ lights, networkId });
+			const result = await axios.post('http://4edc8244.ngrok.io/lights/update', { lights, networkId });
 			return result;
 		}
 	},

@@ -49,9 +49,10 @@
 					<b-form-input
 						type="range"
 						min="0"
-						max="100"
-						v-model="inputVal.state.brightness"/>
-					<span v-if="inputVal.state.brightness" v-text="`${inputVal.state.brightness}%`"/>
+						max="255"
+						v-model="brightnessValue"
+						@input="onBrightnessInput"/>
+					<span v-if="inputVal.state.brightness" v-text="inputVal.state.brightness"/>
 				</div>
 
 			</template>
@@ -91,7 +92,8 @@ export default {
 	data() {
 		return {
 			inputVal: this.value,
-			colourPickerValue: { hex: '#ffffff' },
+			colourPickerValue: { rgb: '#ffffff' },
+			brightnessValue: 255,
 			sceneOptions: [
 				'flow', 'sesh', 'woah', 'morning'
 			],
@@ -109,7 +111,14 @@ export default {
 	},
 	methods: {
 		onColourPickerInput() {
-			this.inputVal.state.colour = this.colourPickerValue.hex;
+			this.inputVal.state.colour = [
+				this.colourPickerValue.rgba.r,
+				this.colourPickerValue.rgba.g,
+				this.colourPickerValue.rgba.b
+			];
+		},
+		onBrightnessInput() {
+			this.inputVal.state.brightness = parseInt(this.brightnessValue, 10);
 		},
 		clearDefaultInputs() {
 			this.inputVal.state.brightness = null;
@@ -134,7 +143,7 @@ export default {
 			immediate: true,
 			handler() {
 				this.inputVal = this.value;
-				this.colourPickerValue = { hex: this.value.state.colour };
+				this.colourPickerValue = { rgb: this.value.state.colour };
 			}
 		},
 		controls() {
