@@ -15,4 +15,4 @@ New users should follow [this guide](/.project/guides/new_user.md) to get set up
 - [orchestration-ui](/orchestration-ui): _user interface through which one can orchestrate the home_
 
 ## Notes
-The [.project](/.project) folder contains information relevant to the project. [Known Issues](.project/known_issues.md) and the [Roadmap](.project/roadmap.md) can be found there. There is also a folder [guides](.project/guides) which contains walkthroughs relevant to this project.
+The [.project](/.project) folder contains information relevant to the project. [Known Issues](/.project/known_issues.md) and the [Roadmap](/.project/roadmap.md) can be found there. There is also a folder [guides](/.project/guides) which contains walkthroughs relevant to this project.
