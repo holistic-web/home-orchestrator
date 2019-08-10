@@ -7,7 +7,6 @@ const lightService = new LightService();
 
 router.post('/update', async (req, res, next) => {
 	try {
-		console.log(req);
 		const { lights, networkId } = req.body;
 		console.log('> lights/update~ called with: ' + JSON.stringify({ lights, networkId }, null, 4));
 
