@@ -18,15 +18,14 @@ router.post('/update', async (req, res, next) => {
 		});
 		await batchWrite.commit();
 
-		// Get the IFTTT key
+		// Get the network
 		const networkDoc = admin.firestore().collection('networks').doc(networkId);
 		const networkSnap = await networkDoc.get();
 		const network = networkSnap.data();
-		const IFTTT_KEY = network.variables.IFTTT_KEY;
 
 		// Update the lights
 		console.log('> updateLights~ updating the lights\' state');
-		await lightService.updateLights(lights, IFTTT_KEY);
+		await lightService.updateLights(lights, network);
 
 		return res.send('done');
 

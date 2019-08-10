@@ -1,10 +1,11 @@
 process.env.PORT = 3000;
 
-const express = require('express');
 const admin = require('firebase-admin');
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const serviceAccount = require('./lib/service-account.json');
 const routes = require('./routes');
-const bodyParser = require('body-parser');
 const ErrorHandlerMiddleware = require('./middlewares/ErrorHandler');
 
 admin.initializeApp({
@@ -14,6 +15,7 @@ admin.initializeApp({
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/lights', routes.LightController)
