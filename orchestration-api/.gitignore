@@ -26,4 +26,5 @@ yarn-error.log*
 .firebase
 firebase-debug.log
 
-service-user.json
+# Google Credentials
+service-account.json
