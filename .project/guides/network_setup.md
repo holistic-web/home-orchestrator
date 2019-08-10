@@ -20,3 +20,5 @@ A walkthrough for setting up a network in the Home Orchestrator system. New user
 		variables: {empty} // Map (leave this empty for now)
 	}
 	```
+
+4. Navigate to https://holistic-home-5134d.firebaseapp.com/account in your browser and your new network should appear in the list. Click `Set Active` on this network and you are all set up!
