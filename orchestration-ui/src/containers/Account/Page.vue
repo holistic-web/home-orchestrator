@@ -7,6 +7,12 @@
 
 		<template v-slot:actions>
 			<b-btn
+				variant="outline-info"
+				size="sm"
+				v-text="'Update Settings'"
+				:disabled="page.isSubmitting || page.isLoading"
+				@click="onUpdateSettingsClick"/>
+			<b-btn
 				variant="outline-danger"
 				size="sm"
 				v-text="'Log Out'"
@@ -44,12 +50,14 @@
 							size="sm"
 							v-text="'Set Active'"
 							:disabled="isSetNetworkActiveDisabled(data.item)"
-							@click="setCurrentNetwork(data.item)"/>
+							@click="onNetworkSelect(data.item)"/>
 					</template>
 
 				</b-table>
 
 			</section>
+
+			<settings v-model="network.settings"/>
 
 		</template>
 
@@ -59,23 +67,26 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import DefaultLayout from '../../components/DefaultLayout.vue';
+import Settings from './components/Settings.vue';
 
 export default {
 	components: {
-		DefaultLayout
+		DefaultLayout,
+		Settings
 	},
 	data() {
 		return {
 			page: {
 				isLoading: false,
-				isSubmtting: false
+				isSubmitting: false
 			},
 			tableFields: [
 				'name',
 				'owner',
 				'users',
 				{ key: 'actions', label: '' }
-			]
+			],
+			networkSettings: null
 		};
 	},
 	computed: {
@@ -89,6 +100,7 @@ export default {
 		...mapActions({
 			fetchNetworks: 'networks/fetchNetworks',
 			setCurrentNetwork: 'networks/setCurrentNetwork',
+			updateNetwork: 'networks/updateNetwork',
 			logOutUser: 'account/logOut'
 		}),
 		async setupPage() {
@@ -99,10 +111,28 @@ export default {
 		isSetNetworkActiveDisabled(network) {
 			if (!this.network) return false;
 			return this.network._id === network._id;
+		},
+		onNetworkSelect(network) {
+			this.setCurrentNetwork(network);
+			this.setupPage();
+		},
+		async onUpdateSettingsClick() {
+			this.page.isSubmitting = true;
+			await this.updateNetwork({ settings: this.networkSettings });
+			this.setupPage();
+			this.page.isSubmitting = false;
 		}
 	},
 	created() {
 		this.setupPage();
+	},
+	watch: {
+		network: {
+			immediate: true,
+			handler() {
+				this.networkSettings = this.network.settings;
+			}
+		}
 	}
 };
 </script>

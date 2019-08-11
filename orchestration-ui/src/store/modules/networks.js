@@ -23,6 +23,11 @@ export default {
 			const { data: networks } = await fetchNetworks();
 			if (!options.skipCommit) commit('SET_NETWORKS', networks);
 			return networks;
+		},
+		async updateNetwork({ rootState }, network) {
+			const updateNetwork = rootState.firebase.functions().httpsCallable('updateNetwork');
+			const result = await updateNetwork(network);
+			return result;
 		}
 	},
 	getters: {

@@ -1,5 +1,3 @@
-import { networkInterfaces } from 'os';
-
 /* eslint-disable no-param-reassign */
 const axios = require('axios');
 
