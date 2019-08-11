@@ -6,6 +6,27 @@ module.exports = class IftttClient {
 		this.IFTTT_KEY = IFTTT_KEY;
 	}
 
+	async update(light) {
+		if (light.state.on) {
+			await this.turnOn(light);
+
+			if (light.type === 'nanoleaf' && light.state.scene) {
+				await this.setScene(light, light.state.scene)
+			}
+
+			if (light.state.brightness) {
+				await this.setBrightness(light, light.state.brightness);
+			}
+
+			if (light.state.colour) {
+				await this.setColour(light, light.state.colour);
+			}
+
+		} else {
+			await this.turnOff(light);
+		}
+	}
+
 	async turnOn(light) {
 		await axios.post(this._getRequestPath(light, 'turn-on'));
 	}

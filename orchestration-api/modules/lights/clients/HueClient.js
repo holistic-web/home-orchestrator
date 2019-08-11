@@ -5,6 +5,17 @@ module.exports = class HueClient {
 		this.hueApi = new HueApi(hueIP, username);
 	}
 
+	async update(light) {
+		await this.hueApi.setLightState(
+			light.meta.hueId,
+			{
+				on: light.state.on,
+				bri: light.state.brightness,
+				rgb: light.state.colour
+			}
+		)
+	}
+
 	async turnOn(light) {
 		await this.hueApi.setLightState(light.meta.hueId, { on: true });
 	}
