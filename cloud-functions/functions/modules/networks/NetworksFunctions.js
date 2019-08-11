@@ -35,13 +35,13 @@ exports.getNetworks = functions.https.onCall(async (data, context) => {
 	return filteredNetworks
 });
 
-exports.updateNetwork = functions.https.onCall(async (network, context) => {
-	console.log('> updateNetwork~ called with: ' + JSON.stringify({ network, auth: context.auth }, null, 4));
-	await getValidUser(context, network._id);
+exports.updateNetwork = functions.https.onCall(async ({ network, networkId }, context) => {
+	console.log('> updateNetwork~ called with: ' + JSON.stringify({ network, networkId, auth: context.auth }, null, 4));
+	await getValidUser(context, networkId);
 
 	// Update the Database
 	console.log('> updateNetwork~ writing to network collection');
-	const networkDocumentRef = admin.firestore().collection('networks').doc(network._id);
-	await networkDocumentRef.set(network);
+	const networkDocumentRef = admin.firestore().collection('networks').doc(networkId);
+	await networkDocumentRef.update(network);
 	return 'success';
 });

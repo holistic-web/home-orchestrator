@@ -118,7 +118,7 @@ export default {
 		},
 		async onUpdateSettingsClick() {
 			this.page.isSubmitting = true;
-			await this.updateNetwork({ settings: this.networkSettings });
+			await this.updateNetwork({ network: { settings: this.networkSettings }, networkId: this.network._id });
 			this.setupPage();
 			this.page.isSubmitting = false;
 		}

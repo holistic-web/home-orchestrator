@@ -14,6 +14,7 @@
 
 - owner's of a network should be able to designate a new owner
 
+- only admin's and owners should be able to edit a network's settings
 
 ## Orchestration UI
 

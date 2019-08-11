@@ -24,9 +24,9 @@ export default {
 			if (!options.skipCommit) commit('SET_NETWORKS', networks);
 			return networks;
 		},
-		async updateNetwork({ rootState }, network) {
+		async updateNetwork({ rootState }, { network, networkId }) {
 			const updateNetwork = rootState.firebase.functions().httpsCallable('updateNetwork');
-			const result = await updateNetwork(network);
+			const result = await updateNetwork({ network, networkId });
 			return result;
 		}
 	},
