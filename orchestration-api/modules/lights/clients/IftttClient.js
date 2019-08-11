@@ -25,34 +25,41 @@ module.exports = class IftttClient {
 		} else {
 			await this.turnOff(light);
 		}
+
+		return 'done';
 	}
 
 	async turnOn(light) {
-		await axios.post(this._getRequestPath(light, 'turn-on'));
+		const result = await axios.post(this._getRequestPath(light, 'turn-on'));
+		return result;
 	}
 
 	async turnOff(light) {
-		await axios.post(this._getRequestPath(light, 'turn-off'));
+		const result = await axios.post(this._getRequestPath(light, 'turn-off'));
+		return result;
 	}
 
 	async setBrightness(light, brightness) {
 		const adjustedBrightness = brightness * (100 / 255);
-		await axios.post(this._getRequestPath(light, 'set-brightness'), { value1: adjustedBrightness });
+		const result = await axios.post(this._getRequestPath(light, 'set-brightness'), { value1: adjustedBrightness });
+		return result;
 	}
 
 	async setColour(light, colour) {
 		let hexColour = rgbHex(colour);
 		// handle nanoleaf hex codes...
 		if (light.type === 'nanoleaf') hexColour = hexColour.replace('#', '');
-		await axios.post(this._getRequestPath(light, 'set-colour'), { value1: hexColour });
+		const result = await axios.post(this._getRequestPath(light, 'set-colour'), { value1: hexColour });
+		return result;
 	}
 
 	async setScene(light, scene) {
-		await axios.post(this._getRequestPath(light, `set-scene-${scene}`));
+		const result = await axios.post(this._getRequestPath(light, `set-scene-${scene}`));
+		return result;
 	}
 
 	_getRequestPath(light, actionName) {
-		let path = `https://maker.ifttt.com/trigger/${light.name}-${actionName}/with/key/${this.IFTTT_KEY}`;
+		const path = `https://maker.ifttt.com/trigger/${light.name}-${actionName}/with/key/${this.IFTTT_KEY}`;
 		return path;
 	}
 }

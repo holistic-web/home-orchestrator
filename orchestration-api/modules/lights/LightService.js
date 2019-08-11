@@ -1,28 +1,19 @@
 const IftttClient = require('./clients/IftttClient');
-const HueClient = require('./clients/HueClient');
+const HomeClient = require('./clients/HomeClient');
 
 module.exports = class LightService {
 
 	async updateLight(light, network) {
 		console.log('> LightService/updateLight~ called with: ' + JSON.stringify({ light, network }, null, 4));
 
-		// get the correct light client
 		let lightClient;
-		if (light.type === 'hue') {
-			if (network.settings.lights.hue.useIFTTT) {
-				lightClient = new IftttClient(network.settings.IFTTT.key)
-			} else {
-				lightClient = new HueClient(
-					network.settings.lights.hue.ipAddress,
-					network.settings.lights.hue.username
-				);
-			}
+		if (network.settings.useLocalAPI) {
+			lightClient = new HomeClient(network);
 		} else {
 			lightClient = new IftttClient(network.settings.IFTTT.key)
 		}
 
 		await lightClient.update(light);
-
 
 		console.log('> LightService/updateLight~ completed successfully');
 		return 'success';

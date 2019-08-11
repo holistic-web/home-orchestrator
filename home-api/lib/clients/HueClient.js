@@ -6,30 +6,35 @@ module.exports = class HueClient {
 	}
 
 	async update(light) {
-		await this.hueApi.setLightState(
+		const result = await this.hueApi.setLightState(
 			light.meta.hueId,
 			{
 				on: light.state.on,
 				bri: light.state.brightness,
 				rgb: light.state.colour
 			}
-		)
+		);
+		return result;
 	}
 
 	async turnOn(light) {
-		await this.hueApi.setLightState(light.meta.hueId, { on: true });
+		const result = await this.hueApi.setLightState(light.meta.hueId, { on: true });
+		return result;
 	}
 
 	async turnOff(light) {
-		await this.hueApi.setLightState(light.meta.hueId, { on: false });
+		const result = await this.hueApi.setLightState(light.meta.hueId, { on: false });
+		return result;
 	}
 
 	async setBrightness(brightness) {
-		await this.hueApi.setLightState(1, { bri: brightness });
+		const result = await this.hueApi.setLightState(1, { bri: brightness });
+		return result;
 	}
 
 	async setColour(colour) {
-		await this.hueApi.setLightState(1, { rgb: colour });
+		const result = await this.hueApi.setLightState(1, { rgb: colour });
+		return result;
 	}
 
 }

@@ -1,5 +1,5 @@
-const LightController = require('./modules/lights/LightController');
+const LightsController = require('./modules/lights/LightsController');
 
 module.exports = {
-	LightController
+	LightsController
 };

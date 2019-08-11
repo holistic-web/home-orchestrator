@@ -23,20 +23,7 @@ app.post('/updateLights', async (req, res, next) => {
 	try {
 
 		console.log('> /updateLights ~ called with: ' + JSON.stringify(req.body, null, 4));
-		const { lights, networkId } = req.body;
-
-		// Update the Database
-		const batchWrite = admin.firestore().batch();
-		lights.forEach(light => {
-			lightRef = admin.firestore().collection('networks').doc(networkId).collection('lights').doc(light._id);
-			batchWrite.update(lightRef, light);
-		});
-		await batchWrite.commit();
-
-		// Get the network
-		const networkDoc = admin.firestore().collection('networks').doc(networkId);
-		const networkSnap = await networkDoc.get();
-		const network = networkSnap.data();
+		const { lights, network } = req.body;
 
 		// Update the lights
 		console.log('> updateLights~ updating the lights\' state');
