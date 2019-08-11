@@ -13,3 +13,5 @@
 - anyone can update the lights for any networkId, the cloud function should verify the user has access to this network
 
 - legacy lights, themes, and users collections need to be cleanedup. Remember to backup what we need to!
+
+- home api and location api both use the same google authentication credentials. The local api should perhaps not be authorized to write to the database

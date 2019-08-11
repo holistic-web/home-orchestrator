@@ -4,6 +4,8 @@
 
 - terminology for 'Themes' (being the state of things) and 'Scenes' (a mode for an individual light) should be swapped
 
+- shared files, such as IftttClient.js should be imported from one location
+
 ## Multiple Users
 
 - a modal should open prompting network selection if one isn't currently selected

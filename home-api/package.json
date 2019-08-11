@@ -1,0 +1,19 @@
+{
+	"name": "home-api",
+	"version": "1.0.0",
+	"description": "Performs actions on devices local to the API. This API should be hosted on the same wifi network as devices it wants to operate on.",
+	"main": "app.js",
+	"scripts": {
+		"start": "node app.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"axios": "0.19.0",
+		"express": "4.17.1",
+		"body-parser": "1.19.0",
+		"cors": "2.8.5",
+		"firebase-admin": "8.2.0"
+	}
+}

@@ -4,13 +4,13 @@ const admin = require('firebase-admin');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const serviceAccount = require('./lib/service-account.json');
+const config = require('./lib/config');
 const routes = require('./routes');
 const ErrorHandlerMiddleware = require('./middlewares/ErrorHandler');
 
 admin.initializeApp({
-	credential: admin.credential.cert(serviceAccount),
-	databaseURL: 'https://holistic-home-5134d.firebaseio.com'
+	credential: admin.credential.cert(config.firebase.credential),
+	databaseURL: config.firebase.databaseURL
 });
 
 const app = express();
