@@ -36,11 +36,11 @@ exports.getNetworks = functions.https.onCall(async (data, context) => {
 });
 
 exports.updateNetwork = functions.https.onCall(async (network, context) => {
-	console.log('> updateTheme~ called with: ' + JSON.stringify({ network, auth: context.auth }, null, 4));
+	console.log('> updateNetwork~ called with: ' + JSON.stringify({ network, auth: context.auth }, null, 4));
 	await getValidUser(context, network._id);
 
 	// Update the Database
-	console.log('> updateTheme~ writing to themes collection');
+	console.log('> updateNetwork~ writing to network collection');
 	const networkDocumentRef = admin.firestore().collection('networks').doc(network._id);
 	await networkDocumentRef.set(network);
 	return 'success';
