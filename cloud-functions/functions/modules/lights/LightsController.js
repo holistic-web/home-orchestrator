@@ -1,4 +1,5 @@
 const axios = require('axios');
+const rgbHex = require('rgb-hex');
 
 class LightsController {
 
@@ -26,7 +27,7 @@ class LightsController {
 			if (light.state.colour) {
 
 				// handle nanoleaf hex codes...
-				let colour = light.state.colour;
+				let colour = rgbHex(light.state.colour);
 				if (light.type === 'nanoleaf') colour = colour.replace('#', '');
 
 				console.log('> LightsController/updateLight~ setting light colour');
