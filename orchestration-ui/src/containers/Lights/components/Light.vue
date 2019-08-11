@@ -92,7 +92,7 @@ export default {
 	data() {
 		return {
 			inputVal: this.value,
-			colourPickerValue: { rgb: '#ffffff' },
+			colourPickerValue: { rgb: [255, 255, 255] },
 			brightnessValue: 255,
 			sceneOptions: [
 				'flow', 'sesh', 'woah', 'morning'
