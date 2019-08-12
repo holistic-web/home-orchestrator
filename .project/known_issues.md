@@ -8,8 +8,6 @@
 
 - scene loads as unselected for a light when entering scene mode. Should have a default value
 
-- creating a new theme takes you to the themes list page rather than the new theme's detail page
-
 - anyone can update the lights for any networkId, the cloud function should verify the user has access to this network
 
 - legacy lights, themes, and users collections need to be cleanedup. Remember to backup what we need to!

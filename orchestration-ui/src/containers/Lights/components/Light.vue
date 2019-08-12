@@ -39,9 +39,15 @@
 
 				<div class="Light__item">
 					<label v-text="'Colour'"/>
-					<colour-picker
-						v-model="colourPickerValue"
-						@input="onColourPickerInput"/>
+					<verte
+						picker="wheel"
+						model="rgb"
+						display="picker"
+						:rgbSliders="false"
+						:showHistory="false"
+						:draggable="false"
+						:enableAlpha="false"
+						v-model="inputVal.state.colour"/>
 				</div>
 
 				<div class="Light__item">
@@ -49,9 +55,8 @@
 					<b-form-input
 						type="range"
 						min="0"
-						max="255"
-						v-model="brightnessValue"
-						@input="onBrightnessInput"/>
+						max="100"
+						v-model="inputVal.state.brightness"/>
 					<span v-if="inputVal.state.brightness" v-text="inputVal.state.brightness"/>
 				</div>
 
@@ -75,11 +80,12 @@
 </template>
 
 <script>
-import { Chrome as ColourPicker } from 'vue-color';
+import Verte from 'verte';
+import 'verte/dist/verte.css';
 
 export default {
 	components: {
-		ColourPicker
+		Verte
 	},
 	props: {
 		value: {
@@ -92,8 +98,6 @@ export default {
 	data() {
 		return {
 			inputVal: this.value,
-			colourPickerValue: { rgb: [255, 255, 255] },
-			brightnessValue: 255,
 			sceneOptions: [
 				'flow', 'sesh', 'woah', 'morning'
 			],
@@ -110,16 +114,6 @@ export default {
 		}
 	},
 	methods: {
-		onColourPickerInput() {
-			this.inputVal.state.colour = [
-				this.colourPickerValue.rgba.r,
-				this.colourPickerValue.rgba.g,
-				this.colourPickerValue.rgba.b
-			];
-		},
-		onBrightnessInput() {
-			this.inputVal.state.brightness = parseInt(this.brightnessValue, 10);
-		},
 		clearDefaultInputs() {
 			this.inputVal.state.brightness = null;
 			this.inputVal.state.colour = null;
@@ -143,7 +137,6 @@ export default {
 			immediate: true,
 			handler() {
 				this.inputVal = this.value;
-				this.colourPickerValue = { rgb: this.value.state.colour };
 			}
 		},
 		controls() {

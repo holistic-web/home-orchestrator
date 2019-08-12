@@ -1,4 +1,4 @@
-# Cloud Functions
+w# Cloud Functions
 These are the cloud functions for this project, hosted on Firebase. If they haven't been used in a while it make ~15 seconds for the project to spin up.
 
 ### Deploying
