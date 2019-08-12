@@ -47,8 +47,7 @@
 						:showHistory="false"
 						:draggable="false"
 						:enableAlpha="false"
-						v-model="inputVal.state.colour"
-						@input="onColourPickerInput"/>
+						v-model="inputVal.state.colour"/>
 				</div>
 
 				<div class="Light__item">
