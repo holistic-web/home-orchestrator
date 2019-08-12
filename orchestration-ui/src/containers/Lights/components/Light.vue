@@ -40,6 +40,13 @@
 				<div class="Light__item">
 					<label v-text="'Colour'"/>
 					<verte
+						picker="wheel"
+						model="rgb"
+						display="picker"
+						:rgbSliders="false"
+						:showHistory="false"
+						:draggable="false"
+						:enableAlpha="false"
 						v-model="inputVal.state.colour"
 						@input="onColourPickerInput"/>
 				</div>
