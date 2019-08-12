@@ -14,7 +14,7 @@ class LightsController {
 		if (light.state.on) {
 			await axios.post(this._getRequestPath(light, 'turn-on'));
 
-			if (light.state.scene) {
+			if (light.type === 'nanoleaf' && light.state.scene) {
 				console.log('> LightsController/updateLight~ setting light scene');
 				await axios.post(this._getRequestPath(light, `set-scene-${light.state.scene}`));
 			}

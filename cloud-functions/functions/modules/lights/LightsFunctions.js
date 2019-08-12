@@ -7,7 +7,7 @@ exports.getLights = functions.https.onCall(async (networkId, context) => {
 	console.log('> getLights~ called with: ' + JSON.stringify({ networkId, auth: context.auth }, null, 4));
 	await getValidUser(context, networkId);
 
-	// Fetch the lights\
+	// Fetch the lights
 	const lightsSnapshots = await admin.firestore().collection('networks').doc(networkId).collection('lights').get();
 	const lights = lightsSnapshots.docs.map(doc => doc.data());
 	return lights;
@@ -30,7 +30,7 @@ exports.updateLights = functions.https.onCall(async ({ lights, networkId }, cont
 	const networkDoc = admin.firestore().collection('networks').doc(networkId);
 	const networkSnap = await networkDoc.get();
 	const network = networkSnap.data();
-	const IFTTT_KEY = network.variables.IFTTT_KEY;
+	const IFTTT_KEY = network.settings.IFTTT.key;
 
 	// Update the lights
 	console.log('> updateLights~ updating the lights\' state');
