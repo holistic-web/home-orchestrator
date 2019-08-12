@@ -99,7 +99,6 @@ export default {
 	data() {
 		return {
 			inputVal: this.value,
-			colourPickerValue: '',
 			sceneOptions: [
 				'flow', 'sesh', 'woah', 'morning'
 			],
@@ -116,9 +115,6 @@ export default {
 		}
 	},
 	methods: {
-		onColourPickerInput() {
-			console.log(this.colourPickerValue);
-		},
 		clearDefaultInputs() {
 			this.inputVal.state.brightness = null;
 			this.inputVal.state.colour = null;
