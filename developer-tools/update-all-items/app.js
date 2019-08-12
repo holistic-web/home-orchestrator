@@ -2,11 +2,13 @@ const admin = require('firebase-admin');
 const serviceAccount = require('./service-account.json');
 
 admin.initializeApp({
-	credential: admin.credential.cert(config.firebase.credential),
-	databaseURL: config.firebase.databaseURL
+	credential: admin.credential.cert(serviceAccount),
+	databaseURL: 'https://holistic-home-5134d.firebaseio.com'
 });
 
-const collection = admin.firestore().collection('networks');
+// #TODO: set this value to the collection you want to modify
+const collectionName = 'networks';
+const collection = admin.firestore().collection(collectionName);
 
 const updateItems = async () => {
 
@@ -19,7 +21,7 @@ const updateItems = async () => {
 	console.log('> Modifying the data...')
 	const promises = items.map(async item => {
 
-		// if we want to edit the item
+		// #TODO edit the logic below to modify the items
 		if (item) {
 			Console.log(`> Working on: ${JSON.stringify(item, null, 4)}...`);
 			item.newProperty = 'example';
@@ -32,7 +34,7 @@ const updateItems = async () => {
 	});
 
 	// Wait for updates to be applied
-	console.log('> Applying updates...')
+	console.log('> Applying updates...');
 	await Promise.all(promises);
 
 	console.log('Done!');
