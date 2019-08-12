@@ -39,9 +39,15 @@
 
 				<div class="Light__item">
 					<label v-text="'Colour'"/>
-					<colour-picker
-						v-model="colourPickerValue"
-						@input="onColourPickerInput"/>
+					<verte
+						picker="wheel"
+						model="rgb"
+						display="picker"
+						:rgbSliders="false"
+						:showHistory="false"
+						:draggable="false"
+						:enableAlpha="false"
+						v-model="inputVal.state.colour"/>
 				</div>
 
 				<div class="Light__item">
@@ -74,11 +80,12 @@
 </template>
 
 <script>
-import { Chrome as ColourPicker } from 'vue-color';
+import Verte from 'verte';
+import 'verte/dist/verte.css';
 
 export default {
 	components: {
-		ColourPicker
+		Verte
 	},
 	props: {
 		value: {
@@ -91,7 +98,6 @@ export default {
 	data() {
 		return {
 			inputVal: this.value,
-			colourPickerValue: { hex: '#ffffff' },
 			sceneOptions: [
 				'flow', 'sesh', 'woah', 'morning'
 			],
@@ -108,9 +114,6 @@ export default {
 		}
 	},
 	methods: {
-		onColourPickerInput() {
-			this.inputVal.state.colour = this.colourPickerValue.hex;
-		},
 		clearDefaultInputs() {
 			this.inputVal.state.brightness = null;
 			this.inputVal.state.colour = null;
@@ -134,7 +137,6 @@ export default {
 			immediate: true,
 			handler() {
 				this.inputVal = this.value;
-				this.colourPickerValue = { hex: this.value.state.colour };
 			}
 		},
 		controls() {
