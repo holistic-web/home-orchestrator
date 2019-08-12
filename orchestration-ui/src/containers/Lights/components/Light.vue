@@ -39,8 +39,8 @@
 
 				<div class="Light__item">
 					<label v-text="'Colour'"/>
-					<Verte
-						v-model="colourPickerValue"
+					<verte
+						v-model="inputVal.state.colour"
 						@input="onColourPickerInput"/>
 				</div>
 
@@ -92,7 +92,7 @@ export default {
 	data() {
 		return {
 			inputVal: this.value,
-			colourPickerValue: { hex: '#ffffff' },
+			colourPickerValue: '',
 			sceneOptions: [
 				'flow', 'sesh', 'woah', 'morning'
 			],
@@ -111,7 +111,6 @@ export default {
 	methods: {
 		onColourPickerInput() {
 			console.log(this.colourPickerValue);
-			this.inputVal.state.colour = this.colourPickerValue.hex;
 		},
 		clearDefaultInputs() {
 			this.inputVal.state.brightness = null;
@@ -136,7 +135,6 @@ export default {
 			immediate: true,
 			handler() {
 				this.inputVal = this.value;
-				this.colourPickerValue = { hex: this.value.state.colour };
 			}
 		},
 		controls() {
