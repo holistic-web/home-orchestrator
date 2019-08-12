@@ -39,7 +39,7 @@
 
 				<div class="Light__item">
 					<label v-text="'Colour'"/>
-					<colour-picker
+					<Verte
 						v-model="colourPickerValue"
 						@input="onColourPickerInput"/>
 				</div>
@@ -74,11 +74,12 @@
 </template>
 
 <script>
-import { Chrome as ColourPicker } from 'vue-color';
+import Verte from 'verte';
+import 'verte/dist/verte.css';
 
 export default {
 	components: {
-		ColourPicker
+		Verte
 	},
 	props: {
 		value: {
@@ -109,6 +110,7 @@ export default {
 	},
 	methods: {
 		onColourPickerInput() {
+			console.log(this.colourPickerValue);
 			this.inputVal.state.colour = this.colourPickerValue.hex;
 		},
 		clearDefaultInputs() {
