@@ -57,7 +57,9 @@
 
 			</section>
 
-			<settings v-model="network.settings"/>
+			<settings
+				v-if="network"
+				v-model="network.settings"/>
 
 		</template>
 
