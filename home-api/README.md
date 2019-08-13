@@ -10,6 +10,10 @@ Performs actions on devices local to the API. This API should be hosted on the s
 
 2. ensure you have `service-account.json` present in the lib folder
 
+3. connect to local bridge:
+	- https://developers.meethue.com/develop/get-started-2/
+	- docs in hue client library
+
 ## Running
 
 1. start the program
