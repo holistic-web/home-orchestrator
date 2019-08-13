@@ -18,7 +18,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use('/lights', routes.LightController)
+app.use('/lights', routes.LightsController);
+app.use('/themes', routes.ThemesController);
 
 app.use(ErrorHandlerMiddleware);
 

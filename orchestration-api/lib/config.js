@@ -1,4 +1,4 @@
-const serviceAccount = require('./lib/service-account.json');
+const serviceAccount = require('./service-account.json');
 
 module.exports = {
 	firebase: {
