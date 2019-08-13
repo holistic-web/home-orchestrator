@@ -7,7 +7,7 @@ module.exports = class LightService {
 		console.log('> LightService/updateLight~ called with: ' + JSON.stringify({ light, network }, null, 4));
 
 		let lightClient;
-		if (network.settings.useLocalAPI) {
+		if (light.type === 'hue' && !network.settings.lights.hue.useIFTTT) {
 			lightClient = new HomeClient(network);
 		} else {
 			lightClient = new IftttClient(network.settings.IFTTT.key)
