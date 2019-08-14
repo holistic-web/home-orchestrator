@@ -36,8 +36,7 @@ router.post('/update', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-		console.log('req.body: ', req.body);
-		const { networkId } = req.body;
+		const { networkId } = req.query;
 		const lightsSnapshots = await admin.firestore().collection('networks').doc(networkId).collection('lights').get();
 		const lights = lightsSnapshots.docs.map(doc => doc.data());
 		return res.send(lights);

@@ -2,8 +2,6 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const { getUser, getUsers, createUser, updateUserRole, deleteUser } = require('./modules/users/UsersFunctions');
 const { getNetworks, updateNetwork } = require('./modules/networks/NetworksFunctions');
-const { getLights, updateLights } = require('./modules/lights/LightsFunctions');
-const { getTheme, getThemes, createTheme, updateTheme, deleteTheme } = require('./modules/themes/ThemesFunctions');
 
 admin.initializeApp(functions.config().firebase);
 
@@ -15,12 +13,3 @@ exports.deleteUser = deleteUser;
 
 exports.getNetworks = getNetworks;
 exports.updateNetwork = updateNetwork;
-
-exports.getLights = getLights;
-exports.updateLights = updateLights;
-
-exports.getTheme = getTheme;
-exports.getThemes = getThemes;
-exports.createTheme = createTheme;
-exports.updateTheme = updateTheme;
-exports.deleteTheme = deleteTheme;

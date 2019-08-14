@@ -22,3 +22,6 @@ https://cloud.google.com/sdk/docs/#install_the_latest_cloud_tools_version_clouds
 
 2. follow the instructions here to deploy the app:
 https://cloud.google.com/community/tutorials/run-expressjs-on-google-app-engine
+```
+>gcloud app deploy
+```

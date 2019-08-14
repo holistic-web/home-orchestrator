@@ -1,5 +1,3 @@
-process.env.PORT = 3000;
-
 const admin = require('firebase-admin');
 const express = require('express');
 const cors = require('cors');
@@ -23,6 +21,7 @@ app.use('/themes', routes.ThemesController);
 
 app.use(ErrorHandlerMiddleware);
 
-app.listen(process.env.PORT, () =>
-  console.log(`Orchestration API listening on port ${process.env.PORT}!`),
+
+app.listen(config.port, () =>
+  console.log(`Orchestration API listening on port ${config.port}!`),
 );

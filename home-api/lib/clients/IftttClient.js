@@ -40,7 +40,6 @@ module.exports = class IftttClient {
 	}
 
 	async setBrightness(light, brightness) {
-		const adjustedBrightness = brightness * (100 / 255);
 		const result = await axios.post(this._getRequestPath(light, 'set-brightness'), { value1: adjustedBrightness });
 		return result;
 	}
