@@ -14,7 +14,7 @@ It hosted at: https://holistic-home-5134d.firebaseapp.com
 1. just run the app :)
 	```
 	> npm run serve
-
+	```
 
 ## Deploying
 1. build the project
