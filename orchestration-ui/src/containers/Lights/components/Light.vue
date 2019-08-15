@@ -57,7 +57,7 @@
 						min="0"
 						max="100"
 						v-model="inputVal.state.brightness"/>
-					<span v-if="inputVal.state.brightness" v-text="`${inputVal.state.brightness}%`"/>
+					<span v-if="inputVal.state.brightness" v-text="inputVal.state.brightness"/>
 				</div>
 
 			</template>

@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+import axios from 'axios';
+import config from '../../lib/config';
 
 export default {
 	namespaced: true,
@@ -11,17 +13,26 @@ export default {
 		}
 	},
 	actions: {
-		async fetchLights({ commit, rootState, rootGetters }, options = {}) {
-			const getLights = rootState.firebase.functions().httpsCallable('getLights');
+		async fetchLights({ commit, rootGetters }, options = {}) {
 			const { _id: networkId } = rootGetters['networks/network'];
-			const { data: lights } = await getLights(networkId);
+			const { data: lights } = await axios.get(
+				`${config.API_BASE}/lights`,
+				{
+					params: { networkId }
+				}
+			);
 			if (!options.skipCommit) commit('SET_LIGHTS', lights);
 			return lights;
 		},
-		async updateLights({ rootState, rootGetters }, lights) {
-			const updateLights = rootState.firebase.functions().httpsCallable('updateLights');
+		async updateLights({ rootGetters }, lights) {
 			const { _id: networkId } = rootGetters['networks/network'];
-			const result = await updateLights({ lights, networkId });
+			const result = await axios.post(
+				`${config.API_BASE}/lights/update`,
+				{
+					lights,
+					networkId
+				}
+			);
 			return result;
 		}
 	},

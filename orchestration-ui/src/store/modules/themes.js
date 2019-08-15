@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+import axios from 'axios';
+import config from '../../lib/config';
 
 export default {
 	namespaced: true,
@@ -15,36 +17,58 @@ export default {
 		}
 	},
 	actions: {
-		async fetchTheme({ commit, rootState, rootGetters }, id) {
-			const fetchTheme = rootState.firebase.functions().httpsCallable('getTheme');
+		async fetchTheme({ commit, rootGetters }, id) {
 			const { _id: networkId } = rootGetters['networks/network'];
-			const { data: theme } = await fetchTheme({ id, networkId });
+			const { data: theme } = await axios.get(
+				`${config.API_BASE}/themes/${id}`,
+				{
+					params: { networkId }
+				}
+			);
 			commit('SET_THEME', theme);
 			return theme;
 		},
-		async fetchThemes({ commit, rootState, rootGetters }, options = {}) {
-			const fetchThemes = rootState.firebase.functions().httpsCallable('getThemes');
+		async fetchThemes({ commit, rootGetters }, options = {}) {
 			const { _id: networkId } = rootGetters['networks/network'];
-			const { data: themes } = await fetchThemes(networkId);
+			const { data: themes } = await axios.get(
+				`${config.API_BASE}/themes`,
+				{
+					params: { networkId }
+				}
+			);
 			if (!options.skipCommit) commit('SET_THEMES', themes);
 			return themes;
 		},
-		async updateTheme({ rootState, rootGetters }, theme) {
-			const updateTheme = rootState.firebase.functions().httpsCallable('updateTheme');
+		async updateTheme({ rootGetters }, theme) {
 			const { _id: networkId } = rootGetters['networks/network'];
-			const result = await updateTheme({ theme, networkId });
+			const result = await axios.patch(
+				`${config.API_BASE}/themes/${theme._id}`,
+				{
+					theme,
+					networkId
+				}
+			);
 			return result;
 		},
-		async createTheme({ rootState, rootGetters }, theme) {
-			const createTheme = rootState.firebase.functions().httpsCallable('createTheme');
+		async createTheme({ rootGetters }, theme) {
 			const { _id: networkId } = rootGetters['networks/network'];
-			const result = await createTheme({ theme, networkId });
+			const result = await axios.post(
+				`${config.API_BASE}/themes`,
+				{
+					theme,
+					networkId
+				}
+			);
 			return result;
 		},
-		async deleteTheme({ rootState, rootGetters }, theme) {
-			const deleteTheme = rootState.firebase.functions().httpsCallable('deleteTheme');
+		async deleteTheme({ rootGetters }, theme) {
 			const { _id: networkId } = rootGetters['networks/network'];
-			const result = await deleteTheme({ theme, networkId });
+			const result = await axios.delete(
+				`${config.API_BASE}/themes/${theme._id}`,
+				{
+					params: { networkId }
+				}
+			);
 			return result;
 		},
 		async applyTheme({ dispatch }, theme) {

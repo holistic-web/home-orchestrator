@@ -1,0 +1,15 @@
+{
+	"name": "update-all-items",
+	"version": "1.0.0",
+	"description": "This is a developer script to iterate through the database and update all items in a collection.",
+	"main": "app.js",
+	"scripts": {
+		"start": "node app.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"firebase-admin": "8.2.0"
+	}
+}

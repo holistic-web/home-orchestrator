@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+import axios from 'axios';
+import config from '../../lib/config';
 
 export default {
 	namespaced: true,
@@ -15,17 +17,25 @@ export default {
 		}
 	},
 	actions: {
-		async fetchUser({ commit, rootState, rootGetters }, email) {
-			const fetchUser = rootState.firebase.functions().httpsCallable('getUser');
+		async fetchUser({ commit, rootGetters }, email) {
 			const { _id: networkId } = rootGetters['networks/network'];
-			const { data: user } = await fetchUser({ email, networkId });
+			const { data: user } = await axios.get(
+				`${config.API_BASE}/users/${email}`,
+				{
+					params: { networkId }
+				}
+			);
 			commit('SET_USER', user);
 			return user;
 		},
-		async fetchUsers({ commit, rootState, rootGetters }, options = {}) {
-			const fetchUsers = rootState.firebase.functions().httpsCallable('getUsers');
+		async fetchUsers({ commit, rootGetters }, options = {}) {
 			const network = rootGetters['networks/network'];
-			const { data: users } = await fetchUsers(network._id);
+			const { data: users } = await axios.get(
+				`${config.API_BASE}/users`,
+				{
+					params: { networkId: network._id }
+				}
+			);
 			users.push({
 				email: network.owner,
 				role: 'owner'
@@ -33,22 +43,36 @@ export default {
 			if (!options.skipCommit) commit('SET_USERS', users);
 			return users;
 		},
-		async createUser({ rootState, rootGetters }, { email, role }) {
-			const createTheme = rootState.firebase.functions().httpsCallable('createUser');
+		async createUser({ rootGetters }, { email, role }) {
 			const { _id: networkId } = rootGetters['networks/network'];
-			const result = await createTheme({ email, role, networkId });
+			const result = await axios.post(
+				`${config.API_BASE}/users`,
+				{
+					user: { email, role },
+					networkId
+				}
+			);
 			return result;
 		},
-		async deleteUser({ rootState, rootGetters }, email) {
-			const deleteUser = rootState.firebase.functions().httpsCallable('deleteUser');
+		async deleteUser({ rootGetters }, email) {
 			const { _id: networkId } = rootGetters['networks/network'];
-			const result = await deleteUser({ email, networkId });
+			const result = await axios.delete(
+				`${config.API_BASE}/users/${email}`,
+				{
+					params: { networkId }
+				}
+			);
 			return result;
 		},
-		async updateUserRole({ rootState, rootGetters }, { email, role }) {
-			const updateUserRole = rootState.firebase.functions().httpsCallable('updateUserRole');
+		async updateUserRole({ rootGetters }, { email, role }) {
 			const { _id: networkId } = rootGetters['networks/network'];
-			const result = await updateUserRole({ email, role, networkId });
+			const result = await axios.patch(
+				`${config.API_BASE}/users/${email}`,
+				{
+					user: { email, role },
+					networkId
+				}
+			);
 			return result;
 		}
 	},
