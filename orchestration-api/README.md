@@ -2,6 +2,8 @@
 
 Performs actions on networks. This API is hosted in the cloud and provides simple services for performing actions on lights.
 
+It is hosted on: https://holistic-home-5134d.appspot.com
+
 ## Setup
 1. install dependencies
 	```
@@ -12,7 +14,7 @@ Performs actions on networks. This API is hosted in the cloud and provides simpl
 	_To acquire credentials, follow the steps outlined here: https://firebase.google.com/docs/admin/setup#initialize_the_sdk_
 
 ## Running
-1. Just run the app :)
+1. just run the app :)
 	```
 	> npm run start
 	```
