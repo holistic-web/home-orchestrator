@@ -2,7 +2,7 @@
 
 User interface for the orchestration system. It is hosted with firebase and written in VueJS
 
-It hosted at: https://holistic-home-5134d.firebaseapp.com
+It's hosted at: https://holistic-home-5134d.firebaseapp.com
 
 ## Setup
 1. install dependencies
