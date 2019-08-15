@@ -4,7 +4,7 @@ This is a project to manage home tasks and automation.
 New users should follow [this guide](/.project/guides/new_user.md) to get set up.
 
 ## Useful Links
-- holistic-home-5134d.firebaseapp.com: Orchestration UI
+- https://holistic-home-5134d.firebaseapp.com: Orchestration UI
 - https://console.firebase.google.com/u/0/project/holistic-home-5134d/: Firebase console
 - https://holistic-home-5134d.appspot.com: API base
 
