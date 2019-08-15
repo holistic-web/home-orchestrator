@@ -4,6 +4,8 @@
 
 - terminology for 'Themes' (being the state of things) and 'Scenes' (a mode for an individual nanoleaf light) should be swapped
 
+- We should look at adding automatic deployment on merge to master, maybe using something like https://gist.github.com/naesheim/18d0c0a58ee61f4674353a2f4cf71475
+
 ## Multiple Users
 
 - the sign up screen should allow a user to create a personal network if they haven't already.
@@ -26,3 +28,5 @@
 - relevant IFTTT triggers be created as part of a 'create light process' allowing users to set up their own lights
 
 - lights should be able to be grouped to be treated as one device
+
+
