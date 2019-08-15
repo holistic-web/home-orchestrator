@@ -68,6 +68,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import toastService from '../../lib/toastService';
 import DefaultLayout from '../../components/DefaultLayout.vue';
 import Settings from './components/Settings.vue';
 
@@ -120,8 +121,13 @@ export default {
 		},
 		async onUpdateSettingsClick() {
 			this.page.isSubmitting = true;
-			await this.updateNetwork({ network: { settings: this.networkSettings }, networkId: this.network._id });
-			this.setupPage();
+			try {
+				await this.updateNetwork({ network: { settings: this.networkSettings }, networkId: this.network._id });
+				this.setupPage();
+				toastService.toast('Settings Updated');
+			} catch (err) {
+				toastService.toast(err);
+			}
 			this.page.isSubmitting = false;
 		}
 	},
