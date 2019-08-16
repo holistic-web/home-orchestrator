@@ -19,8 +19,10 @@ export default {
 	actions: {
 		async fetchTheme({ commit, rootGetters }, id) {
 			const { _id: networkId } = rootGetters['networks/network'];
+			const { token } = rootGetters.account.token;
 			const { data: theme } = await axios.get(
 				`${config.API_BASE}/themes/${id}`,
+				{ headers: { Authorization: `Bearer ${token}` } },
 				{
 					params: { networkId }
 				}
