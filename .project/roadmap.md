@@ -29,4 +29,5 @@
 
 - lights should be able to be grouped to be treated as one device
 
+- Create a toggle switch to enable switching automatic or manual modes for live updates (i.e. update whenever the value in the ui changes). It would hide the Action Bar when it is set on automatic. 
 
