@@ -22,6 +22,7 @@ export default {
 			const { token } = rootGetters.account.token;
 			const { data: theme } = await axios.get(
 				`${config.API_BASE}/themes/${id}`,
+				// this is where I added the header
 				{ headers: { Authorization: `Bearer ${token}` } },
 				{
 					params: { networkId }
