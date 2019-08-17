@@ -7,7 +7,8 @@ const lightService = new LightService();
 
 router.post('/update', async (req, res, next) => {
 	try {
-		const { lights, networkId } = req.body;
+		const { lights, userId } = req.body;
+		const { networkId } = await getDocument(`users/${userId}`);
 
 		const lightPromises = lights.map(async light => {
 			const result = await updateDocument(`networks/${networkId}/lights/${light._id}`, light);
@@ -25,13 +26,14 @@ router.post('/update', async (req, res, next) => {
 });
 
 router.get('/', async (req, res, next) => {
-    try {
-		const { networkId } = req.query;
+	try {
+		const { userId } = req.query;
+		const { networkId } = await getDocument(`users/${userId}`);
 		const lights = await getCollection(`networks/${networkId}/lights`);
 		return res.send(lights);
-    } catch (err) {
-        next(err);
-    }
+	} catch (err) {
+		next(err);
+	}
 });
 
 module.exports = router;
