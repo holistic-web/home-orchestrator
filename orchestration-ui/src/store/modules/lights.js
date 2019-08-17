@@ -17,9 +17,7 @@ export default {
 			const { uid: userId } = rootGetters['account/account'].user;
 			const { data: lights } = await axios.get(
 				`${config.API_BASE}/lights`,
-				{
-					params: { userId }
-				}
+				{ params: { userId } }
 			);
 			if (!options.skipCommit) commit('SET_LIGHTS', lights);
 			return lights;
@@ -28,10 +26,7 @@ export default {
 			const { uid: userId } = rootGetters['account/account'].user;
 			const result = await axios.post(
 				`${config.API_BASE}/lights/update`,
-				{
-					lights,
-					userId
-				}
+				{ lights, userId }
 			);
 			return result;
 		}

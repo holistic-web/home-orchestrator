@@ -5,7 +5,8 @@ const router = Router();
 
 router.get('/', async (req, res, next) => {
 	try {
-		const { networkId } = req.query;
+		const { userId } = req.query;
+		const { networkId } = await getDocument(`users/${userId}`);
 		const themes = await getCollection(`networks/${networkId}/themes`);
 		return res.send(themes);
 	} catch (err) {
@@ -15,7 +16,8 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
 	try {
-		const { theme, networkId } = req.body;
+		const { theme, userId } = req.body;
+		const { networkId } = await getDocument(`users/${userId}`);
 		const result = await createDocument(`networks/${networkId}/themes`, theme);
 		return res.send(result);
 	} catch (err) {
@@ -25,8 +27,9 @@ router.post('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
 	try {
-		const { networkId } = req.query;
+		const { userId } = req.query;
 		const { id: themeId } = req.params;
+		const { networkId } = await getDocument(`users/${userId}`);
 		const theme = await getDocument(`networks/${networkId}/themes/${themeId}`);
 		return res.send(theme);
 	} catch (err) {
@@ -36,8 +39,9 @@ router.get('/:id', async (req, res, next) => {
 
 router.patch('/:id', async (req, res, next) => {
 	try {
-		const { theme, networkId } = req.body;
+		const { theme, userId } = req.body;
 		const themeId = req.params.id;
+		const { networkId } = await getDocument(`users/${userId}`);
 		const result = await updateDocument(`networks/${networkId}/themes/${themeId}`, theme);
 		return res.send(result);
 	} catch (err) {
@@ -47,8 +51,9 @@ router.patch('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
 	try {
-		const { networkId } = req.query;
+		const { userId } = req.query;
 		const themeId = req.params.id;
+		const { networkId } = await getDocument(`users/${userId}`);
 		const result = await deleteDocument(`networks/${networkId}/themes/${themeId}`);
 		return res.send(result);
 	} catch (err) {
