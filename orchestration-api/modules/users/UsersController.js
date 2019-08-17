@@ -1,13 +1,12 @@
 const { Router } = require('express');
-const admin = require('firebase-admin');
+const { getCollection, getDocument, setDocument, updateDocument, deleteDocument } = require('../../clients/FirebaseClient');
 
 const router = Router();
 
 router.get('/', async (req, res, next) => {
 	try {
 		const { networkId } = req.query;
-		const usersSnapshot = await admin.firestore().collection('networks').doc(networkId).collection('users').get();
-		const users = usersSnapshot.docs.map(doc => doc.data());
+		const users = await getCollection(`networks/${networkId}/users`);
 		return res.send(users);
 	} catch (err) {
 		next(err);
@@ -17,9 +16,8 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
 	try {
 		const { user, networkId } = req.body;
-		const userDocumentRef = await admin.firestore().collection('networks').doc(networkId).collection('users').doc(user.email);
-		await userDocumentRef.set(user);
-		return res.send('success');
+		const result = await setDocument(`/networks/${networkId}/users/${user.email}`, user);
+		return res.send(result);
 	} catch (err) {
 		next(err);
 	}
@@ -28,9 +26,8 @@ router.post('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
 	try {
 		const { networkId } = req.query;
-		const userId = req.params.id;
-		const userDoc = await admin.firestore().collection('networks').doc(networkId).collection('users').doc(userId).get();
-		const user = userDoc.data();
+		const { id: userId } = req.params;
+		const user = await getDocument(`networks/${networkId}/users/${userId}`);
 		return res.send(user);
 	} catch (err) {
 		next(err);
@@ -40,10 +37,9 @@ router.get('/:id', async (req, res, next) => {
 router.patch('/:id', async (req, res, next) => {
 	try {
 		const { user, networkId } = req.body;
-		const userId = req.params.id;
-		const userDoc = await admin.firestore().collection('networks').doc(networkId).collection('users').doc(userId).get();
-		await userDoc.update(user);
-		return res.send('done');
+		const { id: userId } = req.params;
+		const result = await updateDocument(`networks/${networkId}/users/${userId}`, user);
+		return res.send(result);
 	} catch (err) {
 		next(err);
 	}
@@ -52,10 +48,9 @@ router.patch('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
 	try {
 		const { networkId } = req.query;
-		const userId = req.params.id;
-		const userDoc = await admin.firestore().collection('networks').doc(networkId).collection('users').doc(userId).get();
-		await userDoc.delete();
-		return res.send('done');
+		const { id: userId } = req.params;
+		const result = await deleteDocument(`networks/${networkId}/users/${userId}`)
+		return res.send(result);
 	} catch (err) {
 		next(err);
 	}
