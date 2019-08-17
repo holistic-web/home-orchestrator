@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import routes from '../router/routes';
 
 export default {
@@ -50,6 +50,14 @@ export default {
 			const menuItems = routes.filter(route => route.menuName);
 			return menuItems;
 		}
+	},
+	methods: {
+		...mapActions({
+			fetchNetwork: 'networks/fetchNetwork'
+		})
+	},
+	created() {
+		this.fetchNetwork();
 	}
 };
 </script>
