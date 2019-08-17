@@ -17,8 +17,16 @@ export default {
 		}
 	},
 	actions: {
-		setCurrentNetwork({ commit }, network) {
-			commit('SET_NETWORK', network);
+		async setCurrentNetwork({ rootGetters }, network) {
+			const { email } = rootGetters['account/account'].user;
+			const result = await axios.patch(
+				`${config.API_BASE}/me/networkId`,
+				{
+					userId: email,
+					networkId: network._id
+				}
+			);
+			return result;
 		},
 		async fetchNetworks({ commit, rootGetters }, options = {}) {
 			const { email } = rootGetters['account/account'].user;
