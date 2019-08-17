@@ -6,8 +6,7 @@ const router = Router();
 router.get('/', async (req, res, next) => {
 	try {
 		const { networkId } = req.query;
-		const path = `networks/${networkId}/themes`;
-		const themes = await getCollection(path);
+		const themes = await getCollection(`networks/${networkId}/themes`);
 		return res.send(themes);
 	} catch (err) {
 		next(err);
