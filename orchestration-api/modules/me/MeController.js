@@ -34,4 +34,15 @@ router.get('/network', async (req, res, next) => {
 	}
 });
 
+router.patch('/network', async (req, res, next) => {
+	try {
+		const { userId, network } = req.body;
+		const { networkId } = await getDocument(`users/${userId}`);
+		const result = await updateDocument(`networks/${networkId}`, network);
+		return res.send(result);
+	} catch(err) {
+		next(err);
+	}
+});
+
 module.exports = router;

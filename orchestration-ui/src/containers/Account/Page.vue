@@ -126,7 +126,7 @@ export default {
 		async onUpdateSettingsClick() {
 			this.page.isSubmitting = true;
 			try {
-				await this.updateNetwork({ network: { settings: this.networkSettings }, networkId: this.network._id });
+				await this.updateNetwork({ settings: this.networkSettings });
 				this.setupPage();
 				toastService.toast('Settings Updated');
 			} catch (err) {
@@ -142,6 +142,7 @@ export default {
 		network: {
 			immediate: true,
 			handler() {
+				if (!this.network) return;
 				this.networkSettings = this.network.settings;
 			}
 		}

@@ -1,12 +1,11 @@
 const { Router } = require('express');
-const { getCollection, updateDocument } = require('../../clients/FirebaseClient');
+const { getCollection } = require('../../clients/FirebaseClient');
 
 const router = Router();
 
 router.get('/', async (req, res, next) => {
 	try {
-		const { email } = req.query;
-
+		const { userId } = req.query;
 		const networks = await getCollection('networks');
 
 		const loadUsersPromises = networks.map(async network => {
@@ -15,10 +14,10 @@ router.get('/', async (req, res, next) => {
 		await Promise.all(loadUsersPromises);
 
 		const filteredNetworks = networks.filter(network => {
-			if (network.owner === email) return true;
+			if (network.ownerId === userId) return true;
 			let isNetworkUser = false;
 			network.users.forEach(networkUser => {
-				if (networkUser.email === email) {
+				if (networkUser.userId === userId) {
 					isNetworkUser = true;
 				}
 			});
@@ -26,17 +25,6 @@ router.get('/', async (req, res, next) => {
 		});
 		return res.send(filteredNetworks);
 
-	} catch (err) {
-		next(err);
-	}
-});
-
-router.patch('/:id', async (req, res, next) => {
-	try {
-		const networkId = req.params.id;
-		const { network } = req.body;
-		const result = await updateDocument(`networks/${networkId}`, network);
-		return res.send(result);
 	} catch (err) {
 		next(err);
 	}
