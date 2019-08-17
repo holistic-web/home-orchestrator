@@ -17,6 +17,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/lights', routes.LightsController);
+app.use('/me'. routes.MeController);
 app.use('/networks', routes.NetworksController)
 app.use('/themes', routes.ThemesController);
 app.use('/users', routes.UsersController);
