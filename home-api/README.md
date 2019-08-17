@@ -8,7 +8,8 @@ Performs actions on devices local to the API. This API should be hosted on the s
 	> npm install
 	```
 
-2. ensure you have `service-account.json` present in the lib folder
+2.  Aquire service credentials and store the file as `/lib/service-account.json`
+	_To acquire credentials, follow the steps outlined here: https://firebase.google.com/docs/admin/setup#initialize_the_sdk_
 
 3. connect to local bridge:
 	- https://developers.meethue.com/develop/get-started-2/
