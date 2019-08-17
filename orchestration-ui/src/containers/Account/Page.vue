@@ -102,13 +102,17 @@ export default {
 	methods: {
 		...mapActions({
 			fetchNetworks: 'networks/fetchNetworks',
+			fetchNetwork: 'networks/fetchNetwork',
 			setCurrentNetwork: 'networks/setCurrentNetwork',
 			updateNetwork: 'networks/updateNetwork',
 			logOutUser: 'account/logOut'
 		}),
 		async setupPage() {
 			this.page.isLoading = true;
-			await this.fetchNetworks();
+			await Promise.all([
+				this.fetchNetworks(),
+				this.fetchNetwork()
+			]);
 			this.page.isLoading = false;
 		},
 		isSetNetworkActiveDisabled(network) {

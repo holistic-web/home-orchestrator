@@ -17,16 +17,25 @@ export default {
 		}
 	},
 	actions: {
-		async setCurrentNetwork({ rootGetters }, network) {
-			const { email } = rootGetters['account/account'].user;
+		async setCurrentNetwork({ rootGetters }, { _id: networkId }) {
+			const { uid: userId } = rootGetters['account/account'].user;
 			const result = await axios.patch(
 				`${config.API_BASE}/me/networkId`,
-				{
-					userId: email,
-					networkId: network._id
-				}
+				{ userId, networkId }
 			);
 			return result;
+		},
+		async fetchNetwork({ commit, rootGetters }, options = {}) {
+			const { uid: userId } = rootGetters['account/account'].user;
+
+			const { data: network } = await axios.get(
+				`${config.API_BASE}/me/network`,
+				{
+					params: { userId }
+				}
+			);
+			if (!options.skipCommit) commit('SET_NETWORKS', network);
+			return network;
 		},
 		async fetchNetworks({ commit, rootGetters }, options = {}) {
 			const { email } = rootGetters['account/account'].user;

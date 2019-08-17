@@ -15,10 +15,21 @@ router.get('/', async (req, res, next) => {
 
 router.patch('/networkId', async (req, res, next) => {
 	try {
-		const { userId, netwokId } = req.body;
+		const { userId, networkId } = req.body;
 		const result = await updateDocument(`users/${userId}`, { networkId });
 		return res.send(result);
 	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/network', async (req, res, next) => {
+	try {
+		const { userId } = req.query;
+		const { networkId } = await getDocument(`users/${userId}`);
+		const network = await getDocument(`networks/${networkId}`);
+		return res.send(network);
+	} catch(err) {
 		next(err);
 	}
 });
