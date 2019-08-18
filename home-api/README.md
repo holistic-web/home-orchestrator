@@ -8,13 +8,23 @@ Performs actions on devices local to the API. This API should be hosted on the s
 	> npm install
 	```
 
-2. ensure you have `service-account.json` present in the lib folder
+1. ensure you have `service-account.json` present in the lib folder
 
-3. get the details for your local bridge to local bridge:
-	- https://developers.meethue.com/develop/get-started-2/
-	- docs in hue client library
+1. Open a web browser and the device you intent to run the Home API and navigate to: https://discovery.meethue.com/, this will list any Hue Bridges on your local network.
 
-4 expose your port to the internet, we recommend using [ngrok](https://ngrok.com/)
+1. Test these details by opening your Hue's control panel at: https://{{BRIDGE_IP_ADDRESS}}/debug/clip.html
+
+1. In this panel, create a user by sending the following request:
+	```
+	type: POST,
+	url: '/api',
+	body: { "devicetype": "my_home_api" }
+	```
+	Congratulations, you just created a user for your instance of the Home API to use to control your lights!
+
+1. In orchestration-ui under Account / Settings ensure you're configured to use the Home API and enter the username and IP address.
+
+1. expose your port to the internet, we recommend using [ngrok](https://ngrok.com/)
 	```
 	> ngrok http 4000
 	```
