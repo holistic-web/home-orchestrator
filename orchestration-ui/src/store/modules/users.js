@@ -17,60 +17,41 @@ export default {
 		}
 	},
 	actions: {
-		async fetchUser({ commit, rootGetters }, email) {
-			const { _id: networkId } = rootGetters['networks/network'];
-			const { data: user } = await axios.get(
-				`${config.API_BASE}/users/${email}`,
-				{
-					params: { networkId }
-				}
-			);
-			commit('SET_USER', user);
-			return user;
-		},
 		async fetchUsers({ commit, rootGetters }, options = {}) {
-			const network = rootGetters['networks/network'];
+			const { uid } = rootGetters['account/account'].user;
 			const { data: users } = await axios.get(
 				`${config.API_BASE}/users`,
-				{
-					params: { networkId: network._id }
-				}
+				{ params: { userId: uid } }
 			);
-			users.push({
-				email: network.owner,
-				role: 'owner'
-			});
 			if (!options.skipCommit) commit('SET_USERS', users);
 			return users;
 		},
 		async createUser({ rootGetters }, { email, role }) {
-			const { _id: networkId } = rootGetters['networks/network'];
+			const { uid } = rootGetters['account/account'].user;
 			const result = await axios.post(
 				`${config.API_BASE}/users`,
 				{
 					user: { email, role },
-					networkId
+					userId: uid
 				}
 			);
 			return result;
 		},
-		async deleteUser({ rootGetters }, email) {
-			const { _id: networkId } = rootGetters['networks/network'];
+		async deleteUser({ rootGetters }, userId) {
+			const { uid } = rootGetters['account/account'].user;
 			const result = await axios.delete(
-				`${config.API_BASE}/users/${email}`,
-				{
-					params: { networkId }
-				}
+				`${config.API_BASE}/users/${userId}`,
+				{ params: { userId: uid } }
 			);
 			return result;
 		},
-		async updateUserRole({ rootGetters }, { email, role }) {
-			const { _id: networkId } = rootGetters['networks/network'];
+		async updateUserRole({ rootGetters }, { userId, role }) {
+			const { uid } = rootGetters['account/account'].user;
 			const result = await axios.patch(
-				`${config.API_BASE}/users/${email}`,
+				`${config.API_BASE}/users/${userId}`,
 				{
-					user: { email, role },
-					networkId
+					user: { userId, role },
+					userId: uid
 				}
 			);
 			return result;

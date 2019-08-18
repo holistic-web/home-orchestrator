@@ -25,7 +25,7 @@ module.exports = {
 		const pathParts = documentPath.split('/');
 		data._id = pathParts[pathParts.length - 1];
 		const documentRef = admin.firestore().doc(documentPath);
-		await documentRef.update(data);
+		await documentRef.set(data);
 		return data;
 	},
 
