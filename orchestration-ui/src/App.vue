@@ -32,7 +32,6 @@ export default {
 
 	&__content {
 		width: 100%;
-		overflow: auto;
 	}
 }
 
