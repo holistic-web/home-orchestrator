@@ -14,24 +14,19 @@ export default {
 	},
 	actions: {
 		async fetchLights({ commit, rootGetters }, options = {}) {
-			const { _id: networkId } = rootGetters['networks/network'];
+			const { uid: userId } = rootGetters['account/account'].user;
 			const { data: lights } = await axios.get(
 				`${config.API_BASE}/lights`,
-				{
-					params: { networkId }
-				}
+				{ params: { userId } }
 			);
 			if (!options.skipCommit) commit('SET_LIGHTS', lights);
 			return lights;
 		},
 		async updateLights({ rootGetters }, lights) {
-			const { _id: networkId } = rootGetters['networks/network'];
+			const { uid: userId } = rootGetters['account/account'].user;
 			const result = await axios.post(
 				`${config.API_BASE}/lights/update`,
-				{
-					lights,
-					networkId
-				}
+				{ lights, userId }
 			);
 			return result;
 		}

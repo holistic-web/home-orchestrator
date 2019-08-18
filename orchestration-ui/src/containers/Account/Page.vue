@@ -102,13 +102,17 @@ export default {
 	methods: {
 		...mapActions({
 			fetchNetworks: 'networks/fetchNetworks',
+			fetchNetwork: 'networks/fetchNetwork',
 			setCurrentNetwork: 'networks/setCurrentNetwork',
 			updateNetwork: 'networks/updateNetwork',
 			logOutUser: 'account/logOut'
 		}),
 		async setupPage() {
 			this.page.isLoading = true;
-			await this.fetchNetworks();
+			await Promise.all([
+				this.fetchNetworks(),
+				this.fetchNetwork()
+			]);
 			this.page.isLoading = false;
 		},
 		isSetNetworkActiveDisabled(network) {
@@ -122,7 +126,7 @@ export default {
 		async onUpdateSettingsClick() {
 			this.page.isSubmitting = true;
 			try {
-				await this.updateNetwork({ network: { settings: this.networkSettings }, networkId: this.network._id });
+				await this.updateNetwork({ settings: this.networkSettings });
 				this.setupPage();
 				toastService.toast('Settings Updated');
 			} catch (err) {
@@ -138,6 +142,7 @@ export default {
 		network: {
 			immediate: true,
 			handler() {
+				if (!this.network) return;
 				this.networkSettings = this.network.settings;
 			}
 		}

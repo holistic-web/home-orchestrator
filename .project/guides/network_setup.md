@@ -16,7 +16,7 @@ A walkthrough for setting up a network in the Home Orchestrator system. New user
 	{
 		_id: {Auto-ID}, // String (matching the generated ID above)
 		name: {network name}, // String (this can be whatever you like)
-		owner: {your email}, // String (this must be the account you use to log in)
+		ownerId: {your uid}, // String (found at: https://console.firebase.google.com/u/0/project/holistic-home-5134d/authentication/users)
 		variables: {empty} // Map (leave this empty for now)
 	}
 	```

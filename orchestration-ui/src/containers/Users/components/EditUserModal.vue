@@ -94,7 +94,7 @@ export default {
 					toastService.toast('User added');
 				} else {
 					await this.updateUserRole({
-						email: this.email,
+						userId: this.user._id,
 						role: this.role
 					});
 					toastService.toast('User updated');
