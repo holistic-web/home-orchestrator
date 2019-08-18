@@ -10,7 +10,7 @@ Performs actions on devices local to the API. This API should be hosted on the s
 
 1. ensure you have `service-account.json` present in the lib folder
 
-1. Open a web browser and the device you intent to run the Home API and navigate to: https://discovery.meethue.com/, this will list any Hue Bridges on your local network.
+1. Open a web browser on the network you intend to run the Home API and navigate to: https://discovery.meethue.com/, this will list any Hue Bridges on your local network.
 
 1. Test these details by opening your Hue's control panel at: https://{{BRIDGE_IP_ADDRESS}}/debug/clip.html
 
