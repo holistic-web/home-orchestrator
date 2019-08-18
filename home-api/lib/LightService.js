@@ -1,4 +1,4 @@
-const HueClient = require('./clients/HueClient');
+const HueClient = require('../clients/HueClient');
 
 module.exports = class LightService {
 
@@ -10,13 +10,6 @@ module.exports = class LightService {
 
 		await lightClient.update(light);
 		return 'success';
-	}
-
-	async updateLights(lights, network) {
-		const requests = lights.map(light => {
-			return this.updateLight(light, network);
-		});
-		await Promise.all(requests);
 	}
 
 };

@@ -11,15 +11,15 @@ const lightService = new LightService();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.post('/updateLights', async (req, res, next) => {
+app.post('/updateLight', async (req, res, next) => {
 	try {
 
-		console.log('> /updateLights ~ called with: ' + JSON.stringify(req.body, null, 4));
-		const { lights, network } = req.body;
+		console.log('> /updateLight ~ called with: ' + JSON.stringify(req.body, null, 4));
+		const { light, network } = req.body;
 
-		// Update the lights
-		console.log('> updateLights~ updating the lights\' state');
-		await lightService.updateLights(lights, network);
+		// Update the light
+		console.log('> updateLight~ updating the light\'s state');
+		await lightService.updateLight(light, network);
 
 		return res.send('done');
 
