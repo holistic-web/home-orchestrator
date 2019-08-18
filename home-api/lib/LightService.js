@@ -1,4 +1,4 @@
-const IftttClient = require('./clients/IftttClient');
+// const IftttClient = require('./clients/IftttClient');
 const HueClient = require('./clients/HueClient');
 
 module.exports = class LightService {
@@ -7,15 +7,11 @@ module.exports = class LightService {
 		console.log('> LightService/updateLight~ called with: ' + JSON.stringify({ light, network }, null, 4));
 
 		// get the correct light client
-		let lightClient;
-		if (light.type === 'hue') {
-			lightClient = new HueClient(
-				network.settings.lights.hue.ipAddress,
-				network.settings.lights.hue.username
-			);
-		} else {
-			lightClient = new IftttClient(network.settings.IFTTT.key)
-		}
+		const lightClient = new HueClient(
+			network.settings.lights.hue.ipAddress,
+			network.settings.lights.hue.username
+		);
+
 
 		await lightClient.update(light);
 
