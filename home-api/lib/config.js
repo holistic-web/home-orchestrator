@@ -6,4 +6,4 @@ module.exports = {
 		credential: serviceAccount,
 		databaseURL: 'https://holistic-home-5134d.firebaseio.com'
 	}
-}
+};
