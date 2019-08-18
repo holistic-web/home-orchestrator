@@ -16,22 +16,19 @@
 				v-text="'Save as Theme'"
 				@click="showSaveAsThemeModal"/>
 
-			<b-btn
-				variant="primary"
-				v-text="'Update Lights'"
-				:disabled="page.isSubmitting"
-				@click="submit"/>
 		</template>
 
 		<template v-slot:content>
 
-			<list v-model="lightsInputs"/>
+			<list class="LightsControl__list" v-model="lightsInputs"/>
 
 			<save-as-theme-modal
 				:visible="page.isSaveAsThemeModalVisible"
 				:theme="{ lights: lightsInputs }"
 				@submitted="goToThemesList"
 				@hidden="hideSaveAsThemeModal"/>
+
+			<action-bar v-if="!page.submitted" @update="submit"/>
 
 		</template>
 
@@ -43,14 +40,16 @@ import { cloneDeep } from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
 import toastService from '../../lib/toastService';
 import DefaultLayout from '../../components/DefaultLayout.vue';
-import List from './components/List.vue';
 import SaveAsThemeModal from '../Themes/components/SaveAsThemeModal.vue';
+import List from './components/List.vue';
+import ActionBar from './components/ActionBar.vue';
 
 export default {
 	components: {
 		DefaultLayout,
+		SaveAsThemeModal,
 		List,
-		SaveAsThemeModal
+		ActionBar
 	},
 	data() {
 		return {
@@ -105,3 +104,12 @@ export default {
 	}
 };
 </script>
+
+<style lang="scss">
+.LightsControl {
+
+	&__list {
+		padding-bottom: 4rem;
+	}
+}
+</style>
