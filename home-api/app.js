@@ -1,5 +1,3 @@
-process.env.PORT = 3000;
-
 const admin = require('firebase-admin');
 const express = require('express');
 const cors = require('cors');
@@ -37,3 +35,7 @@ app.post('/updateLights', async (req, res, next) => {
 });
 
 app.use(ErrorHandlerMiddleware);
+
+app.listen(config.port, () =>
+  console.log(`Home API listening on port ${config.port}!`),
+);
