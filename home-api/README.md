@@ -17,6 +17,7 @@ Performs actions on devices local to the API. This API should be hosted on the s
 4 expose your port to the internet, we recommend using [ngrok](https://ngrok.com/)
 	```
 	> ngrok http 4000
+	```
 
 5. enter your bridges details and internet url on the Account / Settings page in the orchestration-ui
 
