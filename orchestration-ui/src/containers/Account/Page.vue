@@ -85,7 +85,7 @@ export default {
 			},
 			tableFields: [
 				'name',
-				'owner',
+				{ key: 'owner.email', label: 'Owner' },
 				'users',
 				{ key: 'actions', label: '' }
 			],
