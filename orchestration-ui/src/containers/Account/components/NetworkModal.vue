@@ -3,9 +3,8 @@
 		:visible="visible"
 		title="Choose Active Network"
 		ok-variant="outline-info"
-		ok-title="Save"
-		:ok-disabled="isSubmitDisabled"
-		@ok="onSubmit"
+		ok-title="Close"
+		ok-only
 		@hidden="$emit('hidden')">
 
 			<span v-if="isSubmitting" v-text="'Submitting...'"/>
@@ -36,3 +35,26 @@
 
 	</b-modal>
 </template>
+
+
+<script>
+import { mapGetters, mapActions } from 'vuex';
+import toastService from '../../lib/toastService';
+
+
+export default {
+	data() {
+		return {
+			page: {
+				isLoading: false,
+				isSubmitting: false
+			},
+			tableFields: [
+				'name',
+				'owner',
+				'users',
+				{ key: 'actions', label: '' }
+			],
+			networkSettings: null
+		};
+	},
