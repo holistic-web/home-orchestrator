@@ -18,7 +18,7 @@ router.beforeEach((to, from, next) => {
 		return next();
 	}
 	if (!isAuthenticated) return next({ name: 'account.unauthorized' });
-	axios.defaults.headers.common.Authorization = store.getters['account/token'];
+	axios.defaults.headers.common.authorization = `Bearer ${store.getters['account/token']}`;
 	return next();
 });
 

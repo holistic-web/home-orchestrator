@@ -13,20 +13,15 @@ export default {
 		}
 	},
 	actions: {
-		async fetchLights({ commit, rootGetters }, options = {}) {
-			const { uid: userId } = rootGetters['account/account'].user;
-			const { data: lights } = await axios.get(
-				`${config.API_BASE}/lights`,
-				{ params: { userId } }
-			);
+		async fetchLights({ commit }, options = {}) {
+			const { data: lights } = await axios.get(`${config.API_BASE}/lights`);
 			if (!options.skipCommit) commit('SET_LIGHTS', lights);
 			return lights;
 		},
-		async updateLights({ rootGetters }, lights) {
-			const { uid: userId } = rootGetters['account/account'].user;
+		async updateLights(vuex, lights) {
 			const result = await axios.post(
 				`${config.API_BASE}/lights/update`,
-				{ lights, userId }
+				lights
 			);
 			return result;
 		}
