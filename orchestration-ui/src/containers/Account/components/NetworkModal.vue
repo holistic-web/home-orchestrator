@@ -58,3 +58,17 @@ export default {
 			networkSettings: null
 		};
 	},
+	computed: {
+		...mapGetters({
+			account: 'account/account',
+			network: 'networks/network',
+			networks: 'networks/networks'
+		})
+	},
+	methods: {
+		...mapActions({
+			fetchNetworks: 'networks/fetchNetworks',
+			fetchNetwork: 'networks/fetchNetwork',
+			setCurrentNetwork: 'networks/setCurrentNetwork',
+			updateNetwork: 'networks/updateNetwork',
+		}),
