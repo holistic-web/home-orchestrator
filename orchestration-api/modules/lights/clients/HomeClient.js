@@ -3,13 +3,13 @@ const axios = require('axios');
 module.exports = class HomeClient {
 	constructor(network) {
 		this.network = network;
-		this.apiBase = network.settings.localAPI;
+		this.apiBase = network.settings.localUrl;
 	}
 
-	async update(lights) {
+	async update(light) {
 		const result = await axios.post(
 			`${this.apiBase}/updateLights`,
-			{ lights, network: this.network }
+			{ light, network: this.network }
 		);
 		return result;
 	}

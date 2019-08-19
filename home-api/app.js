@@ -1,17 +1,9 @@
-process.env.PORT = 3000;
-
-const admin = require('firebase-admin');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const config = require('./lib/config');
-const lightService = require('./lib/LightService');
+const LightService = require('./lib/LightService');
 const ErrorHandlerMiddleware = require('./middlewares/ErrorHandler');
-
-admin.initializeApp({
-	credential: admin.credential.cert(config.firebase.credential),
-	databaseURL: config.firebase.databaseURL
-});
 
 const app = express();
 const lightService = new LightService();
@@ -19,15 +11,15 @@ const lightService = new LightService();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.post('/updateLights', async (req, res, next) => {
+app.post('/updateLight', async (req, res, next) => {
 	try {
 
-		console.log('> /updateLights ~ called with: ' + JSON.stringify(req.body, null, 4));
-		const { lights, network } = req.body;
+		console.log('> /updateLight ~ called with: ' + JSON.stringify(req.body, null, 4));
+		const { light, network } = req.body;
 
-		// Update the lights
-		console.log('> updateLights~ updating the lights\' state');
-		await lightService.updateLights(lights, network);
+		// Update the light
+		console.log('> updateLight~ updating the light\'s state');
+		await lightService.updateLight(light, network);
 
 		return res.send('done');
 
@@ -37,3 +29,7 @@ app.post('/updateLights', async (req, res, next) => {
 });
 
 app.use(ErrorHandlerMiddleware);
+
+app.listen(config.port, () =>
+  console.log(`Home API listening on port ${config.port}!`),
+);
