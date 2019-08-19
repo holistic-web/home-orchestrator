@@ -38,6 +38,8 @@
 <script>
 import { cloneDeep } from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
+import Pusher from 'pusher-js';
+import config from '../../lib/config';
 import toastService from '../../lib/toastService';
 import DefaultLayout from '../../components/DefaultLayout.vue';
 import SaveAsThemeModal from '../Themes/components/SaveAsThemeModal.vue';
@@ -58,17 +60,20 @@ export default {
 				isSubmitting: false,
 				isSaveAsThemeModalVisible: false
 			},
+			pusher: {},
 			lightsInputs: []
 		};
 	},
 	computed: {
 		...mapGetters({
+			network: 'networks/network',
 			lights: 'lights/lights'
 		})
 	},
 	methods: {
 		...mapActions({
 			fetchLights: 'lights/fetchLights',
+			fetchNetwork: 'networks/fetchNetwork',
 			updateLights: 'lights/updateLights'
 		}),
 		async fetch() {
@@ -76,6 +81,16 @@ export default {
 			await this.fetchLights();
 			this.lightsInputs = cloneDeep(this.lights);
 			this.page.isLoading = false;
+		},
+		async setupPusher() {
+			this.pusher.instance = new Pusher(config.pusher.APP_KEY, {
+				cluster: config.pusher.cluster
+			});
+			await this.fetchNetwork();
+			this.pusher.channel = this.pusher.instance.subscribe(this.network._id);
+			this.pusher.channel.bind('lights_update', () => {
+				this.fetch();
+			});
 		},
 		async submit() {
 			if (!this.lights) return;
@@ -101,6 +116,11 @@ export default {
 	},
 	created() {
 		this.fetch();
+		this.setupPusher();
+	},
+	destroyed() {
+		if (!this.pusher.channel) return;
+		this.pusher.channel.unsubscribe();
 	}
 };
 </script>

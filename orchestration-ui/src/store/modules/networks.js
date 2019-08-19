@@ -30,9 +30,7 @@ export default {
 
 			const { data: network } = await axios.get(
 				`${config.API_BASE}/me/network`,
-				{
-					params: { userId }
-				}
+				{ params: { userId } }
 			);
 			if (!options.skipCommit) commit('SET_NETWORK', network);
 			return network;

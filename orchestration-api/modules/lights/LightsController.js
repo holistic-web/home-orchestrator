@@ -1,9 +1,11 @@
 const { Router } = require('express');
+const PusherClient = require('../../clients/PusherClient');
 const { getCollection, getDocument, updateDocument } = require('../../clients/FirebaseClient');
 const LightService = require('./LightService');
 
 const router = Router();
 const lightService = new LightService();
+const pusherClient = new PusherClient();
 
 router.post('/update', async (req, res, next) => {
 	try {
@@ -18,6 +20,12 @@ router.post('/update', async (req, res, next) => {
 
 		const network = await getDocument(`networks/${networkId}`);
 		await lightService.updateLights(lights, network);
+
+		pusherClient.publishMessage(
+			networkId,
+			'lights_update',
+			'done'
+		);
 
 		return res.send('done');
 	} catch (err) {
