@@ -10,8 +10,11 @@ It is hosted on: https://holistic-home-5134d.appspot.com
 	> npm install
 	```
 
-2. Aquire service credentials and store the file as `/lib/service-account.json`
+2. Acquire service credentials and store the file as `/lib/service-account.json`
 	_To acquire credentials, follow the steps outlined here: https://firebase.google.com/docs/admin/setup#initialize_the_sdk_
+
+3. Acquire pusher credentials and store the file as `/lib/pusher-account.json`.
+	_https://dashboard.pusher.com/apps/845025/keys_
 
 ## Running
 1. just run the app :)

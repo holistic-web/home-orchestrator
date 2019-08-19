@@ -13,11 +13,12 @@
 		"bootstrap-vue": "2.0.0-rc.24",
 		"firebase": "6.1.1",
 		"lodash": "^4.17.11",
+		"pusher-js": "5.0.0",
 		"register-service-worker": "^1.5.2",
 		"verte": "0.0.12",
 		"vue": "^2.5.22",
 		"vue-router": "^3.0.1",
-		"vue-toasted": "^1.1.27",
+		"vue-toasted": "1.1.27",
 		"vuex": "^3.0.1",
 		"vuex-persist": "2.0.0"
 	},
