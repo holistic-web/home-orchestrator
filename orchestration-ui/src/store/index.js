@@ -16,10 +16,7 @@ const provider = new firebase.auth.GoogleAuthProvider();
 
 const persistedState = new VuexPersistence({
 	supportCsircular: true,
-	modules: [
-		'account',
-		'networks'
-	]
+	modules: ['account']
 });
 
 const storeConfig = {

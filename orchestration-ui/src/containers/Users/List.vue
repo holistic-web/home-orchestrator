@@ -124,7 +124,6 @@ export default {
 	methods: {
 		...mapActions({
 			fetchUsers: 'users/fetchUsers',
-			fetchUser: 'users/fetchUser',
 			deleteUser: 'users/deleteUser'
 		}),
 		async fetch() {
@@ -137,7 +136,7 @@ export default {
 		async onConfirmDeleteClick() {
 			this.page.isSubmitting = true;
 			try {
-				await this.deleteUser(this.page.lastClickedUser.email);
+				await this.deleteUser(this.page.lastClickedUser.userId);
 				toastService.toast('User removed');
 				this.fetch();
 			} catch (err) {

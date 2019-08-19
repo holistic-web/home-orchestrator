@@ -17,25 +17,41 @@ export default {
 		}
 	},
 	actions: {
-		setCurrentNetwork({ commit }, network) {
-			commit('SET_NETWORK', network);
+		async setCurrentNetwork({ rootGetters }, { _id: networkId }) {
+			const { uid: userId } = rootGetters['account/account'].user;
+			const result = await axios.patch(
+				`${config.API_BASE}/me/networkId`,
+				{ userId, networkId }
+			);
+			return result;
+		},
+		async fetchNetwork({ commit, rootGetters }, options = {}) {
+			const { uid: userId } = rootGetters['account/account'].user;
+
+			const { data: network } = await axios.get(
+				`${config.API_BASE}/me/network`,
+				{ params: { userId } }
+			);
+			if (!options.skipCommit) commit('SET_NETWORK', network);
+			return network;
 		},
 		async fetchNetworks({ commit, rootGetters }, options = {}) {
-			const { email } = rootGetters['account/account'].user;
+			const { uid: userId } = rootGetters['account/account'].user;
 
 			const { data: networks } = await axios.get(
 				`${config.API_BASE}/networks`,
 				{
-					params: { email }
+					params: { userId }
 				}
 			);
 			if (!options.skipCommit) commit('SET_NETWORKS', networks);
 			return networks;
 		},
-		async updateNetwork(vuex, { network, networkId }) {
+		async updateNetwork({ rootGetters }, network) {
+			const { uid: userId } = rootGetters['account/account'].user;
 			const result = await axios.patch(
-				`${config.API_BASE}/networks/${networkId}`,
-				{ network }
+				`${config.API_BASE}/me/network`,
+				{ userId, network }
 			);
 			return result;
 		}
