@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import firebase from 'firebase';
 import VuexPersistence from 'vuex-persist';
-import config from '../config';
+import config from '../lib/config';
 import accountStore from './modules/account';
 import usersStore from './modules/users';
 import lightsStore from './modules/lights';
