@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getCollection } = require('../../clients/FirebaseClient');
+const { getCollection, getDocument } = require('../../clients/FirebaseClient');
 
 const router = Router();
 
@@ -10,6 +10,7 @@ router.get('/', async (req, res, next) => {
 
 		const loadUsersPromises = networks.map(async network => {
 			network.users = await getCollection(`networks/${network._id}/users`)
+			network.owner = await getDocument(`users/${network.ownerId}`);
 		});
 		await Promise.all(loadUsersPromises);
 
