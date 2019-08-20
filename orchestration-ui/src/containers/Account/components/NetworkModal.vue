@@ -72,3 +72,35 @@ export default {
 			setCurrentNetwork: 'networks/setCurrentNetwork',
 			updateNetwork: 'networks/updateNetwork',
 		}),
+		isSetNetworkActiveDisabled(network) {
+			if (!this.network) return false;
+			return this.network._id === network._id;
+		},
+		async setupPage() {
+			this.page.isLoading = true;
+			await Promise.all([
+				this.fetchNetworks(),
+				this.fetchNetwork()
+			]);
+			this.page.isLoading = false;
+		},
+		isSetNetworkActiveDisabled(network) {
+			if (!this.network) return false;
+			return this.network._id === network._id;
+		},
+		onNetworkSelect(network) {
+			this.setCurrentNetwork(network);
+			this.setupPage();
+		},
+		async onUpdateSettingsClick() {
+			this.page.isSubmitting = true;
+			try {
+				await this.updateNetwork({ settings: this.networkSettings });
+				this.setupPage();
+				toastService.toast('Settings Updated');
+			} catch (err) {
+				toastService.toast(err);
+			}
+			this.page.isSubmitting = false;
+		}
+	}
