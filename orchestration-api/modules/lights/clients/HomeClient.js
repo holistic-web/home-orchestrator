@@ -8,7 +8,7 @@ module.exports = class HomeClient {
 
 	async update(light) {
 		const result = await axios.post(
-			`${this.apiBase}/updateLights`,
+			`${this.apiBase}/updateLight`,
 			{ light, network: this.network }
 		);
 		return result;
