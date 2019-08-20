@@ -12,7 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/updateLight', async (req, res, next) => {
-	console.log(JSON.stringify(req.body, null, 4));
+	console.log('hello');	//JSON.stringify(req.body, null, 4));
 	try {
 
 		console.log('> /updateLight ~ called with: ' + JSON.stringify(req.body, null, 4));
