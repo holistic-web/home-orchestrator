@@ -5,8 +5,7 @@ const router = Router();
 
 router.get('/', async (req, res, next) => {
 	try {
-		const { userId } = req.query;
-		const user = await getDocument(`users/${userId}`);
+		const user = req.user;
 		return res.send(user);
 	} catch (err) {
 		next(err);
@@ -25,8 +24,7 @@ router.patch('/networkId', async (req, res, next) => {
 
 router.get('/network', async (req, res, next) => {
 	try {
-		const { userId } = req.query;
-		const { networkId } = await getDocument(`users/${userId}`);
+		const { networkId } = req.user;
 		const network = await getDocument(`networks/${networkId}`);
 		return res.send(network);
 	} catch(err) {
@@ -36,8 +34,8 @@ router.get('/network', async (req, res, next) => {
 
 router.patch('/network', async (req, res, next) => {
 	try {
-		const { userId, network } = req.body;
-		const { networkId } = await getDocument(`users/${userId}`);
+		const { network } = req.body;
+		const { networkId } = req.user;
 		const result = await updateDocument(`networks/${networkId}`, network);
 		return res.send(result);
 	} catch(err) {
