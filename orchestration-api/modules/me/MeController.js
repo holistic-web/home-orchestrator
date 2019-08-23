@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/', async (req, res, next) => {
 	try {
-		const user = req.user;
+		const { user } = req;
 		return res.send(user);
 	} catch (err) {
 		next(err);
