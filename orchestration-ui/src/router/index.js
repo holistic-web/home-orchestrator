@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import axios from 'axios';
+import firebase from 'firebase';
 import routes from './routes';
 import store from '../store/index';
 
@@ -11,14 +12,14 @@ const router = new Router({
 	mode: 'history'
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
 	const isAuthenticated = !!store.getters['account/account'];
 	if (to.name === 'account.unauthorized') {
 		if (isAuthenticated) return next('/');
 		return next();
 	}
-	if (!isAuthenticated) return next({ name: 'account.unauthorized' });
-	axios.defaults.headers.common.authorization = `Bearer ${store.getters['account/token']}`;
+	const token = await firebase.user.getIdToken();
+	axios.defaults.headers.common.authorization = `Bearer ${token}`;
 	return next();
 });
 
