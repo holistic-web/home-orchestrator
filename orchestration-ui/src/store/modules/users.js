@@ -50,7 +50,8 @@ export default {
 			const result = await axios.patch(
 				`${config.API_BASE}/users/${userId}`,
 				{
-					user: { userId, role },
+					user: userId,
+					role,
 					userId: uid
 				}
 			);

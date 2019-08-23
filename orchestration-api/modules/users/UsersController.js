@@ -50,7 +50,7 @@ router.post('/', async (req, res, next) => {
 
 router.patch('/:id', async (req, res, next) => {
 	try {
-		const { user } = req.body;
+		const user = req.body;
 		const { networkId } = req.user;
 		const { id } = req.params;
 		const result = await updateDocument(`networks/${networkId}/users/${id}`, user);
