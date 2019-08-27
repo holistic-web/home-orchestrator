@@ -8,6 +8,8 @@ Performs actions on devices local to the API. This API should be hosted on the s
 	> npm install
 	```
 
+Follow steps described here https://developers.meethue.com/develop/get-started-2/
+
 1. Open a web browser on the network you intend to run the Home API and navigate to: https://discovery.meethue.com/, this will list any Hue Bridges on your local network.
 
 1. Test these details by opening your Hue's control panel at: https://{{BRIDGE_IP_ADDRESS}}/debug/clip.html

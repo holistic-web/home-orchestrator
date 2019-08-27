@@ -12,6 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/updateLight', async (req, res, next) => {
+	console.log(JSON.stringify(req.body, null, 4));
 	try {
 
 		console.log('> /updateLight ~ called with: ' + JSON.stringify(req.body, null, 4));
@@ -19,6 +20,24 @@ app.post('/updateLight', async (req, res, next) => {
 
 		// Update the light
 		console.log('> updateLight~ updating the light\'s state');
+		await lightService.updateLight(light, network);
+
+		return res.send('done');
+
+	} catch (err) {
+		next(err);
+	}
+});
+
+app.post('/danTest', async (req, res, next) => {
+	console.log(JSON.stringify(req.body, null, 4));
+	try {
+
+		console.log('> /danTest ~ called with: ' + JSON.stringify(req.body, null, 4));
+		const { light, network } = req.body;
+
+		// Update the light
+		console.log('> danTest~ updating the light\'s state');
 		await lightService.updateLight(light, network);
 
 		return res.send('done');
