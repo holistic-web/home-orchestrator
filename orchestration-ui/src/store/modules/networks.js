@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-import axios from 'axios';
 import config from '../../lib/config';
+import httpService from '../../lib/httpService';
 
 export default {
 	namespaced: true,
@@ -19,40 +19,40 @@ export default {
 	actions: {
 		async setCurrentNetwork({ rootGetters }, { _id: networkId }) {
 			const { uid: userId } = rootGetters['account/account'].user;
-			const result = await axios.patch(
-				`${config.API_BASE}/me/networkId`,
-				{ userId, networkId }
-			);
+			const result = await httpService.request({
+				url: `${config.API_BASE}/me/networkId`,
+				method: 'PATCH',
+				data: { userId, networkId }
+			});
 			return result;
 		},
 		async fetchNetwork({ commit, rootGetters }, options = {}) {
 			const { uid: userId } = rootGetters['account/account'].user;
-
-			const { data: network } = await axios.get(
-				`${config.API_BASE}/me/network`,
-				{ params: { userId } }
-			);
+			const { data: network } = await httpService.request({
+				url: `${config.API_BASE}/me/network`,
+				method: 'GET',
+				params: { userId }
+			});
 			if (!options.skipCommit) commit('SET_NETWORK', network);
 			return network;
 		},
 		async fetchNetworks({ commit, rootGetters }, options = {}) {
 			const { uid: userId } = rootGetters['account/account'].user;
-
-			const { data: networks } = await axios.get(
-				`${config.API_BASE}/networks`,
-				{
-					params: { userId }
-				}
-			);
+			const { data: networks } = await httpService.request({
+				url: `${config.API_BASE}/networks`,
+				method: 'GET',
+				params: { userId }
+			});
 			if (!options.skipCommit) commit('SET_NETWORKS', networks);
 			return networks;
 		},
 		async updateNetwork({ rootGetters }, network) {
 			const { uid: userId } = rootGetters['account/account'].user;
-			const result = await axios.patch(
-				`${config.API_BASE}/me/network`,
-				{ userId, network }
-			);
+			const result = await httpService.request({
+				url: `${config.API_BASE}/me/network`,
+				method: 'PATCH',
+				data: { userId, network }
+			});
 			return result;
 		}
 	},
