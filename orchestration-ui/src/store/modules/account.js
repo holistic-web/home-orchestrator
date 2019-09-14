@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import firebase from 'firebase';
-import config from '../../config';
+import config from '../../lib/config';
 
 firebase.initializeApp(config.firebase);
 const provider = new firebase.auth.GoogleAuthProvider();
@@ -41,7 +41,7 @@ export default {
 		},
 		async logOut({ state, commit }) {
 			const success = await state.firebase.auth().signOut();
-			commit('SET_ACCOUNT', null);
+			commit('SETw_ACCOUNT', null);
 			commit('SET_TOKEN', null);
 			localStorage.clear();
 			window.location.reload();

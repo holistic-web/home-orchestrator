@@ -17,50 +17,42 @@ export default {
 		}
 	},
 	actions: {
-		async fetchTheme({ commit, rootGetters }, id) {
-			const { uid: userId } = rootGetters['account/account'].user;
+		async fetchTheme({ commit }, id) {
 			const { data: theme } = await httpService.request({
 				url: `${config.API_BASE}/themes/${id}`,
-				method: 'GET',
-				params: { userId }
+				method: 'GET'
 			});
 			commit('SET_THEME', theme);
 			return theme;
 		},
-		async fetchThemes({ commit, rootGetters }, options = {}) {
-			const { uid: userId } = rootGetters['account/account'].user;
+		async fetchThemes({ commit }, options = {}) {
 			const { data: themes } = await httpService.request({
 				url: `${config.API_BASE}/themes`,
-				method: 'GET',
-				params: { userId }
+				method: 'GET'
 			});
 			if (!options.skipCommit) commit('SET_THEMES', themes);
 			return themes;
 		},
-		async updateTheme({ rootGetters }, theme) {
-			const { uid: userId } = rootGetters['account/account'].user;
+		async updateTheme(vuex, theme) {
 			const result = await httpService.request({
 				url: `${config.API_BASE}/themes/${theme._id}`,
 				method: 'PATCH',
-				data: { theme, userId }
+				data: { theme }
 			});
 			return result;
 		},
-		async createTheme({ rootGetters }, theme) {
-			const { uid: userId } = rootGetters['account/account'].user;
+		async createTheme(vuex, theme) {
 			const result = await httpService.request({
 				url: `${config.API_BASE}/themes`,
 				method: 'POST',
-				data: { theme, userId }
+				data: { theme }
 			});
 			return result;
 		},
-		async deleteTheme({ rootGetters }, theme) {
-			const { uid: userId } = rootGetters['account/account'].user;
+		async deleteTheme(vuex, theme) {
 			const result = await httpService.request({
 				url: `${config.API_BASE}/themes/${theme._id}`,
-				method: 'DELETE',
-				params: { userId }
+				method: 'DELETE'
 			});
 			return result;
 		},

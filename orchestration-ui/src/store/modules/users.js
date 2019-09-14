@@ -17,45 +17,37 @@ export default {
 		}
 	},
 	actions: {
-		async fetchUsers({ commit, rootGetters }, options = {}) {
-			const { uid } = rootGetters['account/account'].user;
+		async fetchUsers({ commit }, options = {}) {
 			const { data: users } = await httpService.request({
 				url: `${config.API_BASE}/users`,
-				method: 'GET',
-				params: { userId: uid }
+				method: 'GET'
 			});
 			if (!options.skipCommit) commit('SET_USERS', users);
 			return users;
 		},
-		async createUser({ rootGetters }, { email, role }) {
-			const { uid } = rootGetters['account/account'].user;
+		async createUser(vuex, { email, role }) {
 			const result = await httpService.request({
 				url: `${config.API_BASE}/users`,
 				method: 'POST',
 				data: {
-					user: { email, role },
-					userId: uid
+					user: { email, role }
 				}
 			});
 			return result;
 		},
-		async deleteUser({ rootGetters }, userId) {
-			const { uid } = rootGetters['account/account'].user;
+		async deleteUser(vuex, userId) {
 			const result = await httpService.request({
 				url: `${config.API_BASE}/users/${userId}`,
-				method: 'DELETE',
-				params: { userId: uid }
+				method: 'DELETE'
 			});
 			return result;
 		},
-		async updateUserRole({ rootGetters }, { userId, role }) {
-			const { uid } = rootGetters['account/account'].user;
+		async updateUserRole(vuex, { userId, role }) {
 			const result = await httpService.request({
 				url: `${config.API_BASE}/users/${userId}`,
 				method: 'PATCH',
 				data: {
-					user: { userId, role },
-					userId: uid
+					user: { userId, role }
 				}
 			});
 			return result;
