@@ -30,7 +30,7 @@
 
 			<action-bar
 				v-if="!page.submitted"
-				:receivingUpdates="receivingLiveUpdates"
+				:receivingUpdates="page.isReceivingLiveUpdates"
 				@update="submit"/>
 
 		</template>
@@ -61,7 +61,8 @@ export default {
 			page: {
 				isLoading: false,
 				isSubmitting: false,
-				isSaveAsThemeModalVisible: false
+				isSaveAsThemeModalVisible: false,
+				isReceivingLiveUpdates: false
 			},
 			pusher: {},
 			lightsInputs: []
@@ -71,11 +72,7 @@ export default {
 		...mapGetters({
 			network: 'networks/network',
 			lights: 'lights/lights'
-		}),
-		receivingLiveUpdates() {
-			!!this.pusher.channel;
-		}
-
+		})
 	},
 	methods: {
 		...mapActions({
@@ -98,6 +95,7 @@ export default {
 			this.pusher.channel.bind('lights_update', () => {
 				this.fetch();
 			});
+			this.page.isReceivingLiveUpdates = true;
 		},
 		async submit() {
 			if (!this.lights) return;
@@ -128,7 +126,7 @@ export default {
 	destroyed() {
 		if (!this.pusher.channel) return;
 		this.pusher.channel.unsubscribe();
-		delete this.pusher.channel;
+		this.page.isReceivingLiveUpdates = false;
 	}
 };
 </script>

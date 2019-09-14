@@ -2,7 +2,7 @@
 	<section class="LightsActionBar">
 
 		<b-container class="LightsActionBar__inner">
-			{{receivingUpdates}}
+			<mdiCheck/>
 			<b-btn
 				variant="primary"
 				v-text="'Update Lights'"
@@ -13,11 +13,16 @@
 </template>
 
 <script>
+import { mdiCheck } from '@mdi/js';
+
 export default {
+	components:{
+		mdiCheck
+	},
 	props:{
-		receivingUpdates:{
-			type:Boolean,
-			default:false
+		receivingUpdates: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data() {
