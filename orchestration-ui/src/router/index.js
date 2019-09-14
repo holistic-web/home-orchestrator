@@ -11,10 +11,12 @@ const router = new Router({
 });
 
 router.beforeEach(async (to, from, next) => {
-	const isAuthenticated = !!store.getters['account/account'];
-	if (to.name === 'account.unauthorized') {
-		if (isAuthenticated) return next('/');
-		return next();
+	const isAuthenticated = !!store.getters['account/user'];
+	if (isAuthenticated) {
+		if (to.name === 'account.unauthorized') return next('/');
+	} else {
+		if (to.name === 'account.unauthorized') return next();
+		return next({ name: 'account.unauthorized' });
 	}
 	return next();
 });
