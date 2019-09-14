@@ -28,7 +28,10 @@
 				@submitted="goToThemesList"
 				@hidden="hideSaveAsThemeModal"/>
 
-			<action-bar v-if="!page.submitted" @update="submit"/>
+			<action-bar
+				v-if="!page.submitted"
+				:receivingUpdates="receivingLiveUpdates"
+				@update="submit"/>
 
 		</template>
 
@@ -68,7 +71,11 @@ export default {
 		...mapGetters({
 			network: 'networks/network',
 			lights: 'lights/lights'
-		})
+		}),
+		receivingLiveUpdates() {
+			!!this.pusher.channel;
+		}
+
 	},
 	methods: {
 		...mapActions({
@@ -121,6 +128,7 @@ export default {
 	destroyed() {
 		if (!this.pusher.channel) return;
 		this.pusher.channel.unsubscribe();
+		delete this.pusher.channel;
 	}
 };
 </script>

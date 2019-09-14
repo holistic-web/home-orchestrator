@@ -2,6 +2,7 @@
 	<section class="LightsActionBar">
 
 		<b-container class="LightsActionBar__inner">
+			{{receivingUpdates}}
 			<b-btn
 				variant="primary"
 				v-text="'Update Lights'"
@@ -13,6 +14,12 @@
 
 <script>
 export default {
+	props:{
+		receivingUpdates:{
+			type:Boolean,
+			default:false
+		}
+	},
 	data() {
 		return {
 			page: {
