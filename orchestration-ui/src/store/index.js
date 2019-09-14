@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import firebase from 'firebase';
 import VuexPersistence from 'vuex-persist';
 import accountStore from './modules/account';
 import usersStore from './modules/users';
