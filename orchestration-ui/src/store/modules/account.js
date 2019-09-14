@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import firebase from 'firebase';
-import config from '../../config';
+import config from '../../lib/config';
 
 firebase.initializeApp(config.firebase);
 const provider = new firebase.auth.GoogleAuthProvider();
