@@ -41,7 +41,7 @@ export default {
 		},
 		async logOut({ state, commit }) {
 			const success = await state.firebase.auth().signOut();
-			commit('SET_ACCOUNT', null);
+			commit('SETw_ACCOUNT', null);
 			commit('SET_TOKEN', null);
 			localStorage.clear();
 			window.location.reload();
