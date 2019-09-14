@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import axios from 'axios';
-import firebase from 'firebase';
 import routes from './routes';
 import store from '../store/index';
 
@@ -18,8 +16,6 @@ router.beforeEach(async (to, from, next) => {
 		if (isAuthenticated) return next('/');
 		return next();
 	}
-	const token = await firebase.user.getIdToken();
-	axios.defaults.headers.common.authorization = `Bearer ${token}`;
 	return next();
 });
 
