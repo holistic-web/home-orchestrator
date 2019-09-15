@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/', async (req, res, next) => {
 	try {
-		const { userId } = req.query;
+		const { _id: userId } = req.user;
 		const networks = await getCollection('networks');
 
 		const loadUsersPromises = networks.map(async network => {

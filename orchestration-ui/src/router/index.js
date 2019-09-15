@@ -10,14 +10,14 @@ const router = new Router({
 	mode: 'history'
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
 	const isAuthenticated = !!store.getters['account/account'];
-	if (to.name === 'account.unauthorized') {
-		if (isAuthenticated) return next('/');
+	if (isAuthenticated) {
+		if (to.name === 'account.unauthorized') return next('/');
 		return next();
 	}
-	if (!isAuthenticated) return next({ name: 'account.unauthorized' });
-	return next();
+	if (to.name === 'account.unauthorized') return next();
+	return next({ name: 'account.unauthorized' });
 });
 
 export default router;
