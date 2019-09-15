@@ -25,7 +25,7 @@ export default {
 			const result = await httpService.request({
 				url: `${config.API_BASE}/lights/update`,
 				method: 'POST',
-				data: { lights }
+				data: lights
 			});
 			return result;
 		}
