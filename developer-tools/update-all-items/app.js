@@ -3,7 +3,7 @@ const serviceAccount = require('./service-account.json');
 
 admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),
-	databaseURL: 'https://holistic-home-5134d.firebaseio.com',
+	databaseURL: 'https://holistic-home-5134d.firebaseio.com'
 });
 
 // #TODO: set this value to the collection you want to modify
