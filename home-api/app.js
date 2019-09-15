@@ -31,5 +31,5 @@ app.post('/updateLight', async (req, res, next) => {
 app.use(ErrorHandlerMiddleware);
 
 app.listen(config.port, () =>
-	x: console.log(`Home API listening on port ${config.port}!`),
+	console.log(`Home API listening on port ${config.port}!`),
 );

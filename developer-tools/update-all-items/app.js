@@ -23,7 +23,7 @@ const updateItems = async () => {
 
 		// #TODO edit the logic below to modify the items
 		if (item) {
-			Console.log(`> Working on: ${JSON.stringify(item, null, 4)}...`);
+			console.log(`> Working on: ${JSON.stringify(item, null, 4)}...`);
 			item.newProperty = 'example';
 
 			// Update the item
