@@ -1,7 +1,7 @@
 <template>
 	<div id="app" class="App">
 
-		<app-header/>
+		<app-header v-if="isLoggedIn"/>
 
 		<router-view class="App__content"/>
 
@@ -14,6 +14,11 @@ import AppHeader from './components/AppHeader.vue';
 export default {
 	components: {
 		AppHeader
+	},
+	computed: {
+		isLoggedIn() {
+			return this.$route.name !== 'account.unauthorized';
+		}
 	}
 };
 

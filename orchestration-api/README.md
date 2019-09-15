@@ -14,7 +14,7 @@ It is hosted on: https://holistic-home-5134d.appspot.com
 	_To acquire credentials, follow the steps outlined here: https://firebase.google.com/docs/admin/setup#initialize_the_sdk_
 
 3. Acquire pusher credentials and store the file as `/lib/pusher-account.json`.
-	_https://dashboard.pusher.com/apps/845025/keys_
+	https://dashboard.pusher.com/apps/845025/keys
 
 ## Running
 1. just run the app :)

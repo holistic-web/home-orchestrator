@@ -13,4 +13,4 @@ module.exports = class HomeClient {
 		);
 		return result;
 	}
-}
+};

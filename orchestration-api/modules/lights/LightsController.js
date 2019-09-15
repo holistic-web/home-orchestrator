@@ -9,8 +9,8 @@ const pusherClient = new PusherClient();
 
 router.post('/update', async (req, res, next) => {
 	try {
-		const { lights, userId } = req.body;
-		const { networkId } = await getDocument(`users/${userId}`);
+		const lights = req.body;
+		const { networkId } = req.user;
 
 		const lightPromises = lights.map(async light => {
 			const result = await updateDocument(`networks/${networkId}/lights/${light._id}`, light);
@@ -29,18 +29,17 @@ router.post('/update', async (req, res, next) => {
 
 		return res.send('done');
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 
 router.get('/', async (req, res, next) => {
 	try {
-		const { userId } = req.query;
-		const { networkId } = await getDocument(`users/${userId}`);
+		const { networkId } = req.user;
 		const lights = await getCollection(`networks/${networkId}/lights`);
 		return res.send(lights);
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 

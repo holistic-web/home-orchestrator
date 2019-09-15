@@ -11,7 +11,7 @@ module.exports = class IftttClient {
 			await this.turnOn(light);
 
 			if (light.type === 'nanoleaf' && light.state.scene) {
-				await this.setScene(light, light.state.scene)
+				await this.setScene(light, light.state.scene);
 			}
 
 			if (light.state.brightness) {
@@ -61,4 +61,4 @@ module.exports = class IftttClient {
 		const path = `https://maker.ifttt.com/trigger/${light.name}-${actionName}/with/key/${this.IFTTT_KEY}`;
 		return path;
 	}
-}
+};

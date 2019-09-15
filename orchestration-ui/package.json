@@ -31,43 +31,12 @@
 		"@vue/cli-service": "^3.4.0",
 		"@vue/eslint-config-airbnb": "^4.0.0",
 		"babel-eslint": "^10.0.1",
-		"eslint": "^5.13.0",
+		"eslint": "^5.16.0",
+		"eslint-config-airbnb-base": "^14.0.0",
 		"eslint-plugin-vue": "^5.0.0",
 		"firebase-tools": "^6.11.0",
 		"node-sass": "^4.9.0",
 		"sass-loader": "^7.1.0",
 		"vue-template-compiler": "^2.5.21"
-	},
-	"eslintConfig": {
-		"root": true,
-		"env": {
-			"node": true
-		},
-		"extends": [
-			"plugin:vue/essential",
-			"@vue/airbnb"
-		],
-		"rules": {
-			"indent": [
-				1,
-				"tab"
-			],
-			"no-tabs": 0,
-			"max-len": [
-				1,
-				160
-			],
-			"comma-dangle": [
-				2,
-				"never"
-			],
-			"no-underscore-dangle": [
-				0,
-				"never"
-			]
-		},
-		"parserOptions": {
-			"parser": "babel-eslint"
-		}
 	}
 }

@@ -5,14 +5,13 @@ const router = Router();
 
 router.get('/', async (req, res, next) => {
 	try {
-		const { userId } = req.query;
-		const { networkId } = await getDocument(`users/${userId}`);
+		const { networkId } = req.user;
 
 		const [{ ownerId }, networkUsers] = await Promise.all([
 			getDocument(`networks/${networkId}`),
 			getCollection(`networks/${networkId}/users`)
 		]);
-		networkUsers.push({ userId: ownerId, role: 'owner'});
+		networkUsers.push({ userId: ownerId, role: 'owner' });
 
 		const userPromises = networkUsers.map(async networkUser => {
 			const user = await getDocument(`users/${networkUser.userId}`);
@@ -25,7 +24,7 @@ router.get('/', async (req, res, next) => {
 
 		return res.send(users);
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 
@@ -45,31 +44,30 @@ router.post('/', async (req, res, next) => {
 		const result = await setDocument(`/networks/${networkId}/users/${user.userId}`, user);
 		return res.send(result);
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 
 router.patch('/:id', async (req, res, next) => {
 	try {
-		const { user, userId } = req.body;
-		const { networkId } = await getDocument(`users/${userId}`);
+		const user = req.body;
+		const { networkId } = req.user;
 		const { id } = req.params;
 		const result = await updateDocument(`networks/${networkId}/users/${id}`, user);
 		return res.send(result);
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 
 router.delete('/:id', async (req, res, next) => {
 	try {
-		const { userId } = req.query;
-		const { networkId } = await getDocument(`users/${userId}`);
+		const { networkId } = req.user;
 		const { id } = req.params;
-		const result = await deleteDocument(`networks/${networkId}/users/${id}`)
+		const result = await deleteDocument(`networks/${networkId}/users/${id}`);
 		return res.send(result);
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 

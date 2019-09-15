@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.post('/updateLight', async (req, res, next) => {
 	try {
 
-		console.log('> /updateLight ~ called with: ' + JSON.stringify(req.body, null, 4));
+		console.log(`> /updateLight ~ called with: ${JSON.stringify(req.body, null, 4)}`);
 		const { light, network } = req.body;
 
 		// Update the light
@@ -30,6 +30,4 @@ app.post('/updateLight', async (req, res, next) => {
 
 app.use(ErrorHandlerMiddleware);
 
-app.listen(config.port, () =>
-  console.log(`Home API listening on port ${config.port}!`),
-);
+app.listen(config.port, () => console.log(`Home API listening on port ${config.port}!`),);

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-import axios from 'axios';
 import config from '../../lib/config';
+import httpService from '../../lib/httpService';
 
 export default {
 	namespaced: true,
@@ -17,53 +17,48 @@ export default {
 		}
 	},
 	actions: {
-		async fetchTheme({ commit, rootGetters }, id) {
-			const { uid: userId } = rootGetters['account/account'].user;
-			const { data: theme } = await axios.get(
-				`${config.API_BASE}/themes/${id}`,
-				{ params: { userId } }
-			);
+		async fetchTheme({ commit }, id) {
+			const { data: theme } = await httpService.request({
+				url: `${config.API_BASE}/themes/${id}`,
+				method: 'GET'
+			});
 			commit('SET_THEME', theme);
 			return theme;
 		},
-		async fetchThemes({ commit, rootGetters }, options = {}) {
-			const { uid: userId } = rootGetters['account/account'].user;
-			const { data: themes } = await axios.get(
-				`${config.API_BASE}/themes`,
-				{ params: { userId } }
-			);
+		async fetchThemes({ commit }, options = {}) {
+			const { data: themes } = await httpService.request({
+				url: `${config.API_BASE}/themes`,
+				method: 'GET'
+			});
 			if (!options.skipCommit) commit('SET_THEMES', themes);
 			return themes;
 		},
-		async updateTheme({ rootGetters }, theme) {
-			const { uid: userId } = rootGetters['account/account'].user;
-			const result = await axios.patch(
-				`${config.API_BASE}/themes/${theme._id}`,
-				{ theme, userId }
-			);
+		async updateTheme(vuex, theme) {
+			const result = await httpService.request({
+				url: `${config.API_BASE}/themes/${theme._id}`,
+				method: 'PATCH',
+				data: { theme }
+			});
 			return result;
 		},
-		async createTheme({ rootGetters }, theme) {
-			const { uid: userId } = rootGetters['account/account'].user;
-			const result = await axios.post(
-				`${config.API_BASE}/themes`,
-				{ theme, userId }
-			);
+		async createTheme(vuex, theme) {
+			const result = await httpService.request({
+				url: `${config.API_BASE}/themes`,
+				method: 'POST',
+				data: { theme }
+			});
 			return result;
 		},
-		async deleteTheme({ rootGetters }, theme) {
-			const { uid: userId } = rootGetters['account/account'].user;
-			const result = await axios.delete(
-				`${config.API_BASE}/themes/${theme._id}`,
-				{
-					params: { userId }
-				}
-			);
+		async deleteTheme(vuex, theme) {
+			const result = await httpService.request({
+				url: `${config.API_BASE}/themes/${theme._id}`,
+				method: 'DELETE'
+			});
 			return result;
 		},
 		async applyTheme({ dispatch }, theme) {
-			await dispatch('lights/updateLights', theme.lights, { root: true });
-			return 'success';
+			const result = await dispatch('lights/updateLights', theme.lights, { root: true });
+			return result;
 		}
 	},
 	getters: {
