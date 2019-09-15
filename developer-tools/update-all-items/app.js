@@ -3,7 +3,7 @@ const serviceAccount = require('./service-account.json');
 
 admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),
-	databaseURL: 'https://holistic-home-5134d.firebaseio.com'
+	databaseURL: 'https://holistic-home-5134d.firebaseio.com',
 });
 
 // #TODO: set this value to the collection you want to modify
@@ -18,7 +18,7 @@ const updateItems = async () => {
 	const items = snapshots.docs.map(doc => doc.data());
 
 	// Modify the items
-	console.log('> Modifying the data...')
+	console.log('> Modifying the data...');
 	const promises = items.map(async item => {
 
 		// #TODO edit the logic below to modify the items
