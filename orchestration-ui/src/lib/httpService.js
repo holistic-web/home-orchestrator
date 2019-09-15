@@ -20,7 +20,7 @@ export default {
 			const result = await axios.request(axiosConfig);
 			return result;
 		} catch (err) {
-			if (err.response.status === 403) return store.dispatch('account/logOut')();
+			if (err.response && err.response.status === 403) return store.dispatch('account/logOut')();
 			throw err;
 		}
 	}
