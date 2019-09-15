@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
 		const networks = await getCollection('networks');
 
 		const loadUsersPromises = networks.map(async network => {
-			network.users = await getCollection(`networks/${network._id}/users`)
+			network.users = await getCollection(`networks/${network._id}/users`);
 			network.owner = await getDocument(`users/${network.ownerId}`);
 		});
 		await Promise.all(loadUsersPromises);
@@ -27,7 +27,7 @@ router.get('/', async (req, res, next) => {
 		return res.send(filteredNetworks);
 
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 

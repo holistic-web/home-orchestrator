@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
 		const themes = await getCollection(`networks/${networkId}/themes`);
 		return res.send(themes);
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 
@@ -20,7 +20,7 @@ router.post('/', async (req, res, next) => {
 		const result = await createDocument(`networks/${networkId}/themes`, theme);
 		return res.send(result);
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 
@@ -31,7 +31,7 @@ router.get('/:id', async (req, res, next) => {
 		const theme = await getDocument(`networks/${networkId}/themes/${themeId}`);
 		return res.send(theme);
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 
@@ -43,7 +43,7 @@ router.patch('/:id', async (req, res, next) => {
 		const result = await updateDocument(`networks/${networkId}/themes/${themeId}`, theme);
 		return res.send(result);
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 
@@ -54,7 +54,7 @@ router.delete('/:id', async (req, res, next) => {
 		const result = await deleteDocument(`networks/${networkId}/themes/${themeId}`);
 		return res.send(result);
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 

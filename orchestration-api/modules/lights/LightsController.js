@@ -29,7 +29,7 @@ router.post('/update', async (req, res, next) => {
 
 		return res.send('done');
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 
@@ -39,7 +39,7 @@ router.get('/', async (req, res, next) => {
 		const lights = await getCollection(`networks/${networkId}/lights`);
 		return res.send(lights);
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 });
 

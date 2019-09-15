@@ -7,6 +7,8 @@ const admin = require('firebase-admin');
 //
 // reference: https://github.com/firebase/functions-samples/blob/Node-8/authorized-https-endpoint/functions/index.js
 
+/* eslint-disable */
+
 const validateFirebaseIdToken = async (req, res, next) => {
 	// console.log('Check if request is authorized with Firebase ID token');
 

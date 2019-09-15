@@ -9,7 +9,7 @@ module.exports = class HueClient {
 		const result = await this.hueApi.setLightState(
 			light.meta.hueId,
 			{
-				on: light.state.on,
+				onss: light.state.on,
 				bri: light.state.brightness,
 				rgb: light.state.colour
 			}
@@ -37,4 +37,4 @@ module.exports = class HueClient {
 		return result;
 	}
 
-}
+};

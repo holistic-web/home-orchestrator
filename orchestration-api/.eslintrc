@@ -10,8 +10,14 @@
 		// only apply parens to arrow functions when there are multiple args
 		"arrow-parens": [2, "as-needed"],
 
+		// allow class methods without 'this' keyword
+		"class-methods-use-this": "off",
+
 		// never have trailing commas
 		"comma-dangle": [2, "never"],
+
+		// allow neat dependency cycles
+		"import/no-cycle": "off",
 
 		// always indent with one tab, including switch statements
 		"indent": [1, "tab", { "SwitchCase": 1 }],
@@ -20,7 +26,7 @@
 		"linebreak-style": 0,
 
 		// warn for any line over 120 chars
-		"max-len": [1, 120],
+		"max-len": [1, 160],
 
 		// class constructors must start with a capital letter, allows Router and Object ID without "new"
 		"new-cap": [2, { "capIsNewExceptions": ["Router", "ObjectId"] }],
@@ -31,8 +37,8 @@
 		// allow the ++ operator
 		"no-plusplus": 0,
 
-		// disallow underscore dangle with the exceptions "_id" & "__v"
-		"no-underscore-dangle": [2, { "allow": ["_id", "__v"] }],
+		// allow underscore dangle
+		"no-underscore-dangle": "off",
 
 		// allow tabs!
 		"no-tabs": 0,

@@ -22,12 +22,10 @@ app.use(UserMiddleware);
 
 app.use('/lights', routes.LightsController);
 app.use('/me', routes.MeController);
-app.use('/networks', routes.NetworksController)
+app.use('/networks', routes.NetworksController);
 app.use('/themes', routes.ThemesController);
 app.use('/users', routes.UsersController);
 
 app.use(ErrorHandlerMiddleware);
 
-app.listen(config.port, () =>
-  console.log(`Orchestration API listening on port ${config.port}!`),
-);
+app.listen(config.port, () => console.log(`Orchestration API listening on port ${config.port}!`));
