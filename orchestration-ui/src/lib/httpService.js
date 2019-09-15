@@ -16,7 +16,12 @@ export default {
 		}
 		if (!axiosConfig.headers) axiosConfig.headers = {};
 		axiosConfig.headers.authorization = `Bearer ${token}`;
-		const result = axios.request(axiosConfig);
-		return result;
+		try {
+			const result = await axios.request(axiosConfig);
+			return result;
+		} catch (err) {
+			if (err.response.status === 403) return store.dispatch('account/logOut')();
+			throw err;
+		}
 	}
 };
