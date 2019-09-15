@@ -14,7 +14,8 @@ router.get('/', async (req, res, next) => {
 
 router.patch('/networkId', async (req, res, next) => {
 	try {
-		const { userId, networkId } = req.body;
+		const { _id: userId } = req.user;
+		const { networkId } = req.body;
 		const result = await updateDocument(`users/${userId}`, { networkId });
 		return res.send(result);
 	} catch (err) {
