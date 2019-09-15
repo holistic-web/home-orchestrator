@@ -37,4 +37,4 @@ module.exports = class HueClient {
 		return result;
 	}
 
-}
+};

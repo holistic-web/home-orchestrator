@@ -9,4 +9,4 @@ module.exports = {
 		databaseURL: 'https://holistic-home-5134d.firebaseio.com'
 	},
 	pusher: pusherAccount
-}
+};

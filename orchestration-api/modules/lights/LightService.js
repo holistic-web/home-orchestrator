@@ -4,13 +4,13 @@ const HomeClient = require('./clients/HomeClient');
 module.exports = class LightService {
 
 	async updateLight(light, network) {
-		console.log('> LightService/updateLight~ called with: ' + JSON.stringify({ light, network }, null, 4));
+		console.log(`> LightService/updateLight~ called with: ${JSON.stringify({ light, network }, null, 4)}`);
 
 		let lightClient;
 		if (light.type === 'hue' && !network.settings.lights.hue.useIFTTT) {
 			lightClient = new HomeClient(network);
 		} else {
-			lightClient = new IftttClient(network.settings.IFTTT.key)
+			lightClient = new IftttClient(network.settings.IFTTT.key);
 		}
 
 		await lightClient.update(light);
@@ -20,9 +20,7 @@ module.exports = class LightService {
 	}
 
 	async updateLights(lights, network) {
-		const requests = lights.map(light => {
-			return this.updateLight(light, network);
-		});
+		const requests = lights.map(light => this.updateLight(light, network));
 		await Promise.all(requests);
 	}
 

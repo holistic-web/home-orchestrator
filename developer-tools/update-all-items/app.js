@@ -18,12 +18,12 @@ const updateItems = async () => {
 	const items = snapshots.docs.map(doc => doc.data());
 
 	// Modify the items
-	console.log('> Modifying the data...')
+	console.log('> Modifying the data...');
 	const promises = items.map(async item => {
 
 		// #TODO edit the logic below to modify the items
 		if (item) {
-			Console.log(`> Working on: ${JSON.stringify(item, null, 4)}...`);
+			console.log(`> Working on: ${JSON.stringify(item, null, 4)}...`);
 			item.newProperty = 'example';
 
 			// Update the item

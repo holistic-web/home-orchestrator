@@ -6,5 +6,5 @@ module.exports = async (req, res, next) => {
 		...req.user,
 		...userData
 	};
-	next();
+	return next();
 };
