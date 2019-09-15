@@ -33,14 +33,13 @@ module.exports = class HueClient {
 
 	async update(light) {
 		const colourAsXY = rgbToXY(light.state.colour);
-		console.log('colourAsXY: ', colourAsXY);
 		const result = await this.hueApi.setLightState(
 			light.meta.hueId,
 			{
 				on: light.state.on,
 				bri: light.state.brightness,
 				xy: colourAsXY
-				//xy: [0.5, 0.5]
+				// xy: [0.5, 0.5]
 			}
 		);
 		return result;
