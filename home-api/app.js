@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.post('/updateLight', async (req, res, next) => {
 	try {
 
-		// console.log(`> /updateLight ~ called with: ${JSON.stringify(req.body, null, 4)}`);
+		console.log(`> /updateLight ~ called with: ${JSON.stringify(req.body, null, 4)}`);
 		const { light, network } = req.body;
 
 		// Update the light
@@ -35,14 +35,29 @@ app.post('/alert', async (req, res, next) => {
 	try {
 		const { light, network } = req.body;
 		for (let i = 0; i < 30; i++) {
-			// const a = 255 * (i / 30);
-			// const b = 255 * (1 - (i / 30));
 			light.state.colour = 'rgb(255,0,0)';
-			// light.state.on = true;
 			await lightService.updateLight(light, network);
 			await sleep(500);
 			light.state.colour = 'rgb(0,0,255)';
-			// light.state.on = false;
+			await lightService.updateLight(light, network);
+			await sleep(500);
+		}
+		return res.send('done');
+
+	} catch (err) {
+		return next(err);
+	}
+});
+
+
+app.post('/colourLoop', async (req, res, next) => {
+	try {
+		const { light, network, loopConstraints } = req.body;
+		for (let i = 0; i < loopConstraints.cycles; i++) {
+			light.state.colour = loopConstraints.colours.first;
+			await lightService.updateLight(light, network);
+			await sleep(500);
+			light.state.colour = loopConstraints.colours.second;
 			await lightService.updateLight(light, network);
 			await sleep(500);
 		}
