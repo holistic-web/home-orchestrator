@@ -53,15 +53,14 @@ app.post('/alert', async (req, res, next) => {
 app.post('/colourLoop', async (req, res, next) => {
 	try {
 		const { light, network, loopConstraints } = req.body;
+		res.send('done');
 		for (let i = 0; i < loopConstraints.cycles; i++) {
-			light.state.colour = loopConstraints.colours.first;
-			await lightService.updateLight(light, network);
-			await sleep(500);
-			light.state.colour = loopConstraints.colours.second;
-			await lightService.updateLight(light, network);
-			await sleep(500);
+			for (let j = 0; j < loopConstraints.colours.length; j++) {
+				light.state.colour = loopConstraints.colours[j];
+				await lightService.updateLight(light, network);
+				await sleep(loopConstraints.wait);
+			}
 		}
-		return res.send('done');
 
 	} catch (err) {
 		return next(err);
