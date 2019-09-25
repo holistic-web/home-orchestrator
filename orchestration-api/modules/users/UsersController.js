@@ -31,7 +31,23 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
 	try {
 		const { networkId } = req.user;
-		const { user } = req.body;
+
+		// ensure they are authorized (owner / admin)
+		const networkUsers = await getCollection(`/networks/${networkId}/users`);
+		let isAdmin = false;
+		networkUsers.forEach(user => {
+			if (user._id === req.user._id && user.role === 'admin') {
+				isAdmin = true;
+			}
+		});
+
+		const { ownerId } = await getDocument(`/networks/${networkId}`);
+
+		if (!isAdmin && req.user._id !== ownerId) {
+			throw new Error('Not authorized');
+		}
+
+		const user = req.body;
 
 		const users = await getCollection('users');
 
