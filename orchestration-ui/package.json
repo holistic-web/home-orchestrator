@@ -1,5 +1,5 @@
 {
-	"name": "home-orchestrator",
+	"name": "orchestration-ui",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
