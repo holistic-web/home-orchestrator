@@ -29,9 +29,7 @@ export default {
 			const result = await httpService.request({
 				url: `${config.API_BASE}/users`,
 				method: 'POST',
-				data: {
-					user: { email, role }
-				}
+				data: { email, role }
 			});
 			return result;
 		},
