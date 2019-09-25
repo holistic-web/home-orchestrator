@@ -31,11 +31,11 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
 	try {
-		const requestUserRole = await getUserRole(req.user._id);
-		if (!['admin', 'owner'].includes(requestUserRole)) throw new Error('Not authorized');
-
 		const { networkId } = req.user;
 		const user = req.body;
+
+		const requestUserRole = await getUserRole(req.user._id, networkId);
+		if (!['admin', 'owner'].includes(requestUserRole)) throw new Error('Not authorized');
 
 		const users = await getCollection('users');
 
@@ -52,12 +52,12 @@ router.post('/', async (req, res, next) => {
 
 router.patch('/:id', async (req, res, next) => {
 	try {
-		const requestUserRole = await getUserRole(req.user._id);
-		if (!['admin', 'owner'].includes(requestUserRole)) throw new Error('Not authorized');
-
 		const user = req.body;
 		const { networkId } = req.user;
 		const { id } = req.params;
+
+		const requestUserRole = await getUserRole(req.user._id, networkId);
+		if (!['admin', 'owner'].includes(requestUserRole)) throw new Error('Not authorized');
 
 		const { ownerId } = await getDocument(`networks/${networkId}`);
 		if (ownerId === id) throw new Error('Cannot modify network owner');
@@ -71,11 +71,11 @@ router.patch('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
 	try {
-		const requestUserRole = await getUserRole(req.user._id);
-		if (!['admin', 'owner'].includes(requestUserRole)) throw new Error('Not authorized');
-
 		const { networkId } = req.user;
 		const { id } = req.params;
+
+		const requestUserRole = await getUserRole(req.user._id, networkId);
+		if (!['admin', 'owner'].includes(requestUserRole)) throw new Error('Not authorized');
 
 		const { ownerId } = await getDocument(`networks/${networkId}`);
 		if (ownerId === id) throw new Error('Cannot delete network owner');
