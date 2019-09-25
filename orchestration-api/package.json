@@ -1,6 +1,6 @@
 {
 	"name": "orchestration-api",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Performs actions on networks. This API is hosted in the cloud and provides simple services for performing actions on lights.",
 	"main": "app.js",
 	"scripts": {
