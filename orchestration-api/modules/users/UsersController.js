@@ -30,15 +30,13 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
 	try {
-		const { user, userId } = req.body;
+		const { networkId } = req.user;
+		const { user } = req.body;
 
-		const [{ networkId }, users] = await Promise.all([
-			getDocument(`users/${userId}`),
-			getCollection('users')
-		]);
+		const users = await getCollection('users');
 
 		const newUser = users.find(u => u.email === user.email);
-		if (!newUser) throw new Error('user not found');
+		if (!newUser) throw new Error('user does not exist in home-orchestrator');
 		user.userId = newUser._id;
 
 		const result = await setDocument(`/networks/${networkId}/users/${user.userId}`, user);
