@@ -6,7 +6,7 @@ module.exports.getUserRole = async (userId, networkId) => {
 	const networkUsers = await getCollection(`/networks/${networkId}/users`);
 	let role = null;
 	networkUsers.forEach(user => {
-		if (user._id === userId && user.role === 'admin') role = 'admin';
+		if (user._id === userId) role = user.role;
 	});
 	return role;
 };
