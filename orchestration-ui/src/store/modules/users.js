@@ -44,9 +44,7 @@ export default {
 			const result = await httpService.request({
 				url: `${config.API_BASE}/users/${userId}`,
 				method: 'PATCH',
-				data: {
-					user: { userId, role }
-				}
+				data: { userId, role }
 			});
 			return result;
 		}
