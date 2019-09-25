@@ -58,6 +58,10 @@ router.patch('/:id', async (req, res, next) => {
 		const user = req.body;
 		const { networkId } = req.user;
 		const { id } = req.params;
+
+		const { ownerId } = await getDocument(`networks/${networkId}`);
+		if (ownerId === id) throw new Error('Cannot modify network owner');
+
 		const result = await updateDocument(`networks/${networkId}/users/${id}`, user);
 		return res.send(result);
 	} catch (err) {
