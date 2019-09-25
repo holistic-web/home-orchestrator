@@ -10,7 +10,7 @@
 
 - the sign up screen should allow a user to create a personal network if they haven't already.
 
-- inviting a user to a 'network' (home) should send them an email
+- inviting a user to a 'network' (home) should send them an email, and work even if they have not already signed up to home-orchestrator
 
 - owner's of a network should be able to designate a new owner
 
