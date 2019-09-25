@@ -42,6 +42,7 @@ export default {
 		flex-direction: column;
 		justify-content: center;
 		align-content: center;
+		min-height: 100vh;
 	}
 
 	&__button {
