@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { getCollection, getDocument, setDocument, updateDocument, deleteDocument } = require('../../clients/FirebaseClient');
+const { getUserRole } = require('../../lib/SecurityService');
 
 const router = Router();
 
@@ -30,23 +31,10 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
 	try {
+		const requestUserRole = await getUserRole(req.user._id);
+		if (!['admin', 'owner'].includes(requestUserRole)) throw new Error('Not authorized');
+
 		const { networkId } = req.user;
-
-		// ensure they are authorized (owner / admin)
-		const networkUsers = await getCollection(`/networks/${networkId}/users`);
-		let isAdmin = false;
-		networkUsers.forEach(user => {
-			if (user._id === req.user._id && user.role === 'admin') {
-				isAdmin = true;
-			}
-		});
-
-		const { ownerId } = await getDocument(`/networks/${networkId}`);
-
-		if (!isAdmin && req.user._id !== ownerId) {
-			throw new Error('Not authorized');
-		}
-
 		const user = req.body;
 
 		const users = await getCollection('users');
@@ -64,6 +52,9 @@ router.post('/', async (req, res, next) => {
 
 router.patch('/:id', async (req, res, next) => {
 	try {
+		const requestUserRole = await getUserRole(req.user._id);
+		if (!['admin', 'owner'].includes(requestUserRole)) throw new Error('Not authorized');
+
 		const user = req.body;
 		const { networkId } = req.user;
 		const { id } = req.params;
@@ -76,8 +67,15 @@ router.patch('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
 	try {
+		const requestUserRole = await getUserRole(req.user._id);
+		if (!['admin', 'owner'].includes(requestUserRole)) throw new Error('Not authorized');
+
 		const { networkId } = req.user;
 		const { id } = req.params;
+
+		const { ownerId } = await getDocument(`networks/${networkId}`);
+		if (ownerId === id) throw new Error('Cannot delete network owner');
+
 		const result = await deleteDocument(`networks/${networkId}/users/${id}`);
 		return res.send(result);
 	} catch (err) {
