@@ -67,6 +67,24 @@ app.post('/colourLoop', async (req, res, next) => {
 	}
 });
 
+
+app.post('/randomColourLoop', async (req, res, next) => {
+	try {
+		const { light, network, loopConstraints } = req.body;
+		res.send('done');
+		for (let i = 0; i < loopConstraints.cycles; i++) {
+			const randomRed = 255 * Math.random();
+			const randomGreen = 255 * Math.random();
+			const randomBlue = (randomRed + randomGreen) / 2;
+			light.state.colour = `rgb(${randomRed},${randomGreen},${randomBlue})`;
+			await lightService.updateLight(light, network);
+			await sleep(loopConstraints.wait);
+		}
+	} catch (err) {
+		return next(err);
+	}
+});
+
 app.use(ErrorHandlerMiddleware);
 
 app.listen(config.port, () => console.log(`Home API listening on port ${config.port}!`),);
