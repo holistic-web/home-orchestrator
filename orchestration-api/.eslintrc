@@ -37,6 +37,9 @@
 		// don"t allow modification of any input parameters
 		"no-param-reassign": [2, { "props": false }],
 
+		// allow us to loop however we'd please
+		"no-await-in-loop": "off",
+
 		// allow the ++ operator
 		"no-plusplus": 0,
 

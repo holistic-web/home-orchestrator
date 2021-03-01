@@ -31,6 +31,9 @@
 
 		// class constructors must start with a capital letter, allows Router and Object ID without "new"
 		"new-cap": [2, { "capIsNewExceptions": ["Router", "ObjectId"] }],
+		
+		// allow us to loop however we'd please
+		"no-await-in-loop": "off",
 
 		// allow us to loop however we'd please
 		"no-await-in-loop": "off",
